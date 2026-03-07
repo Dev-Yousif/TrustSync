@@ -8,6 +8,47 @@
   <ScrollViewer HorizontalScrollBarVisibility="Disabled">
     <StackPanel Spacing="16">
 
+      <!-- Welcome Header -->
+      <Border Background="Transparent" Padding="0"
+              IsVisible="{Binding Summary.UserDisplayName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+        <Grid ColumnDefinitions="Auto,*,Auto">
+          <!-- Profile Avatar -->
+          <Panel Grid.Column="0" Width="64" Height="64" Margin="0,0,16,0">
+            <!-- Fallback: initial circle -->
+            <Border Width="64" Height="64" CornerRadius="12"
+                    IsVisible="{Binding !HasProfileImage}">
+              <Border.Background>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+                  <GradientStop Color="#202020" Offset="0"/>
+                  <GradientStop Color="#404040" Offset="1"/>
+                </LinearGradientBrush>
+              </Border.Background>
+              <TextBlock Text="{Binding UserInitial}" FontSize="20" FontWeight="Bold"
+                         Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <!-- Profile image -->
+            <Border Width="64" Height="64" CornerRadius="12" ClipToBounds="True"
+                    IsVisible="{Binding HasProfileImage}">
+              <Image Source="{Binding ProfileBitmap}" Stretch="UniformToFill"/>
+            </Border>
+          </Panel>
+          <!-- Greeting -->
+          <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <TextBlock Text="{Binding Greeting}" FontSize="14" Foreground="#9CA3AF" FontWeight="Medium"/>
+            </StackPanel>
+            <TextBlock Text="{Binding Summary.UserDisplayName}" FontSize="22" FontWeight="Bold" Foreground="#111827"/>
+          </StackPanel>
+          <!-- Date -->
+          <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+            <TextBlock Text="{Binding TodayDate}" FontSize="13" Foreground="#6B7280" FontWeight="Medium"
+                       HorizontalAlignment="Right"/>
+            <TextBlock Text="{Binding TodayDay}" FontSize="11" Foreground="#9CA3AF"
+                       HorizontalAlignment="Right"/>
+          </StackPanel>
+        </Grid>
+      </Border>
+
       <!-- ROW 1: Main Financial KPIs — 4 equal cards -->
       <Grid ColumnDefinitions="*,*,*,*">
 
@@ -26,9 +67,9 @@
             <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
                        FontSize="28" FontWeight="Bold" Foreground="#111827" Margin="0,10,0,0">
               <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0:N2} {1}">
+                <MultiBinding StringFormat="{}{1}{0:N2}">
                   <Binding Path="Summary.MonthlyIncome"/>
-                  <Binding Path="Summary.CurrencyCode"/>
+                  <Binding Path="Summary.CurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
                 </MultiBinding>
               </TextBlock.Text>
             </TextBlock>
@@ -53,9 +94,9 @@
             <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
                        FontSize="28" FontWeight="Bold" Foreground="#111827" Margin="0,10,0,0">
               <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0:N2} {1}">
+                <MultiBinding StringFormat="{}{1}{0:N2}">
                   <Binding Path="Summary.MonthlyExpenses"/>
-                  <Binding Path="Summary.CurrencyCode"/>
+                  <Binding Path="Summary.CurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
                 </MultiBinding>
               </TextBlock.Text>
             </TextBlock>
@@ -80,9 +121,9 @@
             <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
                        FontSize="28" FontWeight="Bold" Foreground="#111827" Margin="0,10,0,0">
               <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0:N2} {1}">
+                <MultiBinding StringFormat="{}{1}{0:N2}">
                   <Binding Path="Summary.MonthlySavings"/>
-                  <Binding Path="Summary.CurrencyCode"/>
+                  <Binding Path="Summary.CurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
                 </MultiBinding>
               </TextBlock.Text>
             </TextBlock>
@@ -106,9 +147,9 @@
             <TextBlock Grid.Row="1"
                        FontSize="28" FontWeight="Bold" Foreground="White" Margin="0,10,0,0">
               <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0:N2} {1}">
+                <MultiBinding StringFormat="{}{1}{0:N2}">
                   <Binding Path="Summary.NetBalance"/>
-                  <Binding Path="Summary.CurrencyCode"/>
+                  <Binding Path="Summary.CurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
                 </MultiBinding>
               </TextBlock.Text>
             </TextBlock>
@@ -135,9 +176,9 @@
             <StackPanel VerticalAlignment="Center" Spacing="0">
               <TextBlock FontSize="18" FontWeight="Bold" Foreground="#111827">
                 <TextBlock.Text>
-                  <MultiBinding StringFormat="{}{0:N2} {1}">
+                  <MultiBinding StringFormat="{}{1}{0:N2}">
                     <Binding Path="Summary.MonthlyDeductions"/>
-                    <Binding Path="Summary.CurrencyCode"/>
+                    <Binding Path="Summary.CurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
                   </MultiBinding>
                 </TextBlock.Text>
               </TextBlock>
@@ -226,9 +267,9 @@
                                  FontSize="14" FontWeight="Bold"
                                  VerticalAlignment="Center">
                         <TextBlock.Text>
-                          <MultiBinding StringFormat="{}{0:N2} {1}">
+                          <MultiBinding StringFormat="{}{1}{0:N2}">
                             <Binding Path="Amount"/>
-                            <Binding Path="CurrencyCode"/>
+                            <Binding Path="CurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
                           </MultiBinding>
                         </TextBlock.Text>
                         <TextBlock.Foreground>
@@ -270,9 +311,9 @@
                         <TextBlock FontSize="13" FontWeight="SemiBold" Foreground="#111827"
                                    VerticalAlignment="Center">
                           <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0:N2} {1}">
+                            <MultiBinding StringFormat="{}{1}{0:N2}">
                               <Binding Path="Amount"/>
-                              <Binding Path="$parent[ItemsControl].((vm:DashboardViewModel)DataContext).Summary.CurrencyCode"/>
+                              <Binding Path="$parent[ItemsControl].((vm:DashboardViewModel)DataContext).Summary.CurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
                             </MultiBinding>
                           </TextBlock.Text>
                         </TextBlock>

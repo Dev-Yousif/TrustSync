@@ -11,4 +11,5 @@ public interface IBackupService
     Task<IReadOnlyList<BackupRecord>> GetBackupHistoryAsync();
     Task<Result> DeleteBackupAsync(int id);
     string GetBackupDirectory();
+    Task SetBackupDirectoryAsync(string path);
 }

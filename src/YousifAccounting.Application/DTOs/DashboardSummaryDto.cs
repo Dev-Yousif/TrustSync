@@ -10,6 +10,8 @@ public class DashboardSummaryDto
     public int ActiveProjects { get; set; }
     public int CompaniesCount { get; set; }
     public string CurrencyCode { get; set; } = "USD";
+    public string UserDisplayName { get; set; } = "";
+    public string? ProfileImagePath { get; set; }
 }
 
 public class MonthlyDataPoint

@@ -1,3 +1,4 @@
+using Avalonia.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,9 @@ public partial class SettingsViewModel : ViewModelBase
     private readonly ISessionService _sessionService;
     private readonly ICurrencyConversionService _conversionService;
 
+    [ObservableProperty] private string _userDisplayName = "";
+    [ObservableProperty] private string? _profileImagePath;
+    [ObservableProperty] private Bitmap? _profileBitmap;
     [ObservableProperty] private string _defaultCurrency = "USD";
     [ObservableProperty] private int _autoLockTimeout = 5;
     // Password change
@@ -24,6 +28,17 @@ public partial class SettingsViewModel : ViewModelBase
     // Exchange rates
     [ObservableProperty] private string _lastRateRefresh = "Never";
     [ObservableProperty] private bool _isRefreshingRates;
+
+    partial void OnProfileImagePathChanged(string? value)
+    {
+        ProfileBitmap?.Dispose();
+        ProfileBitmap = null;
+        if (!string.IsNullOrEmpty(value) && File.Exists(value))
+        {
+            try { ProfileBitmap = new Bitmap(value); }
+            catch { /* ignore corrupt images */ }
+        }
+    }
 
     public string[] Currencies { get; } = ["USD", "EUR", "GBP", "IQD", "AED", "SAR", "TRY", "CAD", "AUD", "JPY"];
     public int[] TimeoutOptions { get; } = [1, 2, 5, 10, 15, 30, 60];
@@ -40,6 +55,12 @@ public partial class SettingsViewModel : ViewModelBase
     [RelayCommand]
     private async Task LoadAsync()
     {
+        var displayName = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "UserDisplayName");
+        if (displayName is not null) UserDisplayName = displayName.Value;
+
+        var profileImg = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "ProfileImagePath");
+        if (profileImg is not null && File.Exists(profileImg.Value)) ProfileImagePath = profileImg.Value;
+
         var currency = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "DefaultCurrency");
         if (currency is not null) DefaultCurrency = currency.Value;
 
@@ -56,6 +77,20 @@ public partial class SettingsViewModel : ViewModelBase
         IsBusy = true; ClearError();
         try
         {
+            var displayName = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "UserDisplayName");
+            if (displayName is not null)
+                displayName.Value = UserDisplayName.Trim();
+            else
+                _db.AppSettings.Add(new Domain.Entities.AppSetting
+                    { Key = "UserDisplayName", Value = UserDisplayName.Trim(), UpdatedAt = DateTime.UtcNow });
+
+            var profileImg = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "ProfileImagePath");
+            if (profileImg is not null)
+                profileImg.Value = ProfileImagePath ?? "";
+            else if (!string.IsNullOrEmpty(ProfileImagePath))
+                _db.AppSettings.Add(new Domain.Entities.AppSetting
+                    { Key = "ProfileImagePath", Value = ProfileImagePath, UpdatedAt = DateTime.UtcNow });
+
             var currency = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "DefaultCurrency");
             var previousCurrency = currency?.Value ?? "USD";
             if (currency is not null) currency.Value = DefaultCurrency;
@@ -106,6 +141,33 @@ public partial class SettingsViewModel : ViewModelBase
         }
         catch (Exception ex) { ShowToast(ex.Message, isError: true); }
         finally { IsRefreshingRates = false; }
+    }
+
+    public Task SetProfileImageAsync(string sourcePath)
+    {
+        try
+        {
+            var appData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var profileDir = Path.Combine(appData, "YousifAccounting", "Profile");
+            Directory.CreateDirectory(profileDir);
+            var ext = Path.GetExtension(sourcePath);
+            var destPath = Path.Combine(profileDir, $"avatar{ext}");
+            File.Copy(sourcePath, destPath, overwrite: true);
+            ProfileImagePath = destPath;
+            ShowToast("Profile image set. Click Save Settings to keep it.");
+        }
+        catch (Exception ex)
+        {
+            ShowToast($"Failed to set image: {ex.Message}", isError: true);
+        }
+        return Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    public void RemoveProfileImage()
+    {
+        ProfileImagePath = null;
+        ShowToast("Profile image removed. Click Save Settings to keep it.");
     }
 
     [RelayCommand]

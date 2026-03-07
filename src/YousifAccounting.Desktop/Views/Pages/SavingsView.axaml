@@ -71,10 +71,10 @@
                         <Grid ColumnDefinitions="*,Auto">
                           <TextBlock FontSize="12" Foreground="#9CA3AF">
                             <TextBlock.Text>
-                              <MultiBinding StringFormat="{}{0:N2} / {1:N2} {2}">
+                              <MultiBinding StringFormat="{}{2}{0:N2} / {2}{1:N2}">
                                 <Binding Path="SavedAmount"/>
                                 <Binding Path="TargetAmount"/>
-                                <Binding Path="CurrencyCode"/>
+                                <Binding Path="CurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
                               </MultiBinding>
                             </TextBlock.Text>
                           </TextBlock>
@@ -126,9 +126,9 @@
                       <StackPanel Grid.Column="0" Spacing="2">
                         <TextBlock FontSize="14" FontWeight="SemiBold" Foreground="#059669">
                           <TextBlock.Text>
-                            <MultiBinding StringFormat="{}{0:N2} {1}">
+                            <MultiBinding StringFormat="{}{1}{0:N2}">
                               <Binding Path="ConvertedAmount"/>
-                              <Binding Path="ConvertedCurrencyCode"/>
+                              <Binding Path="ConvertedCurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
                             </MultiBinding>
                           </TextBlock.Text>
                         </TextBlock>

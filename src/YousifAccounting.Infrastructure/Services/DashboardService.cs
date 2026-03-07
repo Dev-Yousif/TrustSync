@@ -49,6 +49,16 @@ public class DashboardService : IDashboardService
             .Select(s => s.Value)
             .FirstOrDefaultAsync() ?? "USD";
 
+        var userName = await _db.AppSettings
+            .Where(s => s.Key == "UserDisplayName")
+            .Select(s => s.Value)
+            .FirstOrDefaultAsync() ?? "";
+
+        var profileImage = await _db.AppSettings
+            .Where(s => s.Key == "ProfileImagePath")
+            .Select(s => s.Value)
+            .FirstOrDefaultAsync();
+
         return new DashboardSummaryDto
         {
             MonthlyIncome = monthlyIncome,
@@ -58,7 +68,9 @@ public class DashboardService : IDashboardService
             NetBalance = monthlyIncome - monthlyExpenses - monthlyDeductions - monthlySavings,
             ActiveProjects = activeProjects,
             CompaniesCount = companiesCount,
-            CurrencyCode = defaultCurrency
+            CurrencyCode = defaultCurrency,
+            UserDisplayName = userName,
+            ProfileImagePath = profileImage
         };
     }
 

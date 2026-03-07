@@ -1,5 +1,6 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="using:YousifAccounting.Desktop.Converters"
              x:Class="YousifAccounting.Desktop.App"
              RequestedThemeVariant="Light">
   <Application.Styles>
@@ -143,6 +144,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="/Themes/ThemeLight.axaml"/>
       </ResourceDictionary.MergedDictionaries>
+      <conv:CurrencySymbolConverter x:Key="CurrencySymbolConverter"/>
     </ResourceDictionary>
   </Application.Resources>
 </Application>

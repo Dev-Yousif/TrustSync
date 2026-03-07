@@ -55,6 +55,49 @@ public partial class BackupViewModel : ViewModelBase
         finally { IsBusy = false; }
     }
 
+    public async Task SetBackupDirectoryFromPickerAsync(string path)
+    {
+        IsBusy = true; ClearError();
+        try
+        {
+            await _backupService.SetBackupDirectoryAsync(path);
+            BackupDirectory = _backupService.GetBackupDirectory();
+            ShowToast("Backup directory updated.");
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Failed to set directory: {ex.Message}";
+        }
+        finally { IsBusy = false; }
+    }
+
+    public Task ImportBackupFromFileAsync(string filePath)
+    {
+        ShowConfirmDialog(
+            "Restore Backup",
+            "This will replace your current data with the backup. A safety copy of your current database will be saved. Are you sure?",
+            async () =>
+            {
+                IsBusy = true; ClearError(); StatusMessage = string.Empty;
+                try
+                {
+                    var result = await _backupService.RestoreFromBackupAsync(filePath);
+                    if (result.IsSuccess)
+                    {
+                        StatusMessage = "Backup restored successfully. Please restart the app.";
+                        ShowToast("Backup restored. Restart the app to apply.");
+                    }
+                    else
+                    {
+                        ErrorMessage = result.Error;
+                        ShowToast(result.Error ?? "Restore failed.", isError: true);
+                    }
+                }
+                finally { IsBusy = false; }
+            });
+        return Task.CompletedTask;
+    }
+
     [RelayCommand]
     private void RequestDeleteBackup(BackupRecord record)
     {

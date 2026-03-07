@@ -15,20 +15,41 @@
     <StackPanel Spacing="16">
 
       <Border Background="White" CornerRadius="14" Padding="20,16" BoxShadow="0 1 4 0 #00000008">
-        <Grid ColumnDefinitions="*,Auto">
-          <StackPanel Grid.Column="0" Spacing="2">
-            <TextBlock Text="BACKUP DIRECTORY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
-            <TextBlock Text="{Binding BackupDirectory}" FontSize="12" Foreground="#374151" TextTrimming="CharacterEllipsis"/>
-          </StackPanel>
-          <Button Grid.Column="1" Command="{Binding CreateBackupCommand}"
-                  Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9"
-                  IsEnabled="{Binding !IsBusy}">
-            <StackPanel Orientation="Horizontal" Spacing="6">
-              <TextBlock Text="+" FontSize="16" FontWeight="Bold" Margin="0,-2,0,0"/>
-              <TextBlock Text="Create Backup"/>
+        <StackPanel Spacing="14">
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Grid.Column="0" Spacing="2">
+              <TextBlock Text="BACKUP DIRECTORY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <TextBlock Text="{Binding BackupDirectory}" FontSize="12" Foreground="#374151" TextTrimming="CharacterEllipsis"/>
             </StackPanel>
-          </Button>
-        </Grid>
+            <Button Grid.Column="1" Click="OnChangeBackupDirectory"
+                    Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="1"
+                    Foreground="#374151" FontSize="12" CornerRadius="8" Padding="14,7" Cursor="Hand"
+                    VerticalAlignment="Center">
+              <TextBlock Text="Change Folder"/>
+            </Button>
+          </Grid>
+          <Border Height="1" Background="#F3F4F6"/>
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button Command="{Binding CreateBackupCommand}"
+                    Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9"
+                    IsEnabled="{Binding !IsBusy}">
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <TextBlock Text="+" FontSize="16" FontWeight="Bold" Margin="0,-2,0,0"/>
+                <TextBlock Text="Create Backup"/>
+              </StackPanel>
+            </Button>
+            <Button Click="OnImportBackup"
+                    Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="1"
+                    Foreground="#374151" FontSize="13" CornerRadius="8" Padding="18,9" Cursor="Hand"
+                    IsEnabled="{Binding !IsBusy}">
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <Path Data="M12 3v12M12 3l-4 4M12 3l4 4M4 15v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
+                      Stroke="#374151" StrokeThickness="1.6" Width="14" Height="14" Stretch="Uniform"/>
+                <TextBlock Text="Import Backup"/>
+              </StackPanel>
+            </Button>
+          </StackPanel>
+        </StackPanel>
       </Border>
 
       <TextBlock Text="{Binding StatusMessage}" IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="#059669" FontSize="13" Margin="4,0"/>

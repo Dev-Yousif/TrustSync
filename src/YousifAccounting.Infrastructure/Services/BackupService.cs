@@ -17,11 +17,27 @@ public class BackupService : IBackupService
 
     public string GetBackupDirectory()
     {
+        var custom = _db.AppSettings
+            .FirstOrDefault(s => s.Key == "BackupDirectory");
+        if (custom is not null && !string.IsNullOrWhiteSpace(custom.Value) && Directory.Exists(custom.Value))
+            return custom.Value;
+
         var baseDir = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "YousifAccounting", "Backups");
+            "TrustSync", "Backups");
         Directory.CreateDirectory(baseDir);
         return baseDir;
+    }
+
+    public async Task SetBackupDirectoryAsync(string path)
+    {
+        Directory.CreateDirectory(path);
+        var setting = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "BackupDirectory");
+        if (setting is not null)
+            setting.Value = path;
+        else
+            _db.AppSettings.Add(new AppSetting { Key = "BackupDirectory", Value = path });
+        await _db.SaveChangesAsync();
     }
 
     public async Task<Result<string>> CreateBackupAsync(string? notes = null)
@@ -37,22 +53,25 @@ public class BackupService : IBackupService
 
             var backupDir = GetBackupDirectory();
             var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            var fileName = $"YousifAccounting_Backup_{timestamp}.yabak";
+            var fileName = $"TrustSync_Backup_{timestamp}.yabak";
             var filePath = Path.Combine(backupDir, fileName);
 
-            // Create ZIP backup
-            var tempZip = Path.GetTempFileName();
+            // Copy DB to temp first (the live file is locked by EF Core)
+            var tempDb = Path.Combine(Path.GetTempPath(), $"yabak_{Guid.NewGuid():N}.db");
+            var tempZip = Path.Combine(Path.GetTempPath(), $"yabak_{Guid.NewGuid():N}.zip");
             try
             {
+                File.Copy(dbPath, tempDb, true);
                 using (var archive = ZipFile.Open(tempZip, ZipArchiveMode.Create))
                 {
-                    archive.CreateEntryFromFile(dbPath, "yousifaccounting.db");
+                    archive.CreateEntryFromFile(tempDb, "trustsync.db");
                 }
                 File.Copy(tempZip, filePath, true);
             }
             finally
             {
-                File.Delete(tempZip);
+                if (File.Exists(tempDb)) File.Delete(tempDb);
+                if (File.Exists(tempZip)) File.Delete(tempZip);
             }
 
             var fileInfo = new FileInfo(filePath);
@@ -94,12 +113,14 @@ public class BackupService : IBackupService
             var dbPath = DatabaseConfiguration.GetDatabasePath();
 
             // Extract ZIP to temp
-            var tempDir = Path.Combine(Path.GetTempPath(), "YousifAccounting_Restore");
+            var tempDir = Path.Combine(Path.GetTempPath(), "TrustSync_Restore");
             if (Directory.Exists(tempDir)) Directory.Delete(tempDir, true);
 
             ZipFile.ExtractToDirectory(filePath, tempDir);
 
-            var restoredDb = Path.Combine(tempDir, "yousifaccounting.db");
+            var restoredDb = Path.Combine(tempDir, "trustsync.db");
+            if (!File.Exists(restoredDb))
+                restoredDb = Path.Combine(tempDir, "yousifaccounting.db");
             if (!File.Exists(restoredDb))
                 return Result.Failure("Backup does not contain a valid database.");
 

@@ -1,3 +1,4 @@
+using Avalonia.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using YousifAccounting.Application.Security;
@@ -17,6 +18,9 @@ public partial class MainViewModel : ViewModelBase
 
     [ObservableProperty]
     private string _pageTitle = "Dashboard";
+
+    [ObservableProperty]
+    private StreamGeometry? _pageIconGeometry;
 
     [ObservableProperty]
     private NavigationItem? _selectedNavItem;
@@ -110,6 +114,7 @@ public partial class MainViewModel : ViewModelBase
                 navItem.IsSelected = ReferenceEquals(navItem, item);
 
         PageTitle = item.Title;
+        PageIconGeometry = item.IconGeometry;
         _navigationService.NavigateTo(item.ViewModelType);
         _sessionService.RecordActivity();
     }
