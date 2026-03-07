@@ -38,3 +38,9 @@ Thumbs.db
 *.db
 *.db-shm
 *.db-wal
+
+## Build/publish output
+publish/
+publish-linux/
+installer_output/
+installer.iss

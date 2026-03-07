@@ -1,4 +1,5 @@
 using Avalonia;
+using Velopack;
 
 namespace YousifAccounting.Desktop;
 
@@ -7,6 +8,7 @@ internal sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        VelopackApp.Build().Run();
         BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
 

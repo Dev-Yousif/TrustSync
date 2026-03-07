@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Interactivity;
 using YousifAccounting.Desktop.ViewModels.Shell;
 
@@ -10,18 +9,11 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        PointerPressed += OnWindowPointerPressed;
     }
 
     public MainWindow(MainViewModel viewModel) : this()
     {
         DataContext = viewModel;
-    }
-
-    private void OnWindowPointerPressed(object? sender, PointerPressedEventArgs e)
-    {
-        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            BeginMoveDrag(e);
     }
 
     private void OnMinimize(object? sender, RoutedEventArgs e)
