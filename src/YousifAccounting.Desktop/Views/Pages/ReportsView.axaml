@@ -55,11 +55,21 @@
                 <Border Padding="0,8" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
                   <Grid ColumnDefinitions="120,*,*,*,*,*">
                     <TextBlock Grid.Column="0" Text="{Binding MonthName}" FontSize="13" Foreground="#111827"/>
-                    <TextBlock Grid.Column="1" Text="{Binding Income, StringFormat={}{0:N2}}" FontSize="13" Foreground="#059669" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="2" Text="{Binding Expenses, StringFormat={}{0:N2}}" FontSize="13" Foreground="#DC2626" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="3" Text="{Binding Deductions, StringFormat={}{0:N2}}" FontSize="13" Foreground="#D97706" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="4" Text="{Binding Savings, StringFormat={}{0:N2}}" FontSize="13" Foreground="#202020" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="5" Text="{Binding Net, StringFormat={}{0:N2}}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="1" FontSize="13" Foreground="#059669" HorizontalAlignment="Right">
+                      <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="Income"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Grid.Column="2" FontSize="13" Foreground="#DC2626" HorizontalAlignment="Right">
+                      <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="Expenses"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Grid.Column="3" FontSize="13" Foreground="#D97706" HorizontalAlignment="Right">
+                      <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="Deductions"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Grid.Column="4" FontSize="13" Foreground="#202020" HorizontalAlignment="Right">
+                      <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="Savings"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Grid.Column="5" FontSize="13" FontWeight="SemiBold" Foreground="#111827" HorizontalAlignment="Right">
+                      <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="Net"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                    </TextBlock>
                   </Grid>
                 </Border>
               </DataTemplate>
@@ -80,7 +90,9 @@
                   <Border Padding="0,8" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
                     <Grid ColumnDefinitions="*,Auto,50">
                       <TextBlock Grid.Column="0" Text="{Binding Source}" FontSize="13" Foreground="#374151"/>
-                      <TextBlock Grid.Column="1" Text="{Binding Amount, StringFormat={}{0:N2}}" FontSize="13" Foreground="#059669" Margin="12,0"/>
+                      <TextBlock Grid.Column="1" FontSize="13" Foreground="#059669" Margin="12,0">
+                        <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="Amount"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                      </TextBlock>
                       <Border Grid.Column="2" Background="#F3F4F6" CornerRadius="4" Padding="6,2" HorizontalAlignment="Right">
                         <TextBlock Text="{Binding Percentage, StringFormat={}{0:F0}%}" FontSize="10" Foreground="#6B7280"/>
                       </Border>
@@ -104,7 +116,9 @@
                     <Grid ColumnDefinitions="Auto,*,Auto,Auto">
                       <Border Grid.Column="0" Width="8" Height="8" CornerRadius="4" Background="{Binding ColorHex}" Margin="0,0,10,0" VerticalAlignment="Center"/>
                       <TextBlock Grid.Column="1" Text="{Binding Category}" FontSize="13" Foreground="#374151"/>
-                      <TextBlock Grid.Column="2" Text="{Binding Amount, StringFormat={}{0:N2}}" FontSize="13" Foreground="#DC2626" Margin="12,0"/>
+                      <TextBlock Grid.Column="2" FontSize="13" Foreground="#DC2626" Margin="12,0">
+                        <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="Amount"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                      </TextBlock>
                       <Border Grid.Column="3" Background="#F3F4F6" CornerRadius="4" Padding="6,2">
                         <TextBlock Text="{Binding Percentage, StringFormat={}{0:F0}%}" FontSize="10" Foreground="#6B7280"/>
                       </Border>
@@ -141,10 +155,18 @@
                       <TextBlock Text="{Binding CompanyName}" FontSize="11" Foreground="#9CA3AF"
                                  IsVisible="{Binding CompanyName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
                     </StackPanel>
-                    <TextBlock Grid.Column="1" Text="{Binding AgreedAmount, StringFormat={}{0:N2}}" FontSize="13" Foreground="#374151" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="2" Text="{Binding ReceivedAmount, StringFormat={}{0:N2}}" FontSize="13" Foreground="#059669" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="3" Text="{Binding TotalExpenses, StringFormat={}{0:N2}}" FontSize="13" Foreground="#DC2626" HorizontalAlignment="Right"/>
-                    <TextBlock Grid.Column="4" Text="{Binding Profit, StringFormat={}{0:N2}}" FontSize="13" FontWeight="SemiBold" Foreground="#111827" HorizontalAlignment="Right"/>
+                    <TextBlock Grid.Column="1" FontSize="13" Foreground="#374151" HorizontalAlignment="Right">
+                      <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="AgreedAmount"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Grid.Column="2" FontSize="13" Foreground="#059669" HorizontalAlignment="Right">
+                      <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="ReceivedAmount"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Grid.Column="3" FontSize="13" Foreground="#DC2626" HorizontalAlignment="Right">
+                      <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="TotalExpenses"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Grid.Column="4" FontSize="13" FontWeight="SemiBold" Foreground="#111827" HorizontalAlignment="Right">
+                      <TextBlock.Text><MultiBinding StringFormat="{}{0:N2} {1}"><Binding Path="Profit"/><Binding Path="$parent[ItemsControl].((vm:ReportsViewModel)DataContext).CurrencyCode"/></MultiBinding></TextBlock.Text>
+                    </TextBlock>
                     <Border Grid.Column="5" Background="#F3F4F6" CornerRadius="4" Padding="6,2" HorizontalAlignment="Right" VerticalAlignment="Center">
                       <TextBlock Text="{Binding ProfitMargin, StringFormat={}{0:F0}%}" FontSize="10" Foreground="#6B7280"/>
                     </Border>

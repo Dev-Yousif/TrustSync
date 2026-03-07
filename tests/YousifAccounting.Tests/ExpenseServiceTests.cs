@@ -11,7 +11,7 @@ public class ExpenseServiceTests
     private (ExpenseService service, int categoryId) CreateService(string? dbName = null)
     {
         var db = TestDbContextFactory.CreateWithCategory(out var categoryId, dbName);
-        return (new ExpenseService(db, new NullAuditService()), categoryId);
+        return (new ExpenseService(db, new NullAuditService(), new NullCurrencyConversionService()), categoryId);
     }
 
     [Fact]
@@ -86,7 +86,7 @@ public class ExpenseServiceTests
         });
 
         var db2 = TestDbContextFactory.Create(dbName);
-        var service2 = new ExpenseService(db2, new NullAuditService());
+        var service2 = new ExpenseService(db2, new NullAuditService(), new NullCurrencyConversionService());
         var result = await service2.DeleteAsync(created.Value!.Id);
         result.IsSuccess.Should().BeTrue();
     }

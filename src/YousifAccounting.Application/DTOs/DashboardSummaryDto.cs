@@ -31,6 +31,7 @@ public class RecentTransactionDto
 {
     public required string Description { get; set; }
     public decimal Amount { get; set; }
+    public string CurrencyCode { get; set; } = "USD";
     public DateTime Date { get; set; }
     public bool IsIncome { get; set; }
     public string? CategoryOrSource { get; set; }

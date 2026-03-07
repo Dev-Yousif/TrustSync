@@ -22,21 +22,21 @@ public class DashboardService : IDashboardService
 
         var monthlyIncome = (decimal)await _db.Incomes
             .Where(i => i.Date >= startDate && i.Date < endDate)
-            .SumAsync(i => (double)i.Amount);
+            .SumAsync(i => (double)i.ConvertedAmount);
 
         var monthlyExpenses = (decimal)await _db.Expenses
             .Where(e => e.Date >= startDate && e.Date < endDate)
-            .SumAsync(e => (double)e.Amount);
+            .SumAsync(e => (double)e.ConvertedAmount);
 
         var monthlyDeductions = (decimal)await _db.Deductions
             .Where(d => d.IsActive &&
                    d.StartDate <= endDate &&
                    (d.EndDate == null || d.EndDate >= startDate))
-            .SumAsync(d => (double)d.Amount);
+            .SumAsync(d => (double)d.ConvertedAmount);
 
         var monthlySavings = (decimal)await _db.SavingEntries
             .Where(s => s.Date >= startDate && s.Date < endDate)
-            .SumAsync(s => (double)s.Amount);
+            .SumAsync(s => (double)s.ConvertedAmount);
 
         var activeProjects = await _db.Projects
             .CountAsync(p => p.Status == ProjectStatus.InProgress);
@@ -73,11 +73,11 @@ public class DashboardService : IDashboardService
 
             var income = (decimal)await _db.Incomes
                 .Where(i => i.Date >= startDate && i.Date < endDate)
-                .SumAsync(i => (double)i.Amount);
+                .SumAsync(i => (double)i.ConvertedAmount);
 
             var expenses = (decimal)await _db.Expenses
                 .Where(e => e.Date >= startDate && e.Date < endDate)
-                .SumAsync(e => (double)e.Amount);
+                .SumAsync(e => (double)e.ConvertedAmount);
 
             result.Add(new MonthlyDataPoint
             {
@@ -102,7 +102,7 @@ public class DashboardService : IDashboardService
             {
                 Category = g.Key.Name,
                 ColorHex = g.Key.ColorHex,
-                Amount = (decimal)g.Sum(e => (double)e.Amount)
+                Amount = (decimal)g.Sum(e => (double)e.ConvertedAmount)
             })
             .OrderByDescending(c => (double)c.Amount)
             .ToListAsync();
@@ -125,6 +125,7 @@ public class DashboardService : IDashboardService
             {
                 Description = i.Description,
                 Amount = i.Amount,
+                CurrencyCode = i.CurrencyCode,
                 Date = i.Date,
                 IsIncome = true,
                 CategoryOrSource = i.SourceType.ToString()
@@ -139,6 +140,7 @@ public class DashboardService : IDashboardService
             {
                 Description = e.Description,
                 Amount = e.Amount,
+                CurrencyCode = e.CurrencyCode,
                 Date = e.Date,
                 IsIncome = false,
                 CategoryOrSource = e.Category != null ? e.Category.Name : null

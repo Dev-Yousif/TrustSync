@@ -24,6 +24,10 @@ public class SavingGoalConfiguration : IEntityTypeConfiguration<SavingGoal>
             .IsRequired()
             .HasMaxLength(3);
 
+        builder.Property(s => s.ConvertedTargetAmount).HasColumnType("decimal(18,2)");
+        builder.Property(s => s.ConvertedCurrencyCode).IsRequired().HasMaxLength(3).HasDefaultValue("USD");
+        builder.Property(s => s.ExchangeRateUsed).HasColumnType("decimal(18,6)").HasDefaultValue(1m);
+
         builder.Ignore(s => s.SavedAmount);
         builder.Ignore(s => s.ProgressPercentage);
 

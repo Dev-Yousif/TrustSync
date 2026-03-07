@@ -9,6 +9,9 @@ public sealed class Deduction : BaseEntity, ISoftDeletable
     public string? Description { get; set; }
     public decimal Amount { get; set; }
     public string CurrencyCode { get; set; } = "USD";
+    public decimal ConvertedAmount { get; set; }
+    public string ConvertedCurrencyCode { get; set; } = "USD";
+    public decimal ExchangeRateUsed { get; set; } = 1m;
     public DeductionType Type { get; set; }
     public RecurrenceType RecurrenceType { get; set; } = RecurrenceType.Monthly;
     public DateTime StartDate { get; set; }

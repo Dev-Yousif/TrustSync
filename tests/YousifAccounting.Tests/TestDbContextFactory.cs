@@ -44,3 +44,24 @@ internal sealed class NullAuditService : IAuditService
     public Task LogAsync(AuditAction action, string entityType, int? entityId = null, string? details = null)
         => Task.CompletedTask;
 }
+
+internal sealed class NullCurrencyConversionService : ICurrencyConversionService
+{
+    public Task<YousifAccounting.Domain.Common.Result<YousifAccounting.Application.DTOs.ConversionResult>> ConvertToDefaultAsync(decimal amount, string fromCurrencyCode)
+        => Task.FromResult(YousifAccounting.Domain.Common.Result<YousifAccounting.Application.DTOs.ConversionResult>.Success(
+            new YousifAccounting.Application.DTOs.ConversionResult
+            {
+                ConvertedAmount = amount,
+                ExchangeRateUsed = 1m,
+                TargetCurrencyCode = fromCurrencyCode
+            }));
+
+    public Task<YousifAccounting.Domain.Common.Result> RefreshRatesAsync()
+        => Task.FromResult(YousifAccounting.Domain.Common.Result.Success());
+
+    public Task<DateTime?> GetLastRefreshTimeAsync()
+        => Task.FromResult<DateTime?>(null);
+
+    public Task<YousifAccounting.Domain.Common.Result> ReconvertAllRecordsAsync()
+        => Task.FromResult(YousifAccounting.Domain.Common.Result.Success());
+}

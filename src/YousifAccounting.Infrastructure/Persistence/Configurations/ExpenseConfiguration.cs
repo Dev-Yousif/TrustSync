@@ -19,6 +19,9 @@ public sealed class ExpenseConfiguration : IEntityTypeConfiguration<Expense>
         builder.Property(e => e.RecurrenceType).HasConversion<string>().HasMaxLength(50);
         builder.Property(e => e.Notes).HasMaxLength(2000);
         builder.Property(e => e.AttachmentPath).HasMaxLength(500);
+        builder.Property(e => e.ConvertedAmount).HasColumnType("decimal(18,2)");
+        builder.Property(e => e.ConvertedCurrencyCode).IsRequired().HasMaxLength(3).HasDefaultValue("USD");
+        builder.Property(e => e.ExchangeRateUsed).HasColumnType("decimal(18,6)").HasDefaultValue(1m);
 
         builder.HasIndex(e => e.Date);
         builder.HasIndex(e => new { e.IsDeleted, e.Date });

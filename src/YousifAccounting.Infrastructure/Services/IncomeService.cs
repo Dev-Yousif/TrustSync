@@ -12,8 +12,9 @@ public class IncomeService : IIncomeService
 {
     private readonly AppDbContext _db;
     private readonly IAuditService _audit;
+    private readonly ICurrencyConversionService _conversion;
 
-    public IncomeService(AppDbContext db, IAuditService audit) { _db = db; _audit = audit; }
+    public IncomeService(AppDbContext db, IAuditService audit, ICurrencyConversionService conversion) { _db = db; _audit = audit; _conversion = conversion; }
 
     public async Task<IReadOnlyList<IncomeDto>> GetAllAsync()
     {
@@ -65,6 +66,20 @@ public class IncomeService : IIncomeService
             Notes = dto.Notes?.Trim()
         };
 
+        var conv = await _conversion.ConvertToDefaultAsync(entity.Amount, entity.CurrencyCode);
+        if (conv.IsSuccess)
+        {
+            entity.ConvertedAmount = conv.Value!.ConvertedAmount;
+            entity.ConvertedCurrencyCode = conv.Value.TargetCurrencyCode;
+            entity.ExchangeRateUsed = conv.Value.ExchangeRateUsed;
+        }
+        else
+        {
+            entity.ConvertedAmount = entity.Amount;
+            entity.ConvertedCurrencyCode = entity.CurrencyCode;
+            entity.ExchangeRateUsed = 1m;
+        }
+
         _db.Incomes.Add(entity);
         await _db.SaveChangesAsync();
         await _audit.LogAsync(AuditAction.Create, "Income", entity.Id, $"{entity.Description} ({entity.Amount:N2} {entity.CurrencyCode})");
@@ -93,6 +108,20 @@ public class IncomeService : IIncomeService
         entity.IsRecurring = dto.IsRecurring;
         entity.RecurrenceType = dto.RecurrenceType;
         entity.Notes = dto.Notes?.Trim();
+
+        var conv = await _conversion.ConvertToDefaultAsync(entity.Amount, entity.CurrencyCode);
+        if (conv.IsSuccess)
+        {
+            entity.ConvertedAmount = conv.Value!.ConvertedAmount;
+            entity.ConvertedCurrencyCode = conv.Value.TargetCurrencyCode;
+            entity.ExchangeRateUsed = conv.Value.ExchangeRateUsed;
+        }
+        else
+        {
+            entity.ConvertedAmount = entity.Amount;
+            entity.ConvertedCurrencyCode = entity.CurrencyCode;
+            entity.ExchangeRateUsed = 1m;
+        }
 
         await _db.SaveChangesAsync();
 

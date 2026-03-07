@@ -14,6 +14,7 @@ public partial class ReportsViewModel : ViewModelBase
     [ObservableProperty] private int _selectedYear;
     [ObservableProperty] private int _selectedMonth;
     [ObservableProperty] private int _selectedTabIndex;
+    [ObservableProperty] private string _currencyCode = "USD";
 
     [ObservableProperty] private ObservableCollection<MonthlySummaryReport> _monthlySummaries = [];
     [ObservableProperty] private ObservableCollection<IncomeBySourceItem> _incomeBySource = [];
@@ -40,6 +41,8 @@ public partial class ReportsViewModel : ViewModelBase
         IsBusy = true;
         try
         {
+            CurrencyCode = await _reportingService.GetDefaultCurrencyCodeAsync();
+
             MonthlySummaries = new ObservableCollection<MonthlySummaryReport>(
                 await _reportingService.GetMonthlySummariesAsync(SelectedYear));
 

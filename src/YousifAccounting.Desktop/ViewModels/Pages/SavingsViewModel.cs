@@ -10,6 +10,7 @@ namespace YousifAccounting.Desktop.ViewModels.Pages;
 public partial class SavingsViewModel : ViewModelBase
 {
     private readonly ISavingsService _service;
+    private readonly ICurrencyConversionService _conversionService;
 
     [ObservableProperty] private ObservableCollection<SavingGoalDto> _goals = [];
     [ObservableProperty] private SavingGoalDto? _selectedGoal;
@@ -28,8 +29,11 @@ public partial class SavingsViewModel : ViewModelBase
     // Entry editor
     [ObservableProperty] private bool _isEntryEditorOpen;
     [ObservableProperty] private decimal _editorEntryAmount;
+    [ObservableProperty] private string _editorEntryCurrency = "USD";
     [ObservableProperty] private DateTimeOffset _editorEntryDate = DateTimeOffset.Now;
     [ObservableProperty] private string _editorEntryNotes = string.Empty;
+    [ObservableProperty] private string _conversionPreview = string.Empty;
+    [ObservableProperty] private string _entryConversionPreview = string.Empty;
 
     // Validation
     public string? GoalNameError => GetFieldError("GoalName");
@@ -41,9 +45,10 @@ public partial class SavingsViewModel : ViewModelBase
 
     public string[] Currencies { get; } = ["USD", "EUR", "GBP", "IQD", "AED", "SAR", "TRY", "CAD", "AUD", "JPY"];
 
-    public SavingsViewModel(ISavingsService service)
+    public SavingsViewModel(ISavingsService service, ICurrencyConversionService conversionService)
     {
         _service = service;
+        _conversionService = conversionService;
         LoadCommand.ExecuteAsync(null);
     }
 
@@ -90,10 +95,40 @@ public partial class SavingsViewModel : ViewModelBase
         => SetFieldError("GoalName", string.IsNullOrWhiteSpace(value) ? "Name is required." : null);
 
     partial void OnEditorTargetAmountChanged(decimal value)
-        => SetFieldError("TargetAmount", value <= 0 ? "Target amount must be greater than zero." : null);
+    {
+        SetFieldError("TargetAmount", value <= 0 ? "Target amount must be greater than zero." : null);
+        _ = UpdateConversionPreviewAsync();
+    }
+
+    partial void OnEditorCurrencyChanged(string value) => _ = UpdateConversionPreviewAsync();
+
+    private async Task UpdateConversionPreviewAsync()
+    {
+        if (EditorTargetAmount <= 0) { ConversionPreview = string.Empty; return; }
+        var result = await _conversionService.ConvertToDefaultAsync(EditorTargetAmount, EditorCurrency);
+        if (result.IsSuccess && !string.Equals(EditorCurrency, result.Value!.TargetCurrencyCode, StringComparison.OrdinalIgnoreCase))
+            ConversionPreview = $"\u2248 {result.Value.ConvertedAmount:N2} {result.Value.TargetCurrencyCode} (rate: {result.Value.ExchangeRateUsed:N4})";
+        else
+            ConversionPreview = string.Empty;
+    }
 
     partial void OnEditorEntryAmountChanged(decimal value)
-        => SetFieldError("EntryAmount", value <= 0 ? "Amount must be greater than zero." : null);
+    {
+        SetFieldError("EntryAmount", value <= 0 ? "Amount must be greater than zero." : null);
+        _ = UpdateEntryConversionPreviewAsync();
+    }
+
+    partial void OnEditorEntryCurrencyChanged(string value) => _ = UpdateEntryConversionPreviewAsync();
+
+    private async Task UpdateEntryConversionPreviewAsync()
+    {
+        if (EditorEntryAmount <= 0) { EntryConversionPreview = string.Empty; return; }
+        var result = await _conversionService.ConvertToDefaultAsync(EditorEntryAmount, EditorEntryCurrency);
+        if (result.IsSuccess && !string.Equals(EditorEntryCurrency, result.Value!.TargetCurrencyCode, StringComparison.OrdinalIgnoreCase))
+            EntryConversionPreview = $"\u2248 {result.Value.ConvertedAmount:N2} {result.Value.TargetCurrencyCode} (rate: {result.Value.ExchangeRateUsed:N4})";
+        else
+            EntryConversionPreview = string.Empty;
+    }
 
     [RelayCommand]
     private void OpenCreateGoal()
@@ -170,7 +205,9 @@ public partial class SavingsViewModel : ViewModelBase
     private void OpenAddEntry()
     {
         if (SelectedGoal is null) return;
-        EditorEntryAmount = 0; EditorEntryDate = DateTimeOffset.Now; EditorEntryNotes = string.Empty;
+        EditorEntryAmount = 0; EditorEntryCurrency = SelectedGoal.CurrencyCode;
+        EditorEntryDate = DateTimeOffset.Now; EditorEntryNotes = string.Empty;
+        EntryConversionPreview = string.Empty;
         IsEntryEditorOpen = true; ClearError(); ClearAllFieldErrors();
     }
 
@@ -189,7 +226,7 @@ public partial class SavingsViewModel : ViewModelBase
             var r = await _service.AddEntryAsync(new SavingEntryCreateDto
             {
                 SavingGoalId = SelectedGoal.Id, Amount = EditorEntryAmount,
-                Date = EditorEntryDate.DateTime,
+                CurrencyCode = EditorEntryCurrency, Date = EditorEntryDate.DateTime,
                 Notes = string.IsNullOrWhiteSpace(EditorEntryNotes) ? null : EditorEntryNotes
             });
             if (!r.IsSuccess) { ErrorMessage = r.Error; return; }

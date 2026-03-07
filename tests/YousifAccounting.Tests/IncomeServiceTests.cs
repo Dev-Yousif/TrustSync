@@ -11,7 +11,7 @@ public class IncomeServiceTests
     private IncomeService CreateService(string? dbName = null)
     {
         var db = TestDbContextFactory.Create(dbName);
-        return new IncomeService(db, new NullAuditService());
+        return new IncomeService(db, new NullAuditService(), new NullCurrencyConversionService());
     }
 
     [Fact]
@@ -81,7 +81,7 @@ public class IncomeServiceTests
         var service = CreateService(dbName);
         var created = await service.CreateAsync(new IncomeCreateDto { Description = "Original", Amount = 100m });
 
-        var service2 = new IncomeService(TestDbContextFactory.Create(dbName), new NullAuditService());
+        var service2 = new IncomeService(TestDbContextFactory.Create(dbName), new NullAuditService(), new NullCurrencyConversionService());
         var result = await service2.UpdateAsync(new IncomeUpdateDto
         {
             Id = created.Value!.Id,
@@ -110,7 +110,7 @@ public class IncomeServiceTests
         var service = CreateService(dbName);
         var created = await service.CreateAsync(new IncomeCreateDto { Description = "ToDelete", Amount = 100m });
 
-        var service2 = new IncomeService(TestDbContextFactory.Create(dbName), new NullAuditService());
+        var service2 = new IncomeService(TestDbContextFactory.Create(dbName), new NullAuditService(), new NullCurrencyConversionService());
         var result = await service2.DeleteAsync(created.Value!.Id);
         result.IsSuccess.Should().BeTrue();
     }

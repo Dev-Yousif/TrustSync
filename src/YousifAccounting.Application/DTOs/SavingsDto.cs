@@ -34,6 +34,8 @@ public class SavingEntryDto
     public int Id { get; set; }
     public int SavingGoalId { get; set; }
     public decimal Amount { get; set; }
+    public decimal ConvertedAmount { get; set; }
+    public string ConvertedCurrencyCode { get; set; } = "USD";
     public DateTime Date { get; set; }
     public string? Notes { get; set; }
 }
@@ -42,6 +44,7 @@ public class SavingEntryCreateDto
 {
     public int SavingGoalId { get; set; }
     public decimal Amount { get; set; }
+    public string CurrencyCode { get; set; } = "USD";
     public DateTime Date { get; set; } = DateTime.Today;
     public string? Notes { get; set; }
 }

@@ -8,6 +8,9 @@ public sealed class SavingGoal : BaseEntity, ISoftDeletable
     public string? Description { get; set; }
     public decimal TargetAmount { get; set; }
     public string CurrencyCode { get; set; } = "USD";
+    public decimal ConvertedTargetAmount { get; set; }
+    public string ConvertedCurrencyCode { get; set; } = "USD";
+    public decimal ExchangeRateUsed { get; set; } = 1m;
     public DateTime? TargetDate { get; set; }
     public bool IsCompleted { get; set; }
     public bool IsDeleted { get; set; }

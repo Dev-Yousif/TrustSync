@@ -20,12 +20,12 @@ public class ReportingService : IReportingService
             var start = new DateTime(year, month, 1);
             var end = start.AddMonths(1);
 
-            var income = (decimal)await _db.Incomes.Where(i => i.Date >= start && i.Date < end).SumAsync(i => (double)i.Amount);
-            var expenses = (decimal)await _db.Expenses.Where(e => e.Date >= start && e.Date < end).SumAsync(e => (double)e.Amount);
+            var income = (decimal)await _db.Incomes.Where(i => i.Date >= start && i.Date < end).SumAsync(i => (double)i.ConvertedAmount);
+            var expenses = (decimal)await _db.Expenses.Where(e => e.Date >= start && e.Date < end).SumAsync(e => (double)e.ConvertedAmount);
             var deductions = (decimal)await _db.Deductions
                 .Where(d => d.IsActive && d.StartDate <= end && (d.EndDate == null || d.EndDate >= start))
-                .SumAsync(d => (double)d.Amount);
-            var savings = (decimal)await _db.SavingEntries.Where(s => s.Date >= start && s.Date < end).SumAsync(s => (double)s.Amount);
+                .SumAsync(d => (double)d.ConvertedAmount);
+            var savings = (decimal)await _db.SavingEntries.Where(s => s.Date >= start && s.Date < end).SumAsync(s => (double)s.ConvertedAmount);
 
             result.Add(new MonthlySummaryReport
             {
@@ -46,7 +46,7 @@ public class ReportingService : IReportingService
         var items = await _db.Incomes
             .Where(i => i.Date >= start && i.Date < end)
             .GroupBy(i => i.SourceType)
-            .Select(g => new IncomeBySourceItem { Source = g.Key.ToString(), Amount = (decimal)g.Sum(i => (double)i.Amount) })
+            .Select(g => new IncomeBySourceItem { Source = g.Key.ToString(), Amount = (decimal)g.Sum(i => (double)i.ConvertedAmount) })
             .OrderByDescending(x => x.Amount)
             .ToListAsync();
 
@@ -68,7 +68,7 @@ public class ReportingService : IReportingService
             .Select(g => new CategoryBreakdownItem
             {
                 Category = g.Key.Name, ColorHex = g.Key.ColorHex,
-                Amount = (decimal)g.Sum(e => (double)e.Amount)
+                Amount = (decimal)g.Sum(e => (double)e.ConvertedAmount)
             })
             .OrderByDescending(x => x.Amount)
             .ToListAsync();
@@ -90,14 +90,22 @@ public class ReportingService : IReportingService
                 CompanyName = p.CompanyClient != null ? p.CompanyClient.Name : null,
                 AgreedAmount = p.AgreedAmount,
                 ReceivedAmount = p.ReceivedAmount,
-                TotalExpenses = (decimal)p.Expenses.Sum(e => (double)e.Amount),
-                Profit = p.ReceivedAmount - (decimal)p.Expenses.Sum(e => (double)e.Amount),
+                TotalExpenses = (decimal)p.Expenses.Sum(e => (double)e.ConvertedAmount),
+                Profit = p.ReceivedAmount - (decimal)p.Expenses.Sum(e => (double)e.ConvertedAmount),
                 ProfitMargin = p.ReceivedAmount > 0
-                    ? (double)((p.ReceivedAmount - (decimal)p.Expenses.Sum(e => (double)e.Amount)) / p.ReceivedAmount * 100)
+                    ? (double)((p.ReceivedAmount - (decimal)p.Expenses.Sum(e => (double)e.ConvertedAmount)) / p.ReceivedAmount * 100)
                     : 0
             })
             .OrderByDescending(p => p.Profit)
             .ToListAsync();
+    }
+
+    public async Task<string> GetDefaultCurrencyCodeAsync()
+    {
+        return await _db.AppSettings
+            .Where(s => s.Key == "DefaultCurrency")
+            .Select(s => s.Value)
+            .FirstOrDefaultAsync() ?? "USD";
     }
 
     public async Task<string> ExportMonthlySummaryToCsvAsync(int year)

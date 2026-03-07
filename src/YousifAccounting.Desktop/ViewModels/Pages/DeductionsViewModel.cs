@@ -11,6 +11,7 @@ namespace YousifAccounting.Desktop.ViewModels.Pages;
 public partial class DeductionsViewModel : ViewModelBase
 {
     private readonly IDeductionService _service;
+    private readonly ICurrencyConversionService _conversionService;
 
     [ObservableProperty] private ObservableCollection<DeductionDto> _items = [];
     [ObservableProperty] private string _searchText = string.Empty;
@@ -29,6 +30,7 @@ public partial class DeductionsViewModel : ViewModelBase
     [ObservableProperty] private DateTimeOffset? _editorEndDate;
     [ObservableProperty] private bool _editorIsActive = true;
     [ObservableProperty] private string _editorNotes = string.Empty;
+    [ObservableProperty] private string _conversionPreview = string.Empty;
 
     // Validation
     public string? TitleError => GetFieldError("Title");
@@ -40,9 +42,10 @@ public partial class DeductionsViewModel : ViewModelBase
     public RecurrenceType[] RecurrenceTypes { get; } = Enum.GetValues<RecurrenceType>();
     public string[] Currencies { get; } = ["USD", "EUR", "GBP", "IQD", "AED", "SAR", "TRY", "CAD", "AUD", "JPY"];
 
-    public DeductionsViewModel(IDeductionService service)
+    public DeductionsViewModel(IDeductionService service, ICurrencyConversionService conversionService)
     {
         _service = service;
+        _conversionService = conversionService;
         LoadCommand.ExecuteAsync(null);
     }
 
@@ -66,7 +69,22 @@ public partial class DeductionsViewModel : ViewModelBase
         => SetFieldError("Title", string.IsNullOrWhiteSpace(value) ? "Title is required." : null);
 
     partial void OnEditorAmountChanged(decimal value)
-        => SetFieldError("Amount", value <= 0 ? "Amount must be greater than zero." : null);
+    {
+        SetFieldError("Amount", value <= 0 ? "Amount must be greater than zero." : null);
+        _ = UpdateConversionPreviewAsync();
+    }
+
+    partial void OnEditorCurrencyChanged(string value) => _ = UpdateConversionPreviewAsync();
+
+    private async Task UpdateConversionPreviewAsync()
+    {
+        if (EditorAmount <= 0) { ConversionPreview = string.Empty; return; }
+        var result = await _conversionService.ConvertToDefaultAsync(EditorAmount, EditorCurrency);
+        if (result.IsSuccess && !string.Equals(EditorCurrency, result.Value!.TargetCurrencyCode, StringComparison.OrdinalIgnoreCase))
+            ConversionPreview = $"\u2248 {result.Value.ConvertedAmount:N2} {result.Value.TargetCurrencyCode} (rate: {result.Value.ExchangeRateUsed:N4})";
+        else
+            ConversionPreview = string.Empty;
+    }
 
     [RelayCommand]
     private void OpenCreate()

@@ -19,6 +19,9 @@ public sealed class IncomeConfiguration : IEntityTypeConfiguration<Income>
         builder.Property(i => i.PaymentStatus).HasConversion<string>().HasMaxLength(50);
         builder.Property(i => i.RecurrenceType).HasConversion<string>().HasMaxLength(50);
         builder.Property(i => i.Notes).HasMaxLength(2000);
+        builder.Property(i => i.ConvertedAmount).HasColumnType("decimal(18,2)");
+        builder.Property(i => i.ConvertedCurrencyCode).IsRequired().HasMaxLength(3).HasDefaultValue("USD");
+        builder.Property(i => i.ExchangeRateUsed).HasColumnType("decimal(18,6)").HasDefaultValue(1m);
 
         builder.HasIndex(i => i.Date);
         builder.HasIndex(i => new { i.IsDeleted, i.Date });

@@ -10,7 +10,7 @@ public class SavingsServiceTests
     private SavingsService CreateService(string? dbName = null)
     {
         var db = TestDbContextFactory.Create(dbName);
-        return new SavingsService(db, new NullAuditService());
+        return new SavingsService(db, new NullAuditService(), new NullCurrencyConversionService());
     }
 
     [Fact]
@@ -68,7 +68,7 @@ public class SavingsServiceTests
         var service = CreateService(dbName);
         var created = await service.CreateGoalAsync(new SavingGoalCreateDto { Name = "Original", TargetAmount = 1000m });
 
-        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService());
+        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService(), new NullCurrencyConversionService());
         var result = await service2.UpdateGoalAsync(new SavingGoalUpdateDto
         {
             Id = created.Value!.Id,
@@ -88,7 +88,7 @@ public class SavingsServiceTests
         var service = CreateService(dbName);
         var created = await service.CreateGoalAsync(new SavingGoalCreateDto { Name = "ToDelete", TargetAmount = 500m });
 
-        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService());
+        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService(), new NullCurrencyConversionService());
         var result = await service2.DeleteGoalAsync(created.Value!.Id);
         result.IsSuccess.Should().BeTrue();
     }
@@ -100,7 +100,7 @@ public class SavingsServiceTests
         var service = CreateService(dbName);
         var goal = await service.CreateGoalAsync(new SavingGoalCreateDto { Name = "Fund", TargetAmount = 1000m });
 
-        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService());
+        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService(), new NullCurrencyConversionService());
         var result = await service2.AddEntryAsync(new SavingEntryCreateDto
         {
             SavingGoalId = goal.Value!.Id,
@@ -132,7 +132,7 @@ public class SavingsServiceTests
             SavingGoalId = goal.Value!.Id, Amount = 100m, Date = DateTime.Today
         });
 
-        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService());
+        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService(), new NullCurrencyConversionService());
         var entries = await service2.GetEntriesAsync(goal.Value!.Id);
         entries.Should().HaveCount(1);
         entries[0].Amount.Should().Be(100m);
@@ -149,7 +149,7 @@ public class SavingsServiceTests
             SavingGoalId = goal.Value!.Id, Amount = 100m, Date = DateTime.Today
         });
 
-        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService());
+        var service2 = new SavingsService(TestDbContextFactory.Create(dbName), new NullAuditService(), new NullCurrencyConversionService());
         var result = await service2.DeleteEntryAsync(entry.Value!.Id);
         result.IsSuccess.Should().BeTrue();
     }

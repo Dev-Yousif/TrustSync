@@ -12,7 +12,8 @@ public class SavingsService : ISavingsService
 {
     private readonly AppDbContext _db;
     private readonly IAuditService _audit;
-    public SavingsService(AppDbContext db, IAuditService audit) { _db = db; _audit = audit; }
+    private readonly ICurrencyConversionService _conversion;
+    public SavingsService(AppDbContext db, IAuditService audit, ICurrencyConversionService conversion) { _db = db; _audit = audit; _conversion = conversion; }
 
     public async Task<IReadOnlyList<SavingGoalDto>> GetAllGoalsAsync()
     {
@@ -22,12 +23,12 @@ public class SavingsService : ISavingsService
             .Select(g => new SavingGoalDto
             {
                 Id = g.Id, Name = g.Name, Description = g.Description,
-                TargetAmount = g.TargetAmount,
-                SavedAmount = (decimal)g.Entries.Sum(e => (double)e.Amount),
-                ProgressPercentage = g.TargetAmount > 0
-                    ? g.Entries.Sum(e => (double)e.Amount) / (double)g.TargetAmount * 100
+                TargetAmount = g.ConvertedTargetAmount,
+                SavedAmount = (decimal)g.Entries.Sum(e => (double)e.ConvertedAmount),
+                ProgressPercentage = g.ConvertedTargetAmount > 0
+                    ? g.Entries.Sum(e => (double)e.ConvertedAmount) / (double)g.ConvertedTargetAmount * 100
                     : 0,
-                CurrencyCode = g.CurrencyCode,
+                CurrencyCode = g.ConvertedCurrencyCode,
                 TargetDate = g.TargetDate,
                 IsCompleted = g.IsCompleted,
                 CreatedAt = g.CreatedAt
@@ -45,6 +46,20 @@ public class SavingsService : ISavingsService
             TargetAmount = dto.TargetAmount, CurrencyCode = dto.CurrencyCode,
             TargetDate = dto.TargetDate
         };
+        var conv = await _conversion.ConvertToDefaultAsync(entity.TargetAmount, entity.CurrencyCode);
+        if (conv.IsSuccess)
+        {
+            entity.ConvertedTargetAmount = conv.Value!.ConvertedAmount;
+            entity.ConvertedCurrencyCode = conv.Value.TargetCurrencyCode;
+            entity.ExchangeRateUsed = conv.Value.ExchangeRateUsed;
+        }
+        else
+        {
+            entity.ConvertedTargetAmount = entity.TargetAmount;
+            entity.ConvertedCurrencyCode = entity.CurrencyCode;
+            entity.ExchangeRateUsed = 1m;
+        }
+
         _db.SavingGoals.Add(entity);
         await _db.SaveChangesAsync();
         await _audit.LogAsync(AuditAction.Create, "SavingGoal", entity.Id, entity.Name);
@@ -60,6 +75,21 @@ public class SavingsService : ISavingsService
         entity.Name = dto.Name.Trim(); entity.Description = dto.Description?.Trim();
         entity.TargetAmount = dto.TargetAmount; entity.CurrencyCode = dto.CurrencyCode;
         entity.TargetDate = dto.TargetDate; entity.IsCompleted = dto.IsCompleted;
+
+        var conv = await _conversion.ConvertToDefaultAsync(entity.TargetAmount, entity.CurrencyCode);
+        if (conv.IsSuccess)
+        {
+            entity.ConvertedTargetAmount = conv.Value!.ConvertedAmount;
+            entity.ConvertedCurrencyCode = conv.Value.TargetCurrencyCode;
+            entity.ExchangeRateUsed = conv.Value.ExchangeRateUsed;
+        }
+        else
+        {
+            entity.ConvertedTargetAmount = entity.TargetAmount;
+            entity.ConvertedCurrencyCode = entity.CurrencyCode;
+            entity.ExchangeRateUsed = 1m;
+        }
+
         await _db.SaveChangesAsync();
         var items = await GetAllGoalsAsync();
         return Result<SavingGoalDto>.Success(items.First(g => g.Id == entity.Id));
@@ -67,8 +97,11 @@ public class SavingsService : ISavingsService
 
     public async Task<Result> DeleteGoalAsync(int id)
     {
-        var entity = await _db.SavingGoals.FindAsync(id);
+        var entity = await _db.SavingGoals.Include(g => g.Entries).FirstOrDefaultAsync(g => g.Id == id);
         if (entity is null) return Result.Failure("Goal not found.");
+        // Soft-delete all entries so they don't remain as orphans in dashboard
+        foreach (var entry in entity.Entries)
+            _db.SavingEntries.Remove(entry);
         _db.SavingGoals.Remove(entity);
         await _db.SaveChangesAsync();
         await _audit.LogAsync(AuditAction.Delete, "SavingGoal", id, entity.Name);
@@ -83,7 +116,9 @@ public class SavingsService : ISavingsService
             .Select(e => new SavingEntryDto
             {
                 Id = e.Id, SavingGoalId = e.SavingGoalId,
-                Amount = e.Amount, Date = e.Date, Notes = e.Notes
+                Amount = e.Amount, ConvertedAmount = e.ConvertedAmount,
+                ConvertedCurrencyCode = e.ConvertedCurrencyCode,
+                Date = e.Date, Notes = e.Notes
             }).ToListAsync();
     }
 
@@ -96,6 +131,20 @@ public class SavingsService : ISavingsService
             SavingGoalId = dto.SavingGoalId, Amount = dto.Amount,
             Date = dto.Date, Notes = dto.Notes?.Trim()
         };
+        var conv = await _conversion.ConvertToDefaultAsync(entity.Amount, dto.CurrencyCode);
+        if (conv.IsSuccess)
+        {
+            entity.ConvertedAmount = conv.Value!.ConvertedAmount;
+            entity.ConvertedCurrencyCode = conv.Value.TargetCurrencyCode;
+            entity.ExchangeRateUsed = conv.Value.ExchangeRateUsed;
+        }
+        else
+        {
+            entity.ConvertedAmount = entity.Amount;
+            entity.ConvertedCurrencyCode = dto.CurrencyCode;
+            entity.ExchangeRateUsed = 1m;
+        }
+
         _db.SavingEntries.Add(entity);
         await _db.SaveChangesAsync();
         return Result<SavingEntryDto>.Success(new SavingEntryDto

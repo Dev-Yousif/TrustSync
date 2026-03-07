@@ -41,6 +41,30 @@
         </StackPanel>
       </Border>
 
+      <!-- Exchange Rates Card -->
+      <Border Background="White" CornerRadius="14" Padding="24,20"
+              BoxShadow="0 1 4 0 #00000008">
+        <StackPanel Spacing="16">
+          <TextBlock Text="Exchange Rates" FontSize="16" FontWeight="SemiBold" Foreground="#111827"/>
+
+          <Grid ColumnDefinitions="*,Auto">
+            <StackPanel Spacing="4">
+              <TextBlock Text="Last Updated" FontSize="14" Foreground="#374151"/>
+              <TextBlock Text="{Binding LastRateRefresh}" FontSize="13" Foreground="#6B7280"/>
+            </StackPanel>
+            <Button Grid.Column="1" Command="{Binding RefreshRatesCommand}"
+                    IsEnabled="{Binding !IsRefreshingRates}"
+                    Background="#202020" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold"
+                    CornerRadius="8" Padding="18,9" Cursor="Hand" BorderThickness="0" VerticalAlignment="Center">
+              <TextBlock Text="Refresh Rates"/>
+            </Button>
+          </Grid>
+
+          <TextBlock Text="Rates are fetched from Open ExchangeRate API (free, no key needed). They auto-refresh every 24 hours when you add a transaction."
+                     FontSize="12" Foreground="#9CA3AF" TextWrapping="Wrap"/>
+        </StackPanel>
+      </Border>
+
       <!-- Change Password Card -->
       <Border Background="White" CornerRadius="14" Padding="24,20"
               BoxShadow="0 1 4 0 #00000008">

@@ -13,6 +13,7 @@ public partial class ExpensesViewModel : ViewModelBase
     private readonly IExpenseService _expenseService;
     private readonly ICompanyClientService _companyService;
     private readonly IProjectService _projectService;
+    private readonly ICurrencyConversionService _conversionService;
     private List<ExpenseDto> _allItems = [];
 
     [ObservableProperty] private ObservableCollection<ExpenseDto> _items = [];
@@ -36,6 +37,7 @@ public partial class ExpensesViewModel : ViewModelBase
     [ObservableProperty] private bool _editorIsRecurring;
     [ObservableProperty] private RecurrenceType _editorRecurrenceType;
     [ObservableProperty] private string _editorNotes = string.Empty;
+    [ObservableProperty] private string _conversionPreview = string.Empty;
 
     // Validation
     public string? DescriptionError => GetFieldError("Description");
@@ -49,11 +51,12 @@ public partial class ExpensesViewModel : ViewModelBase
     public RecurrenceType[] RecurrenceTypes { get; } = Enum.GetValues<RecurrenceType>();
     public string[] Currencies { get; } = ["USD", "EUR", "GBP", "IQD", "AED", "SAR", "TRY", "CAD", "AUD", "JPY"];
 
-    public ExpensesViewModel(IExpenseService expenseService, ICompanyClientService companyService, IProjectService projectService)
+    public ExpensesViewModel(IExpenseService expenseService, ICompanyClientService companyService, IProjectService projectService, ICurrencyConversionService conversionService)
     {
         _expenseService = expenseService;
         _companyService = companyService;
         _projectService = projectService;
+        _conversionService = conversionService;
         LoadCommand.ExecuteAsync(null);
     }
 
@@ -85,7 +88,22 @@ public partial class ExpensesViewModel : ViewModelBase
         => SetFieldError("Description", string.IsNullOrWhiteSpace(value) ? "Description is required." : null);
 
     partial void OnEditorAmountChanged(decimal value)
-        => SetFieldError("Amount", value <= 0 ? "Amount must be greater than zero." : null);
+    {
+        SetFieldError("Amount", value <= 0 ? "Amount must be greater than zero." : null);
+        _ = UpdateConversionPreviewAsync();
+    }
+
+    partial void OnEditorCurrencyChanged(string value) => _ = UpdateConversionPreviewAsync();
+
+    private async Task UpdateConversionPreviewAsync()
+    {
+        if (EditorAmount <= 0) { ConversionPreview = string.Empty; return; }
+        var result = await _conversionService.ConvertToDefaultAsync(EditorAmount, EditorCurrency);
+        if (result.IsSuccess && !string.Equals(EditorCurrency, result.Value!.TargetCurrencyCode, StringComparison.OrdinalIgnoreCase))
+            ConversionPreview = $"\u2248 {result.Value.ConvertedAmount:N2} {result.Value.TargetCurrencyCode} (rate: {result.Value.ExchangeRateUsed:N4})";
+        else
+            ConversionPreview = string.Empty;
+    }
 
     partial void OnEditorCategoryChanged(ExpenseCategoryDto? value)
         => SetFieldError("Category", value is null ? "Category is required." : null);

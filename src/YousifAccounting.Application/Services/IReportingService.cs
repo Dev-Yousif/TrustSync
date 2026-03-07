@@ -9,4 +9,5 @@ public interface IReportingService
     Task<IReadOnlyList<CategoryBreakdownItem>> GetExpenseByCategoryAsync(int year, int month);
     Task<IReadOnlyList<ProjectProfitabilityItem>> GetProjectProfitabilityAsync();
     Task<string> ExportMonthlySummaryToCsvAsync(int year);
+    Task<string> GetDefaultCurrencyCodeAsync();
 }

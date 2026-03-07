@@ -11,7 +11,7 @@ public class DeductionServiceTests
     private DeductionService CreateService(string? dbName = null)
     {
         var db = TestDbContextFactory.Create(dbName);
-        return new DeductionService(db, new NullAuditService());
+        return new DeductionService(db, new NullAuditService(), new NullCurrencyConversionService());
     }
 
     [Fact]
@@ -72,7 +72,7 @@ public class DeductionServiceTests
         var service = CreateService(dbName);
         var created = await service.CreateAsync(new DeductionCreateDto { Title = "Original", Amount = 100m });
 
-        var service2 = new DeductionService(TestDbContextFactory.Create(dbName), new NullAuditService());
+        var service2 = new DeductionService(TestDbContextFactory.Create(dbName), new NullAuditService(), new NullCurrencyConversionService());
         var result = await service2.UpdateAsync(new DeductionUpdateDto
         {
             Id = created.Value!.Id,
@@ -91,7 +91,7 @@ public class DeductionServiceTests
         var service = CreateService(dbName);
         var created = await service.CreateAsync(new DeductionCreateDto { Title = "ToDelete", Amount = 50m });
 
-        var service2 = new DeductionService(TestDbContextFactory.Create(dbName), new NullAuditService());
+        var service2 = new DeductionService(TestDbContextFactory.Create(dbName), new NullAuditService(), new NullCurrencyConversionService());
         var result = await service2.DeleteAsync(created.Value!.Id);
         result.IsSuccess.Should().BeTrue();
     }

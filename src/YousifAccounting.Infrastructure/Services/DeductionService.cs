@@ -12,7 +12,8 @@ public class DeductionService : IDeductionService
 {
     private readonly AppDbContext _db;
     private readonly IAuditService _audit;
-    public DeductionService(AppDbContext db, IAuditService audit) { _db = db; _audit = audit; }
+    private readonly ICurrencyConversionService _conversion;
+    public DeductionService(AppDbContext db, IAuditService audit, ICurrencyConversionService conversion) { _db = db; _audit = audit; _conversion = conversion; }
 
     public async Task<IReadOnlyList<DeductionDto>> GetAllAsync()
     {
@@ -41,6 +42,20 @@ public class DeductionService : IDeductionService
             StartDate = dto.StartDate, EndDate = dto.EndDate,
             IsActive = dto.IsActive, Notes = dto.Notes?.Trim()
         };
+        var conv = await _conversion.ConvertToDefaultAsync(entity.Amount, entity.CurrencyCode);
+        if (conv.IsSuccess)
+        {
+            entity.ConvertedAmount = conv.Value!.ConvertedAmount;
+            entity.ConvertedCurrencyCode = conv.Value.TargetCurrencyCode;
+            entity.ExchangeRateUsed = conv.Value.ExchangeRateUsed;
+        }
+        else
+        {
+            entity.ConvertedAmount = entity.Amount;
+            entity.ConvertedCurrencyCode = entity.CurrencyCode;
+            entity.ExchangeRateUsed = 1m;
+        }
+
         _db.Deductions.Add(entity);
         await _db.SaveChangesAsync();
         await _audit.LogAsync(AuditAction.Create, "Deduction", entity.Id, $"{entity.Title} ({entity.Amount:N2})");
@@ -59,6 +74,21 @@ public class DeductionService : IDeductionService
         entity.Type = dto.Type; entity.RecurrenceType = dto.RecurrenceType;
         entity.StartDate = dto.StartDate; entity.EndDate = dto.EndDate;
         entity.IsActive = dto.IsActive; entity.Notes = dto.Notes?.Trim();
+
+        var conv = await _conversion.ConvertToDefaultAsync(entity.Amount, entity.CurrencyCode);
+        if (conv.IsSuccess)
+        {
+            entity.ConvertedAmount = conv.Value!.ConvertedAmount;
+            entity.ConvertedCurrencyCode = conv.Value.TargetCurrencyCode;
+            entity.ExchangeRateUsed = conv.Value.ExchangeRateUsed;
+        }
+        else
+        {
+            entity.ConvertedAmount = entity.Amount;
+            entity.ConvertedCurrencyCode = entity.CurrencyCode;
+            entity.ExchangeRateUsed = 1m;
+        }
+
         await _db.SaveChangesAsync();
         var items = await GetAllAsync();
         return Result<DeductionDto>.Success(items.First(d => d.Id == entity.Id));

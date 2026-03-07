@@ -20,6 +20,7 @@ public sealed class AppDbContext : DbContext
     public DbSet<AppSetting> AppSettings => Set<AppSetting>();
     public DbSet<BackupRecord> BackupRecords => Set<BackupRecord>();
     public DbSet<AuditEntry> AuditEntries => Set<AuditEntry>();
+    public DbSet<ExchangeRate> ExchangeRates => Set<ExchangeRate>();
     public DbSet<Tag> Tags => Set<Tag>();
     public DbSet<ProjectTag> ProjectTags => Set<ProjectTag>();
 

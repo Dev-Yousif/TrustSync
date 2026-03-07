@@ -34,6 +34,8 @@ public static class DependencyInjection
         services.AddTransient<IReportingService, ReportingService>();
         services.AddTransient<IBackupService, BackupService>();
         services.AddTransient<IAuditService, AuditService>();
+        services.AddHttpClient();
+        services.AddTransient<ICurrencyConversionService, CurrencyConversionService>();
 
         return services;
     }
