@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>YousifAccounting.Infrastructure</RootNamespace>
+    <AssemblyName>YousifAccounting.Infrastructure</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.*" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlcipher" Version="2.1.*" />
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.*" />
+    <PackageReference Include="Serilog" Version="3.1.*" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.*" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YousifAccounting.Application\YousifAccounting.Application.csproj" />
+    <ProjectReference Include="..\YousifAccounting.Domain\YousifAccounting.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

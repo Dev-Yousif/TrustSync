@@ -1,0 +1,65 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!-- Background -->
+  <Color x:Key="BackgroundPrimary">#FFFFFF</Color>
+  <Color x:Key="BackgroundSecondary">#F9FAFB</Color>
+  <Color x:Key="BackgroundElevated">#FFFFFF</Color>
+  <Color x:Key="BackgroundHover">#F3F4F6</Color>
+  <Color x:Key="BackgroundInput">#FFFFFF</Color>
+  <Color x:Key="BackgroundSelected">#F5F5F5</Color>
+
+  <!-- Text -->
+  <Color x:Key="TextPrimary">#111827</Color>
+  <Color x:Key="TextSecondary">#374151</Color>
+  <Color x:Key="TextMuted">#6B7280</Color>
+
+  <!-- Accent -->
+  <Color x:Key="AccentPrimary">#202020</Color>
+  <Color x:Key="AccentPrimaryHover">#303030</Color>
+
+  <!-- Semantic -->
+  <Color x:Key="Success">#059669</Color>
+  <Color x:Key="Warning">#D97706</Color>
+  <Color x:Key="Error">#DC2626</Color>
+
+  <!-- Semantic Tints -->
+  <Color x:Key="SuccessTint">#F0FDF4</Color>
+  <Color x:Key="WarningTint">#FFFBEB</Color>
+  <Color x:Key="ErrorTint">#FEF2F2</Color>
+  <Color x:Key="AccentTint">#F5F5F5</Color>
+
+  <!-- Border -->
+  <Color x:Key="BorderDefault">#E5E7EB</Color>
+  <Color x:Key="BorderHover">#D1D5DB</Color>
+
+  <!-- Sidebar -->
+  <Color x:Key="SidebarBackground">#FFFFFF</Color>
+  <Color x:Key="SidebarBorder">#E5E7EB</Color>
+
+  <!-- Brushes -->
+  <SolidColorBrush x:Key="BackgroundPrimaryBrush" Color="{StaticResource BackgroundPrimary}"/>
+  <SolidColorBrush x:Key="BackgroundSecondaryBrush" Color="{StaticResource BackgroundSecondary}"/>
+  <SolidColorBrush x:Key="BackgroundElevatedBrush" Color="{StaticResource BackgroundElevated}"/>
+  <SolidColorBrush x:Key="BackgroundHoverBrush" Color="{StaticResource BackgroundHover}"/>
+  <SolidColorBrush x:Key="BackgroundInputBrush" Color="{StaticResource BackgroundInput}"/>
+  <SolidColorBrush x:Key="BackgroundSelectedBrush" Color="{StaticResource BackgroundSelected}"/>
+
+  <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
+  <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}"/>
+  <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}"/>
+
+  <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource AccentPrimary}"/>
+  <SolidColorBrush x:Key="AccentPrimaryHoverBrush" Color="{StaticResource AccentPrimaryHover}"/>
+
+  <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}"/>
+  <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource Warning}"/>
+  <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}"/>
+
+  <SolidColorBrush x:Key="BorderDefaultBrush" Color="{StaticResource BorderDefault}"/>
+  <SolidColorBrush x:Key="BorderHoverBrush" Color="{StaticResource BorderHover}"/>
+
+  <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource SidebarBackground}"/>
+  <SolidColorBrush x:Key="SidebarBorderBrush" Color="{StaticResource SidebarBorder}"/>
+
+</ResourceDictionary>

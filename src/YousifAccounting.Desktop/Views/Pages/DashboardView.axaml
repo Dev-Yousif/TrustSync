@@ -1,0 +1,314 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:YousifAccounting.Desktop.ViewModels.Pages"
+             x:Class="YousifAccounting.Desktop.Views.Pages.DashboardView"
+             x:DataType="vm:DashboardViewModel">
+
+  <Panel>
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="16">
+
+      <!-- ROW 1: Main Financial KPIs — 4 equal cards -->
+      <Grid ColumnDefinitions="*,*,*,*">
+
+        <!-- Income Card -->
+        <Border Grid.Column="0" Background="White" CornerRadius="14" Padding="22,20"
+                Margin="0,0,8,0" BoxShadow="0 1 4 0 #00000008">
+          <Grid RowDefinitions="Auto,Auto,Auto">
+            <Grid.ColumnDefinitions>*,Auto</Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Text="Income" FontSize="13" FontWeight="Medium" Foreground="#6B7280"/>
+            <Border Grid.Row="0" Grid.Column="1" Width="32" Height="32" CornerRadius="8"
+                    Background="#F5F5F5" HorizontalAlignment="Right">
+              <Path Data="{StaticResource IconIncome}" Stroke="#202020" StrokeThickness="2"
+                    Width="16" Height="16" Stretch="Uniform"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                       Text="{Binding Summary.MonthlyIncome, StringFormat={}{0:N2}}"
+                       FontSize="28" FontWeight="Bold" Foreground="#111827" Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="2"
+                       Text="{Binding Summary.CurrencyCode, StringFormat={}This month · {0}}"
+                       FontSize="11" Foreground="#9CA3AF" Margin="0,4,0,0"/>
+          </Grid>
+        </Border>
+
+        <!-- Expenses Card -->
+        <Border Grid.Column="1" Background="White" CornerRadius="14" Padding="22,20"
+                Margin="4,0" BoxShadow="0 1 4 0 #00000008">
+          <Grid RowDefinitions="Auto,Auto,Auto">
+            <Grid.ColumnDefinitions>*,Auto</Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Text="Expenses" FontSize="13" FontWeight="Medium" Foreground="#6B7280"/>
+            <Border Grid.Row="0" Grid.Column="1" Width="32" Height="32" CornerRadius="8"
+                    Background="#F5F5F5" HorizontalAlignment="Right">
+              <Path Data="{StaticResource IconExpense}" Stroke="#202020" StrokeThickness="2"
+                    Width="16" Height="16" Stretch="Uniform"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                       Text="{Binding Summary.MonthlyExpenses, StringFormat={}{0:N2}}"
+                       FontSize="28" FontWeight="Bold" Foreground="#111827" Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="2"
+                       Text="{Binding Summary.CurrencyCode, StringFormat={}This month · {0}}"
+                       FontSize="11" Foreground="#9CA3AF" Margin="0,4,0,0"/>
+          </Grid>
+        </Border>
+
+        <!-- Net Balance Card (normal) -->
+        <Border Grid.Column="2" Background="White" CornerRadius="14" Padding="22,20"
+                Margin="4,0" BoxShadow="0 1 4 0 #00000008">
+          <Grid RowDefinitions="Auto,Auto,Auto">
+            <Grid.ColumnDefinitions>*,Auto</Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Text="Net Balance" FontSize="13" FontWeight="Medium" Foreground="#6B7280"/>
+            <Border Grid.Row="0" Grid.Column="1" Width="32" Height="32" CornerRadius="8"
+                    Background="#F5F5F5" HorizontalAlignment="Right">
+              <Path Data="{StaticResource IconReports}" Stroke="#202020" StrokeThickness="2"
+                    Width="16" Height="16" Stretch="Uniform"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                       Text="{Binding Summary.NetBalance, StringFormat={}{0:N2}}"
+                       FontSize="28" FontWeight="Bold" Foreground="#111827" Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="2"
+                       Text="{Binding Summary.CurrencyCode, StringFormat={}After deductions · {0}}"
+                       FontSize="11" Foreground="#9CA3AF" Margin="0,4,0,0"/>
+          </Grid>
+        </Border>
+
+        <!-- Savings Card (highlighted) -->
+        <Border Grid.Column="3" CornerRadius="14" Padding="22,20"
+                Margin="8,0,0,0" BoxShadow="0 4 12 0 #20202020">
+          <Border.Background>
+            <LinearGradientBrush StartPoint="0%,0%" EndPoint="100%,100%">
+              <GradientStop Color="#202020" Offset="0"/>
+              <GradientStop Color="#303030" Offset="1"/>
+            </LinearGradientBrush>
+          </Border.Background>
+          <Grid RowDefinitions="Auto,Auto,Auto">
+            <TextBlock Grid.Row="0" Text="Savings" FontSize="13" FontWeight="Medium" Foreground="#D1D5DB"/>
+            <TextBlock Grid.Row="1"
+                       Text="{Binding Summary.MonthlySavings, StringFormat={}{0:N2}}"
+                       FontSize="28" FontWeight="Bold" Foreground="White" Margin="0,10,0,0"/>
+            <TextBlock Grid.Row="2"
+                       Text="{Binding Summary.CurrencyCode, StringFormat={}Total saved · {0}}"
+                       FontSize="11" Foreground="#9CA3AF" Margin="0,4,0,0"/>
+          </Grid>
+        </Border>
+
+      </Grid>
+
+      <!-- ROW 2: Quick Stats Bar — 3 mini stats in one card -->
+      <Border Background="White" CornerRadius="14" Padding="0"
+              BoxShadow="0 1 4 0 #00000008">
+        <Grid ColumnDefinitions="*,Auto,*,Auto,*">
+          <!-- Deductions -->
+          <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14"
+                      HorizontalAlignment="Center" Margin="24,16">
+            <Border Width="40" Height="40" CornerRadius="10" Background="#FFFBEB">
+              <Path Data="{StaticResource IconDeductions}" Stroke="#D97706" StrokeThickness="1.8"
+                    Width="18" Height="18" Stretch="Uniform"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel VerticalAlignment="Center" Spacing="0">
+              <TextBlock Text="{Binding Summary.MonthlyDeductions, StringFormat={}{0:N2}}"
+                         FontSize="18" FontWeight="Bold" Foreground="#111827"/>
+              <TextBlock Text="Deductions" FontSize="11" Foreground="#9CA3AF"/>
+            </StackPanel>
+          </StackPanel>
+
+          <Border Grid.Column="1" Width="1" Background="#F3F4F6" Margin="0,12"/>
+
+          <!-- Active Projects -->
+          <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="14"
+                      HorizontalAlignment="Center" Margin="24,16">
+            <Border Width="40" Height="40" CornerRadius="10" Background="#F5F5F5">
+              <Path Data="{StaticResource IconProjects}" Stroke="#202020" StrokeThickness="1.8"
+                    Width="18" Height="18" Stretch="Uniform"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel VerticalAlignment="Center" Spacing="0">
+              <TextBlock Text="{Binding Summary.ActiveProjects}"
+                         FontSize="18" FontWeight="Bold" Foreground="#111827"/>
+              <TextBlock Text="Active Projects" FontSize="11" Foreground="#9CA3AF"/>
+            </StackPanel>
+          </StackPanel>
+
+          <Border Grid.Column="3" Width="1" Background="#F3F4F6" Margin="0,12"/>
+
+          <!-- Companies -->
+          <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="14"
+                      HorizontalAlignment="Center" Margin="24,16">
+            <Border Width="40" Height="40" CornerRadius="10" Background="#F5F5F5">
+              <Path Data="{StaticResource IconCompanies}" Stroke="#202020" StrokeThickness="1.8"
+                    Width="18" Height="18" Stretch="Uniform"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <StackPanel VerticalAlignment="Center" Spacing="0">
+              <TextBlock Text="{Binding Summary.CompaniesCount}"
+                         FontSize="18" FontWeight="Bold" Foreground="#111827"/>
+              <TextBlock Text="Companies" FontSize="11" Foreground="#9CA3AF"/>
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <!-- ROW 3: Recent Transactions + Expenses by Category -->
+      <Grid ColumnDefinitions="3*,2*">
+
+        <!-- Recent Transactions -->
+        <Border Grid.Column="0" Background="White" CornerRadius="14" Padding="24,20"
+                Margin="0,0,8,0" BoxShadow="0 1 4 0 #00000008">
+          <StackPanel Spacing="16">
+            <Grid ColumnDefinitions="*,Auto">
+              <TextBlock Text="Recent Transactions" FontSize="16" FontWeight="SemiBold"
+                         Foreground="#111827"/>
+              <Border Grid.Column="1" Background="#F9FAFB" CornerRadius="6" Padding="10,4">
+                <TextBlock Text="This month" FontSize="11" Foreground="#6B7280" FontWeight="Medium"/>
+              </Border>
+            </Grid>
+
+            <ItemsControl ItemsSource="{Binding RecentTransactions}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border Padding="0,10" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                      <!-- Type indicator -->
+                      <Border Grid.Column="0" Width="36" Height="36" CornerRadius="10"
+                              Background="#F5F5F5" Margin="0,0,14,0" VerticalAlignment="Center">
+                        <Path Data="{StaticResource IconIncome}" Stroke="#202020" StrokeThickness="1.8"
+                              Width="16" Height="16" Stretch="Uniform"
+                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                      </Border>
+                      <!-- Details -->
+                      <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Description}"
+                                   FontSize="13" FontWeight="SemiBold" Foreground="#111827"/>
+                        <TextBlock FontSize="11" Foreground="#9CA3AF">
+                          <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} · {1:MMM dd}">
+                              <Binding Path="CategoryOrSource"/>
+                              <Binding Path="Date"/>
+                            </MultiBinding>
+                          </TextBlock.Text>
+                        </TextBlock>
+                      </StackPanel>
+                      <!-- Amount -->
+                      <TextBlock Grid.Column="2"
+                                 Text="{Binding Amount, StringFormat={}{0:N2}}"
+                                 FontSize="14" FontWeight="Bold"
+                                 VerticalAlignment="Center">
+                        <TextBlock.Foreground>
+                          <MultiBinding>
+                            <Binding Path="IsIncome"/>
+                          </MultiBinding>
+                        </TextBlock.Foreground>
+                      </TextBlock>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <TextBlock Text="No transactions yet. Start by adding income or expenses."
+                       IsVisible="{Binding !RecentTransactions.Count}"
+                       FontSize="13" Foreground="#9CA3AF" Margin="0,16"
+                       HorizontalAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+        <!-- Expenses by Category -->
+        <Border Grid.Column="1" Background="White" CornerRadius="14" Padding="24,20"
+                Margin="8,0,0,0" BoxShadow="0 1 4 0 #00000008">
+          <StackPanel Spacing="16">
+            <TextBlock Text="Expenses by Category" FontSize="16" FontWeight="SemiBold"
+                       Foreground="#111827"/>
+            <ItemsControl ItemsSource="{Binding ExpenseByCategory}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border Padding="0,8">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                      <Border Grid.Column="0" Width="10" Height="10" CornerRadius="3"
+                              Background="{Binding ColorHex}" Margin="0,0,12,0"
+                              VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="1" Text="{Binding Category}"
+                                 FontSize="13" Foreground="#374151" VerticalAlignment="Center"/>
+                      <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="{Binding Amount, StringFormat={}{0:N2}}"
+                                   FontSize="13" FontWeight="SemiBold" Foreground="#111827"
+                                   VerticalAlignment="Center"/>
+                        <Border Background="#F3F4F6" CornerRadius="4" Padding="6,2">
+                          <TextBlock Text="{Binding Percentage, StringFormat={}{0:F0}%}"
+                                     FontSize="10" Foreground="#6B7280"/>
+                        </Border>
+                      </StackPanel>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Text="No expenses recorded this month."
+                       IsVisible="{Binding !ExpenseByCategory.Count}"
+                       FontSize="13" Foreground="#9CA3AF" Margin="0,16"
+                       HorizontalAlignment="Center"/>
+          </StackPanel>
+        </Border>
+
+      </Grid>
+
+      <!-- ROW 4: Monthly Trends (compact) -->
+      <Border Background="White" CornerRadius="14" Padding="24,20"
+              BoxShadow="0 1 4 0 #00000008">
+        <StackPanel Spacing="16">
+          <Grid ColumnDefinitions="*,Auto">
+            <TextBlock Text="Monthly Overview" FontSize="16" FontWeight="SemiBold"
+                       Foreground="#111827"/>
+            <Border Grid.Column="1" Background="#F9FAFB" CornerRadius="6" Padding="10,4">
+              <TextBlock Text="12-month trend" FontSize="11" Foreground="#6B7280" FontWeight="Medium"/>
+            </Border>
+          </Grid>
+
+          <!-- Compact horizontal months grid -->
+          <Grid ColumnDefinitions="*,*,*,*,*,*" RowDefinitions="Auto,Auto">
+            <ItemsControl ItemsSource="{Binding MonthlyTrends}" Grid.ColumnSpan="6">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border Width="145" Margin="4,4" Padding="12,10"
+                          Background="#FAFBFC" CornerRadius="8">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                      <TextBlock Grid.Column="0" Text="{Binding Month}"
+                                 FontSize="12" FontWeight="SemiBold" Foreground="#6B7280"
+                                 VerticalAlignment="Center"/>
+                      <StackPanel Grid.Column="2" Spacing="1" HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding Income, StringFormat={}{0:N0}}"
+                                   FontSize="11" FontWeight="SemiBold" Foreground="#059669"
+                                   HorizontalAlignment="Right"/>
+                        <TextBlock Text="{Binding Expenses, StringFormat={}{0:N0}}"
+                                   FontSize="11" FontWeight="SemiBold" Foreground="#DC2626"
+                                   HorizontalAlignment="Right"/>
+                      </StackPanel>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </Grid>
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+
+  <!-- Loading Overlay -->
+  <Border IsVisible="{Binding IsBusy}" Background="#FFFFFF90" CornerRadius="12">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
+      <ProgressBar IsIndeterminate="True" Width="120" Foreground="#202020" Background="#E5E7EB"/>
+      <TextBlock Text="Loading..." FontSize="13" Foreground="#6B7280" HorizontalAlignment="Center"/>
+    </StackPanel>
+  </Border>
+
+  </Panel>
+</UserControl>

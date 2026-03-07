@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:YousifAccounting.Desktop.ViewModels.Auth"
+             x:Class="YousifAccounting.Desktop.Views.Auth.LockScreenView"
+             x:DataType="vm:LockScreenViewModel">
+
+  <StackPanel VerticalAlignment="Center" Margin="52,40" Spacing="26" MaxWidth="360">
+
+    <!-- Lock icon + header -->
+    <StackPanel Spacing="16">
+      <Border Width="52" Height="52" CornerRadius="14"
+              HorizontalAlignment="Left"
+              Background="#F3F4F6" BorderBrush="#E5E7EB" BorderThickness="1">
+        <Path Data="{StaticResource IconLock}" Stroke="#374151" StrokeThickness="1.8"
+              Width="20" Height="20" Stretch="Uniform"
+              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+      </Border>
+      <StackPanel Spacing="8">
+        <TextBlock Text="Session Locked" FontSize="26" FontWeight="Bold"
+                   Foreground="#111827" FontFamily="Trebuchet MS, Verdana, sans-serif"/>
+        <TextBlock Text="Your session timed out. Enter your password to continue."
+                   FontSize="13.5" Foreground="#6B7280" LineHeight="20" TextWrapping="Wrap"
+                   FontFamily="Inter"/>
+      </StackPanel>
+    </StackPanel>
+
+    <!-- Password input -->
+    <StackPanel Spacing="8">
+      <TextBlock Text="Password" FontSize="12" FontWeight="SemiBold"
+                 Foreground="#374151"/>
+      <TextBox PasswordChar="&#x25CF;" Watermark="Enter your password"
+               Text="{Binding Password}"
+               Height="44" FontSize="14" Padding="14,0"
+               VerticalContentAlignment="Center"
+               Background="White" Foreground="#111827"
+               BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="10"/>
+    </StackPanel>
+
+    <!-- Error -->
+    <Border IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+            Background="#FEF2F2" CornerRadius="10" Padding="14,10"
+            BorderBrush="#FECACA" BorderThickness="1">
+      <TextBlock Text="{Binding ErrorMessage}"
+                 Foreground="#DC2626" FontSize="13" TextWrapping="Wrap"/>
+    </Border>
+
+    <!-- Unlock button -->
+    <Button Command="{Binding UnlockCommand}"
+            HorizontalAlignment="Stretch" Height="44"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            FontSize="14" FontWeight="SemiBold"
+            CornerRadius="10"
+            IsEnabled="{Binding !IsBusy}"
+            Cursor="Hand"
+            BorderThickness="0"
+            Background="#202020">
+      <TextBlock Text="Unlock" HorizontalAlignment="Center" FontWeight="SemiBold"
+                 Foreground="White" FontSize="14"/>
+    </Button>
+
+  </StackPanel>
+</UserControl>

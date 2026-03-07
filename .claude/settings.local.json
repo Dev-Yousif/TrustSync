@@ -1,0 +1,42 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell.exe -Command \"Get-Command dotnet -ErrorAction SilentlyContinue | Select-Object Source\")",
+      "Bash(powershell.exe -Command \"winget install Microsoft.DotNet.SDK.8 --accept-source-agreements --accept-package-agreements\")",
+      "Bash(export PATH=\"$PATH:/c/Program Files/dotnet\")",
+      "Bash(dotnet --version)",
+      "Bash(dotnet sln add src/YousifAccounting.Domain/YousifAccounting.Domain.csproj)",
+      "Bash(dotnet sln add src/YousifAccounting.Application/YousifAccounting.Application.csproj)",
+      "Bash(dotnet sln add src/YousifAccounting.Infrastructure/YousifAccounting.Infrastructure.csproj)",
+      "Bash(dotnet sln add src/YousifAccounting.Desktop/YousifAccounting.Desktop.csproj)",
+      "Bash(dotnet sln add tests/YousifAccounting.Tests/YousifAccounting.Tests.csproj)",
+      "Bash(dotnet restore)",
+      "Bash(dotnet build)",
+      "Bash(dotnet nuget search \"LiveChartsCore\" --source \"https://api.nuget.org/v3/index.json\" --take 10)",
+      "Bash(dotnet nuget search \"LiveChartsCore.SkiaSharpView.WPF\" --source \"https://api.nuget.org/v3/index.json\" --take 5 --prerelease)",
+      "Bash(dotnet ef migrations add InitialCreate -p src/YousifAccounting.Infrastructure -s src/YousifAccounting.Desktop -o Persistence/Migrations)",
+      "Bash(dotnet tool install --global dotnet-ef)",
+      "Bash(export PATH=\"$PATH:/c/Program Files/dotnet:$HOME/.dotnet/tools\")",
+      "Bash(dotnet ef migrations remove -p src/YousifAccounting.Infrastructure -s src/YousifAccounting.Desktop --force)",
+      "Bash(dotnet test)",
+      "Bash(export PATH=\"/c/Program Files/dotnet:$PATH\")",
+      "Bash(dotnet build tests/YousifAccounting.Tests/YousifAccounting.Tests.csproj)",
+      "Bash(dotnet test tests/YousifAccounting.Tests/YousifAccounting.Tests.csproj --verbosity normal)",
+      "Bash(dotnet build --nologo)",
+      "Bash(dotnet build src/YousifAccounting.Desktop/YousifAccounting.Desktop.csproj)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.irihi.tech)",
+      "WebFetch(domain:www.nuget.org)",
+      "Bash(taskkill //F //IM YousifAccounting.exe)",
+      "Bash(\"/c/Program Files/dotnet/dotnet.exe\" build \"c:/Users/yousi/Desktop/Yousif Accounting/src/YousifAccounting.Desktop/YousifAccounting.Desktop.csproj\")",
+      "Bash(\"/c/Program Files/dotnet/dotnet.exe\" run --project \"c:/Users/yousi/Desktop/Yousif Accounting/src/YousifAccounting.Desktop/YousifAccounting.Desktop.csproj\")",
+      "Bash(\"/c/Program Files/dotnet/dotnet.exe\" build \"c:/Users/yousi/Desktop/Yousif Accounting/src/YousifAccounting.Desktop/YousifAccounting.Desktop.csproj\" -c Debug)",
+      "Bash(taskkill //F //PID 24516)",
+      "Bash(dotnet run --project src/YousifAccounting.Desktop/YousifAccounting.Desktop.csproj)",
+      "Read(//c/Users/yousi/.nuget/packages/avalonia.themes.fluent/**)",
+      "Read(//c/Users/yousi/.nuget/packages/**)",
+      "Read(//c/Users/yousi/**)"
+    ]
+  }
+}
