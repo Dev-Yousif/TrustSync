@@ -22,9 +22,9 @@
     <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Disabled">
       <StackPanel Spacing="16" Margin="0,0,16,0">
 
-        <Border Background="White" CornerRadius="14" Padding="20,16" BoxShadow="0 1 4 0 #00000008">
+        <Border Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="14" Padding="20,16" BoxShadow="0 1 4 0 #00000008">
           <Grid ColumnDefinitions="*,Auto">
-            <TextBlock Text="Saving Goals" FontSize="16" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center"/>
+            <TextBlock Text="Saving Goals" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
             <Button Grid.Column="1" Command="{Binding OpenCreateGoalCommand}"
                     Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9">
               <StackPanel Orientation="Horizontal" Spacing="6">
@@ -35,12 +35,12 @@
           </Grid>
         </Border>
 
-        <Border Background="White" CornerRadius="14" Padding="24,20" BoxShadow="0 1 4 0 #00000008">
+        <Border Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="14" Padding="24,20" BoxShadow="0 1 4 0 #00000008">
           <StackPanel Spacing="4">
             <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
-              <TextBlock Text="All Goals" FontSize="16" FontWeight="SemiBold" Foreground="#111827"/>
-              <Border Grid.Column="1" Background="#F9FAFB" CornerRadius="6" Padding="10,4">
-                <TextBlock Text="{Binding Goals.Count, StringFormat={}{0} goals}" FontSize="11" Foreground="#6B7280" FontWeight="Medium"/>
+              <TextBlock Text="All Goals" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+              <Border Grid.Column="1" Background="{DynamicResource BackgroundSecondaryBrush}" CornerRadius="6" Padding="10,4">
+                <TextBlock Text="{Binding Goals.Count, StringFormat={}{0} goals}" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" FontWeight="Medium"/>
               </Border>
             </Grid>
 
@@ -48,28 +48,28 @@
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
                   <Button Command="{Binding $parent[ItemsControl].((vm:SavingsViewModel)DataContext).SelectGoalCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="0" Margin="0" Cursor="Hand">
-                    <Border Padding="12,14" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
+                    <Border Padding="12,14" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,0,0,1">
                       <StackPanel Spacing="10">
                         <Grid ColumnDefinitions="*,Auto">
                           <StackPanel Orientation="Horizontal" Spacing="12">
-                            <Border Width="38" Height="38" CornerRadius="10" Background="#F5F5F5" VerticalAlignment="Center">
-                              <Path Data="{StaticResource IconSavings}" Stroke="#202020" StrokeThickness="1.8" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Width="38" Height="38" CornerRadius="10" Background="{DynamicResource BackgroundSelectedBrush}" VerticalAlignment="Center">
+                              <Path Data="{StaticResource IconSavings}" Stroke="{DynamicResource AccentPrimaryBrush}" StrokeThickness="1.8" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <TextBlock Text="{Binding Name}" FontSize="13.5" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Name}" FontSize="13.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
                           </StackPanel>
                           <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
                             <Button Command="{Binding $parent[ItemsControl].((vm:SavingsViewModel)DataContext).OpenEditGoalCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="8,5" CornerRadius="6" Cursor="Hand">
-                              <TextBlock Text="Edit" FontSize="11" Foreground="#374151" FontWeight="Medium"/>
+                              <TextBlock Text="Edit" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" FontWeight="Medium"/>
                             </Button>
                             <Button Command="{Binding $parent[ItemsControl].((vm:SavingsViewModel)DataContext).RequestDeleteGoalCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="8,5" CornerRadius="6" Cursor="Hand">
-                              <TextBlock Text="Del" FontSize="11" Foreground="#DC2626" FontWeight="Medium"/>
+                              <TextBlock Text="Del" FontSize="11" Foreground="{DynamicResource ErrorBrush}" FontWeight="Medium"/>
                             </Button>
                           </StackPanel>
                         </Grid>
                         <ProgressBar Minimum="0" Maximum="100" Value="{Binding ProgressPercentage}" Height="6"
-                                     Foreground="#202020" Background="#F3F4F6" CornerRadius="3"/>
+                                     Foreground="{DynamicResource AccentPrimaryBrush}" Background="{DynamicResource BackgroundHoverBrush}" CornerRadius="3"/>
                         <Grid ColumnDefinitions="*,Auto">
-                          <TextBlock FontSize="12" Foreground="#9CA3AF">
+                          <TextBlock FontSize="12" Foreground="{DynamicResource TextLightBrush}">
                             <TextBlock.Text>
                               <MultiBinding StringFormat="{}{2}{0:N2} / {2}{1:N2}">
                                 <Binding Path="SavedAmount"/>
@@ -78,7 +78,7 @@
                               </MultiBinding>
                             </TextBlock.Text>
                           </TextBlock>
-                          <TextBlock Grid.Column="1" Text="{Binding ProgressPercentage, StringFormat={}{0:F0}%}" FontSize="12" FontWeight="SemiBold" Foreground="#202020"/>
+                          <TextBlock Grid.Column="1" Text="{Binding ProgressPercentage, StringFormat={}{0:F0}%}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource AccentPrimaryBrush}"/>
                         </Grid>
                       </StackPanel>
                     </Border>
@@ -88,11 +88,11 @@
             </ItemsControl>
 
             <StackPanel IsVisible="{Binding !Goals.Count}" HorizontalAlignment="Center" Margin="0,40" Spacing="10">
-              <Border Width="48" Height="48" CornerRadius="12" Background="#F3F4F6" HorizontalAlignment="Center">
-                <Path Data="{StaticResource IconSavings}" Stroke="#9CA3AF" StrokeThickness="1.8" Width="20" Height="20" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              <Border Width="48" Height="48" CornerRadius="12" Background="{DynamicResource BackgroundHoverBrush}" HorizontalAlignment="Center">
+                <Path Data="{StaticResource IconSavings}" Stroke="{DynamicResource TextLightBrush}" StrokeThickness="1.8" Width="20" Height="20" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
               </Border>
-              <TextBlock Text="No saving goals" FontSize="16" FontWeight="SemiBold" Foreground="#111827" HorizontalAlignment="Center"/>
-              <TextBlock Text="Create a goal and track your savings progress." FontSize="13" Foreground="#9CA3AF" HorizontalAlignment="Center"/>
+              <TextBlock Text="No saving goals" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+              <TextBlock Text="Create a goal and track your savings progress." FontSize="13" Foreground="{DynamicResource TextLightBrush}" HorizontalAlignment="Center"/>
               <Button Command="{Binding OpenCreateGoalCommand}"
                       Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9"
                       HorizontalAlignment="Center" Margin="0,8,0,0">
@@ -105,11 +105,11 @@
     </ScrollViewer>
 
     <!-- Entries Panel -->
-    <Border Grid.Column="1" Background="White" CornerRadius="14" BoxShadow="0 1 4 0 #00000008">
+    <Border Grid.Column="1" Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="14" BoxShadow="0 1 4 0 #00000008">
       <Grid RowDefinitions="Auto,*">
-        <Border Grid.Row="0" Padding="20,16" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
+        <Border Grid.Row="0" Padding="20,16" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,0,0,1">
           <Grid ColumnDefinitions="*,Auto">
-            <TextBlock Text="Entries" FontSize="16" FontWeight="SemiBold" Foreground="#111827" VerticalAlignment="Center"/>
+            <TextBlock Text="Entries" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center"/>
             <Button Grid.Column="1" Command="{Binding OpenAddEntryCommand}" IsVisible="{Binding SelectedGoal, Converter={x:Static ObjectConverters.IsNotNull}}"
                     Theme="{StaticResource BtnPrimary}" FontSize="12" CornerRadius="8" Padding="14,7">
               <TextBlock Text="+ Add"/>
@@ -121,10 +121,10 @@
             <ItemsControl ItemsSource="{Binding Entries}">
               <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                  <Border Padding="0,10" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
+                  <Border Padding="0,10" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,0,0,1">
                     <Grid ColumnDefinitions="*,Auto,Auto">
                       <StackPanel Grid.Column="0" Spacing="2">
-                        <TextBlock FontSize="14" FontWeight="SemiBold" Foreground="#059669">
+                        <TextBlock FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource SuccessBrush}">
                           <TextBlock.Text>
                             <MultiBinding StringFormat="{}{1}{0:N2}">
                               <Binding Path="ConvertedAmount"/>
@@ -132,11 +132,11 @@
                             </MultiBinding>
                           </TextBlock.Text>
                         </TextBlock>
-                        <TextBlock Text="{Binding Date, StringFormat={}{0:MMM dd}}" FontSize="11" Foreground="#9CA3AF"/>
+                        <TextBlock Text="{Binding Date, StringFormat={}{0:MMM dd}}" FontSize="11" Foreground="{DynamicResource TextLightBrush}"/>
                       </StackPanel>
-                      <TextBlock Grid.Column="1" Text="{Binding Notes}" FontSize="11" Foreground="#9CA3AF" VerticalAlignment="Center" Margin="8,0" IsVisible="{Binding Notes, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                      <TextBlock Grid.Column="1" Text="{Binding Notes}" FontSize="11" Foreground="{DynamicResource TextLightBrush}" VerticalAlignment="Center" Margin="8,0" IsVisible="{Binding Notes, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
                       <Button Grid.Column="2" Command="{Binding $parent[ItemsControl].((vm:SavingsViewModel)DataContext).RequestDeleteEntryCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="6,4" CornerRadius="6" Cursor="Hand" VerticalAlignment="Center">
-                        <TextBlock Text="x" FontSize="11" Foreground="#DC2626"/>
+                        <TextBlock Text="x" FontSize="11" Foreground="{DynamicResource ErrorBrush}"/>
                       </Button>
                     </Grid>
                   </Border>
@@ -144,35 +144,35 @@
               </ItemsControl.ItemTemplate>
             </ItemsControl>
           </ScrollViewer>
-          <TextBlock IsVisible="{Binding !Entries.Count}" Text="Select a goal to view entries." FontSize="13" Foreground="#9CA3AF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <TextBlock IsVisible="{Binding !Entries.Count}" Text="Select a goal to view entries." FontSize="13" Foreground="{DynamicResource TextLightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Panel>
       </Grid>
     </Border>
 
   </Grid>
 
-  <Border IsVisible="{Binding IsBusy}" Background="#FFFFFF90" CornerRadius="12">
+  <Border IsVisible="{Binding IsBusy}" Background="{DynamicResource BackgroundOverlayBrush}" CornerRadius="12">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
-      <ProgressBar IsIndeterminate="True" Width="120" Foreground="#202020" Background="#E5E7EB"/>
-      <TextBlock Text="Loading..." FontSize="13" Foreground="#6B7280" HorizontalAlignment="Center"/>
+      <ProgressBar IsIndeterminate="True" Width="120" Foreground="{DynamicResource AccentPrimaryBrush}" Background="{DynamicResource BorderDefaultBrush}"/>
+      <TextBlock Text="Loading..." FontSize="13" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center"/>
     </StackPanel>
   </Border>
   </Panel>
 
   <!-- Confirm Dialog -->
-  <Border IsVisible="{Binding IsConfirmDialogOpen}" Background="#00000050" CornerRadius="12">
-    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
+  <Border IsVisible="{Binding IsConfirmDialogOpen}" Background="{DynamicResource BackgroundModalBrush}" CornerRadius="12">
+    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="16" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
       <StackPanel>
         <StackPanel Margin="32,32,32,0" Spacing="14" HorizontalAlignment="Center">
-          <Border Width="56" Height="56" CornerRadius="28" Background="#FEF2F2" HorizontalAlignment="Center">
-            <Border Width="36" Height="36" CornerRadius="18" Background="#FEE2E2" HorizontalAlignment="Center" VerticalAlignment="Center">
-              <TextBlock Text="!" FontSize="22" FontWeight="Bold" Foreground="#DC2626" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <Border Width="56" Height="56" CornerRadius="28" Background="{DynamicResource ErrorTintBrush}" HorizontalAlignment="Center">
+            <Border Width="36" Height="36" CornerRadius="18" Background="{DynamicResource ErrorTintBrush}" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <TextBlock Text="!" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource ErrorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
           </Border>
-          <TextBlock Text="{Binding ConfirmDialogTitle}" FontSize="17" FontWeight="Bold" Foreground="#111827" HorizontalAlignment="Center" TextAlignment="Center"/>
-          <TextBlock Text="{Binding ConfirmDialogMessage}" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap" TextAlignment="Center" LineHeight="20" Margin="0,0,0,4"/>
+          <TextBlock Text="{Binding ConfirmDialogTitle}" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" TextAlignment="Center"/>
+          <TextBlock Text="{Binding ConfirmDialogMessage}" FontSize="13" Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap" TextAlignment="Center" LineHeight="20" Margin="0,0,0,4"/>
         </StackPanel>
-        <Border Margin="0,24,0,0" Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0" Background="#FAFBFC">
+        <Border Margin="0,24,0,0" Padding="24,18" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,1,0,0" Background="{DynamicResource BackgroundSecondaryBrush}">
           <Grid ColumnDefinitions="*,10,*">
             <Button Grid.Column="0" Command="{Binding ConfirmDialogNoCommand}"
                     Theme="{StaticResource BtnSecondary}"
@@ -191,47 +191,47 @@
   </Border>
 
   <!-- Goal Editor -->
-  <Border IsVisible="{Binding IsGoalEditorOpen}" Background="#00000050" CornerRadius="12">
-    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="460" Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
+  <Border IsVisible="{Binding IsGoalEditorOpen}" Background="{DynamicResource BackgroundModalBrush}" CornerRadius="12">
+    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="460" Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="16" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
       <StackPanel>
         <Grid ColumnDefinitions="Auto,*,Auto" Margin="28,24,20,0">
-          <Border Width="42" Height="42" CornerRadius="12" Background="#F5F5F5">
-            <Path Data="{StaticResource IconSavings}" Stroke="#202020" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <Border Width="42" Height="42" CornerRadius="12" Background="{DynamicResource BackgroundSelectedBrush}">
+            <Path Data="{StaticResource IconSavings}" Stroke="{DynamicResource AccentPrimaryBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
           </Border>
           <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="2">
-            <TextBlock Text="Saving Goal" FontSize="17" FontWeight="Bold" Foreground="#111827"/>
-            <TextBlock Text="Set your savings target" FontSize="12" Foreground="#9CA3AF"/>
+            <TextBlock Text="Saving Goal" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+            <TextBlock Text="Set your savings target" FontSize="12" Foreground="{DynamicResource TextLightBrush}"/>
           </StackPanel>
           <Button Grid.Column="2" Command="{Binding CloseGoalEditorCommand}" Background="Transparent" BorderThickness="0" Padding="10" CornerRadius="8" Cursor="Hand" VerticalAlignment="Top">
-            <TextBlock Text="✕" FontSize="16" Foreground="#9CA3AF"/>
+            <TextBlock Text="✕" FontSize="16" Foreground="{DynamicResource TextLightBrush}"/>
           </Button>
         </Grid>
-        <Border Height="1" Background="#F3F4F6" Margin="0,20,0,0"/>
+        <Border Height="1" Background="{DynamicResource BackgroundHoverBrush}" Margin="0,20,0,0"/>
 
         <StackPanel Margin="28,20,28,8" Spacing="16">
           <StackPanel Spacing="6">
-            <TextBlock Text="NAME" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+            <TextBlock Text="NAME" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
             <TextBox Text="{Binding EditorGoalName}"/>
-            <TextBlock Text="{Binding GoalNameError}" FontSize="11" Foreground="#DC2626" IsVisible="{Binding HasGoalNameError}"/>
+            <TextBlock Text="{Binding GoalNameError}" FontSize="11" Foreground="{DynamicResource ErrorBrush}" IsVisible="{Binding HasGoalNameError}"/>
           </StackPanel>
           <Grid ColumnDefinitions="*,12,*">
             <StackPanel Grid.Column="0" Spacing="6">
-              <TextBlock Text="TARGET AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <TextBlock Text="TARGET AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
               <TextBox Text="{Binding EditorTargetAmount}"/>
-              <TextBlock Text="{Binding TargetAmountError}" FontSize="11" Foreground="#DC2626" IsVisible="{Binding HasTargetAmountError}"/>
+              <TextBlock Text="{Binding TargetAmountError}" FontSize="11" Foreground="{DynamicResource ErrorBrush}" IsVisible="{Binding HasTargetAmountError}"/>
             </StackPanel>
             <StackPanel Grid.Column="2" Spacing="6">
-              <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
-              <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding EditorCurrency}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+              <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
+              <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding EditorCurrency}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" CornerRadius="8"/>
             </StackPanel>
           </Grid>
           <TextBlock Text="{Binding ConversionPreview}"
                      IsVisible="{Binding ConversionPreview, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                     FontSize="12" Foreground="#6B7280" FontStyle="Italic" Margin="0,-10,0,0"/>
-          <TextBlock Text="{Binding ErrorMessage}" IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="#DC2626" FontSize="12"/>
+                     FontSize="12" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" Margin="0,-10,0,0"/>
+          <TextBlock Text="{Binding ErrorMessage}" IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="{DynamicResource ErrorBrush}" FontSize="12"/>
         </StackPanel>
 
-        <Border Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0" Background="#FAFBFC">
+        <Border Padding="24,18" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,1,0,0" Background="{DynamicResource BackgroundSecondaryBrush}">
           <Grid ColumnDefinitions="*,10,*">
             <Button Grid.Column="0" Command="{Binding CloseGoalEditorCommand}"
                     Theme="{StaticResource BtnSecondary}"
@@ -251,50 +251,50 @@
   </Border>
 
   <!-- Entry Editor -->
-  <Border IsVisible="{Binding IsEntryEditorOpen}" Background="#00000050" CornerRadius="12">
-    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
+  <Border IsVisible="{Binding IsEntryEditorOpen}" Background="{DynamicResource BackgroundModalBrush}" CornerRadius="12">
+    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="16" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
       <StackPanel>
         <Grid ColumnDefinitions="Auto,*,Auto" Margin="28,24,20,0">
-          <Border Width="42" Height="42" CornerRadius="12" Background="#F0FDF4">
-            <Path Data="{StaticResource IconIncome}" Stroke="#059669" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <Border Width="42" Height="42" CornerRadius="12" Background="{DynamicResource SuccessTintBrush}">
+            <Path Data="{StaticResource IconIncome}" Stroke="{DynamicResource SuccessBrush}" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
           </Border>
           <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="2">
-            <TextBlock Text="Add Saving" FontSize="17" FontWeight="Bold" Foreground="#111827"/>
-            <TextBlock Text="Record a savings entry" FontSize="12" Foreground="#9CA3AF"/>
+            <TextBlock Text="Add Saving" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+            <TextBlock Text="Record a savings entry" FontSize="12" Foreground="{DynamicResource TextLightBrush}"/>
           </StackPanel>
           <Button Grid.Column="2" Command="{Binding CloseEntryEditorCommand}" Background="Transparent" BorderThickness="0" Padding="10" CornerRadius="8" Cursor="Hand" VerticalAlignment="Top">
-            <TextBlock Text="✕" FontSize="16" Foreground="#9CA3AF"/>
+            <TextBlock Text="✕" FontSize="16" Foreground="{DynamicResource TextLightBrush}"/>
           </Button>
         </Grid>
-        <Border Height="1" Background="#F3F4F6" Margin="0,20,0,0"/>
+        <Border Height="1" Background="{DynamicResource BackgroundHoverBrush}" Margin="0,20,0,0"/>
 
         <StackPanel Margin="28,20,28,8" Spacing="16">
           <Grid ColumnDefinitions="*,12,*">
             <StackPanel Grid.Column="0" Spacing="6">
-              <TextBlock Text="AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <TextBlock Text="AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
               <TextBox Text="{Binding EditorEntryAmount}"/>
-              <TextBlock Text="{Binding EntryAmountError}" FontSize="11" Foreground="#DC2626" IsVisible="{Binding HasEntryAmountError}"/>
+              <TextBlock Text="{Binding EntryAmountError}" FontSize="11" Foreground="{DynamicResource ErrorBrush}" IsVisible="{Binding HasEntryAmountError}"/>
             </StackPanel>
             <StackPanel Grid.Column="2" Spacing="6">
-              <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
-              <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding EditorEntryCurrency}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+              <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
+              <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding EditorEntryCurrency}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" CornerRadius="8"/>
             </StackPanel>
           </Grid>
           <TextBlock Text="{Binding EntryConversionPreview}"
                      IsVisible="{Binding EntryConversionPreview, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                     FontSize="12" Foreground="#6B7280" FontStyle="Italic" Margin="0,-10,0,0"/>
+                     FontSize="12" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" Margin="0,-10,0,0"/>
           <StackPanel Spacing="6">
-            <TextBlock Text="DATE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+            <TextBlock Text="DATE" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
             <DatePicker SelectedDate="{Binding EditorEntryDate}" HorizontalAlignment="Stretch"/>
           </StackPanel>
           <StackPanel Spacing="6">
-            <TextBlock Text="NOTES" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+            <TextBlock Text="NOTES" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
             <TextBox Text="{Binding EditorEntryNotes}" Watermark="Optional..."/>
           </StackPanel>
-          <TextBlock Text="{Binding ErrorMessage}" IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="#DC2626" FontSize="12"/>
+          <TextBlock Text="{Binding ErrorMessage}" IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="{DynamicResource ErrorBrush}" FontSize="12"/>
         </StackPanel>
 
-        <Border Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0" Background="#FAFBFC">
+        <Border Padding="24,18" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,1,0,0" Background="{DynamicResource BackgroundSecondaryBrush}">
           <Grid ColumnDefinitions="*,10,*">
             <Button Grid.Column="0" Command="{Binding CloseEntryEditorCommand}"
                     Theme="{StaticResource BtnSecondary}"
@@ -313,8 +313,8 @@
     </Border>
   </Border>
 
-  <Border IsVisible="{Binding IsToastVisible}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="16,10" CornerRadius="10" Background="#FFFFFF" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 4 16 0 #40000000">
-    <TextBlock Text="{Binding ToastMessage}" FontSize="13" Foreground="#111827"/>
+  <Border IsVisible="{Binding IsToastVisible}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="16,10" CornerRadius="10" Background="{DynamicResource BackgroundPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" BoxShadow="0 4 16 0 #40000000">
+    <TextBlock Text="{Binding ToastMessage}" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}"/>
   </Border>
 
   </Panel>

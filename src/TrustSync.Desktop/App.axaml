@@ -13,8 +13,8 @@
       <Setter Property="Padding" Value="12,0"/>
       <Setter Property="FontSize" Value="14"/>
       <Setter Property="VerticalContentAlignment" Value="Center"/>
-      <Setter Property="CaretBrush" Value="#202020"/>
-      <Setter Property="SelectionBrush" Value="#20202040"/>
+      <Setter Property="CaretBrush" Value="{DynamicResource CaretBrush}"/>
+      <Setter Property="SelectionBrush" Value="{DynamicResource SelectionBrush}"/>
     </Style>
 
     <!-- Global ComboBox styling -->
@@ -28,21 +28,20 @@
     <Style Selector="ComboBox /template/ Popup">
       <Setter Property="VerticalOffset" Value="4"/>
     </Style>
-    <!-- Target popup border by multiple selectors to ensure it hits -->
     <Style Selector="ComboBox /template/ Popup Border">
       <Setter Property="CornerRadius" Value="12"/>
-      <Setter Property="BorderBrush" Value="#E5E7EB"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderDefaultBrush}"/>
       <Setter Property="BorderThickness" Value="1"/>
-      <Setter Property="Background" Value="#FFFFFF"/>
+      <Setter Property="Background" Value="{DynamicResource BackgroundPrimaryBrush}"/>
       <Setter Property="BoxShadow" Value="0 8 24 0 #25000000"/>
       <Setter Property="Padding" Value="4"/>
       <Setter Property="ClipToBounds" Value="True"/>
     </Style>
     <Style Selector="ComboBox /template/ Border#PopupBorder">
       <Setter Property="CornerRadius" Value="12"/>
-      <Setter Property="BorderBrush" Value="#E5E7EB"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderDefaultBrush}"/>
       <Setter Property="BorderThickness" Value="1"/>
-      <Setter Property="Background" Value="#FFFFFF"/>
+      <Setter Property="Background" Value="{DynamicResource BackgroundPrimaryBrush}"/>
       <Setter Property="BoxShadow" Value="0 8 24 0 #25000000"/>
       <Setter Property="Padding" Value="4"/>
       <Setter Property="ClipToBounds" Value="True"/>
@@ -54,25 +53,25 @@
       <Setter Property="Padding" Value="10,7"/>
       <Setter Property="Margin" Value="2"/>
       <Setter Property="FontSize" Value="13"/>
-      <Setter Property="Foreground" Value="#111827"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
       <Setter Property="Background" Value="Transparent"/>
       <Setter Property="MinHeight" Value="0"/>
     </Style>
     <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter Property="Background" Value="#F3F4F6"/>
-      <Setter Property="Foreground" Value="#111827"/>
+      <Setter Property="Background" Value="{DynamicResource BackgroundHoverBrush}"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
     </Style>
     <Style Selector="ComboBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter Property="Background" Value="#F3F4F6"/>
-      <Setter Property="Foreground" Value="#111827"/>
+      <Setter Property="Background" Value="{DynamicResource BackgroundHoverBrush}"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
     </Style>
     <Style Selector="ComboBoxItem:selected:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter Property="Background" Value="#E5E7EB"/>
-      <Setter Property="Foreground" Value="#111827"/>
+      <Setter Property="Background" Value="{DynamicResource BorderDefaultBrush}"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
     </Style>
     <Style Selector="ComboBoxItem:pressed /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter Property="Background" Value="#E5E7EB"/>
-      <Setter Property="Foreground" Value="#111827"/>
+      <Setter Property="Background" Value="{DynamicResource BorderDefaultBrush}"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
     </Style>
     <!-- Hide the selection pill indicator -->
     <Style Selector="ComboBoxItem /template/ Rectangle#SelectionIndicator">
@@ -84,56 +83,52 @@
       <Setter Property="CornerRadius" Value="8"/>
       <Setter Property="MinHeight" Value="40"/>
       <Setter Property="FontSize" Value="14"/>
-      <Setter Property="Foreground" Value="#111827"/>
-      <Setter Property="Background" Value="#FFFFFF"/>
-      <Setter Property="BorderBrush" Value="#D1D5DB"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+      <Setter Property="Background" Value="{DynamicResource BackgroundPrimaryBrush}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderHoverBrush}"/>
       <Setter Property="BorderThickness" Value="1"/>
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
     </Style>
-    <!-- Border styling and hover/focus states -->
     <Style Selector="DatePicker /template/ Border#PART_BorderElement">
       <Setter Property="CornerRadius" Value="8"/>
-      <Setter Property="Background" Value="#FFFFFF"/>
-      <Setter Property="BorderBrush" Value="#D1D5DB"/>
+      <Setter Property="Background" Value="{DynamicResource BackgroundPrimaryBrush}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource BorderHoverBrush}"/>
       <Setter Property="BorderThickness" Value="1"/>
     </Style>
     <Style Selector="DatePicker:pointerover /template/ Border#PART_BorderElement">
-      <Setter Property="BorderBrush" Value="#9CA3AF"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource TextLightBrush}"/>
     </Style>
     <Style Selector="DatePicker:focus-within /template/ Border#PART_BorderElement">
-      <Setter Property="BorderBrush" Value="#202020"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource AccentPrimaryBrush}"/>
     </Style>
-    <!-- The main flyout button — stretch to fill, transparent bg -->
     <Style Selector="DatePicker /template/ Button#PART_FlyoutButton">
       <Setter Property="HorizontalAlignment" Value="Stretch"/>
       <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
     </Style>
-    <!-- Thin subtle separators between segments -->
     <Style Selector="DatePicker /template/ Rectangle#PART_FirstSpacer">
-      <Setter Property="Fill" Value="#E5E7EB"/>
+      <Setter Property="Fill" Value="{DynamicResource BorderDefaultBrush}"/>
       <Setter Property="Width" Value="1"/>
     </Style>
     <Style Selector="DatePicker /template/ Rectangle#PART_SecondSpacer">
-      <Setter Property="Fill" Value="#E5E7EB"/>
+      <Setter Property="Fill" Value="{DynamicResource BorderDefaultBrush}"/>
       <Setter Property="Width" Value="1"/>
     </Style>
-    <!-- Style the day/month/year text -->
     <Style Selector="DatePicker /template/ TextBlock#PART_DayTextBlock">
       <Setter Property="FontSize" Value="14"/>
-      <Setter Property="Foreground" Value="#111827"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
       <Setter Property="HorizontalAlignment" Value="Center"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
     <Style Selector="DatePicker /template/ TextBlock#PART_MonthTextBlock">
       <Setter Property="FontSize" Value="14"/>
-      <Setter Property="Foreground" Value="#111827"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
       <Setter Property="HorizontalAlignment" Value="Center"/>
       <Setter Property="TextAlignment" Value="Center"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
     <Style Selector="DatePicker /template/ TextBlock#PART_YearTextBlock">
       <Setter Property="FontSize" Value="14"/>
-      <Setter Property="Foreground" Value="#111827"/>
+      <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
       <Setter Property="HorizontalAlignment" Value="Center"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>

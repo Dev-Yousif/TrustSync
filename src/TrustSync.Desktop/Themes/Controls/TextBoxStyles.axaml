@@ -1,98 +1,164 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <!-- Override Fluent TextBox theme resources for light mode -->
-  <SolidColorBrush x:Key="TextControlBackground" Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="#F9FAFB"/>
+  <ResourceDictionary.ThemeDictionaries>
 
-  <SolidColorBrush x:Key="TextControlForeground" Color="#111827"/>
-  <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="#111827"/>
-  <SolidColorBrush x:Key="TextControlForegroundFocused" Color="#111827"/>
-  <SolidColorBrush x:Key="TextControlForegroundDisabled" Color="#9CA3AF"/>
+    <!-- ── Light ── -->
+    <ResourceDictionary x:Key="Light">
+      <SolidColorBrush x:Key="TextControlBackground" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="#F9FAFB"/>
+      <SolidColorBrush x:Key="TextControlForeground" Color="#111827"/>
+      <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="#111827"/>
+      <SolidColorBrush x:Key="TextControlForegroundFocused" Color="#111827"/>
+      <SolidColorBrush x:Key="TextControlForegroundDisabled" Color="#9CA3AF"/>
+      <SolidColorBrush x:Key="TextControlBorderBrush" Color="#D1D5DB"/>
+      <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#9CA3AF"/>
+      <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#202020"/>
+      <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="#E5E7EB"/>
+      <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#9CA3AF"/>
+      <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#6B7280"/>
+      <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#6B7280"/>
+      <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="#202020"/>
+      <SolidColorBrush x:Key="TextControlSelectionForegroundBrush" Color="White"/>
 
-  <SolidColorBrush x:Key="TextControlBorderBrush" Color="#D1D5DB"/>
-  <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#9CA3AF"/>
-  <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#202020"/>
-  <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="#E5E7EB"/>
+      <SolidColorBrush x:Key="ComboBoxBackground" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="ComboBoxBackgroundDisabled" Color="#F9FAFB"/>
+      <SolidColorBrush x:Key="ComboBoxForeground" Color="#111827"/>
+      <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="#111827"/>
+      <SolidColorBrush x:Key="ComboBoxForegroundPressed" Color="#111827"/>
+      <SolidColorBrush x:Key="ComboBoxForegroundDisabled" Color="#9CA3AF"/>
+      <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#D1D5DB"/>
+      <SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="#9CA3AF"/>
+      <SolidColorBrush x:Key="ComboBoxBorderBrushPressed" Color="#202020"/>
+      <SolidColorBrush x:Key="ComboBoxBorderBrushDisabled" Color="#E5E7EB"/>
+      <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="#6B7280"/>
+      <SolidColorBrush x:Key="ComboBoxPlaceHolderForeground" Color="#9CA3AF"/>
+      <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="#E5E7EB"/>
+      <SolidColorBrush x:Key="ComboBoxItemPillFill" Color="#202020"/>
 
-  <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#9CA3AF"/>
-  <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#6B7280"/>
-  <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#6B7280"/>
+      <SolidColorBrush x:Key="ListBoxItemBackground" Color="Transparent"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundPointerOver" Color="#F3F4F6"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundPressed" Color="#E5E7EB"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundSelected" Color="#F3F4F6"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPointerOver" Color="#E5E7EB"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressed" Color="#D1D5DB"/>
+      <SolidColorBrush x:Key="ListBoxItemForeground" Color="#111827"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundPointerOver" Color="#111827"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundPressed" Color="#111827"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundSelected" Color="#111827"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundSelectedPointerOver" Color="#111827"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundSelectedPressed" Color="#111827"/>
 
-  <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="#202020"/>
-  <SolidColorBrush x:Key="TextControlSelectionForegroundBrush" Color="White"/>
+      <SolidColorBrush x:Key="DatePickerButtonBorderBrush" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerButtonBackground" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerButtonBackgroundPointerOver" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerButtonBackgroundPressed" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerButtonForeground" Color="#111827"/>
+      <SolidColorBrush x:Key="DatePickerButtonForegroundPointerOver" Color="#111827"/>
+      <SolidColorBrush x:Key="DatePickerButtonForegroundPressed" Color="#111827"/>
+      <SolidColorBrush x:Key="DatePickerFlyoutPresenterBackground" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="DatePickerFlyoutPresenterBorderBrush" Color="#E5E7EB"/>
+      <SolidColorBrush x:Key="DatePickerSpacerFill" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerHeaderForeground" Color="#111827"/>
+      <SolidColorBrush x:Key="DatePickerFlyoutPresenterHighlightFill" Color="#F3F4F6"/>
+      <SolidColorBrush x:Key="DatePickerFlyoutPresenterSpacerFill" Color="Transparent"/>
 
-  <!-- Override Fluent ComboBox theme resources for light mode -->
-  <SolidColorBrush x:Key="ComboBoxBackground" Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="ComboBoxBackgroundDisabled" Color="#F9FAFB"/>
+      <Color x:Key="SystemAccentColor">#202020</Color>
+      <Color x:Key="SystemAccentColorDark1">#202020</Color>
+      <Color x:Key="SystemAccentColorDark2">#18181B</Color>
+      <Color x:Key="SystemAccentColorDark3">#111827</Color>
+      <Color x:Key="SystemAccentColorLight1">#374151</Color>
+      <Color x:Key="SystemAccentColorLight2">#6B7280</Color>
+      <Color x:Key="SystemAccentColorLight3">#9CA3AF</Color>
+    </ResourceDictionary>
 
-  <SolidColorBrush x:Key="ComboBoxForeground" Color="#111827"/>
-  <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="#111827"/>
-  <SolidColorBrush x:Key="ComboBoxForegroundPressed" Color="#111827"/>
-  <SolidColorBrush x:Key="ComboBoxForegroundDisabled" Color="#9CA3AF"/>
+    <!-- ── Dark ── -->
+    <ResourceDictionary x:Key="Dark">
+      <SolidColorBrush x:Key="TextControlBackground" Color="#1F2023"/>
+      <SolidColorBrush x:Key="TextControlBackgroundPointerOver" Color="#262729"/>
+      <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="#1F2023"/>
+      <SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="#1A1B1E"/>
+      <SolidColorBrush x:Key="TextControlForeground" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="TextControlForegroundPointerOver" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="TextControlForegroundFocused" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="TextControlForegroundDisabled" Color="#505058"/>
+      <SolidColorBrush x:Key="TextControlBorderBrush" Color="#3C3D42"/>
+      <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="#505058"/>
+      <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="#2C2D31"/>
+      <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="#505058"/>
+      <SolidColorBrush x:Key="TextControlPlaceholderForegroundPointerOver" Color="#6E6E75"/>
+      <SolidColorBrush x:Key="TextControlPlaceholderForegroundFocused" Color="#6E6E75"/>
+      <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="TextControlSelectionForegroundBrush" Color="#1A1B1E"/>
 
-  <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#D1D5DB"/>
-  <SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="#9CA3AF"/>
-  <SolidColorBrush x:Key="ComboBoxBorderBrushPressed" Color="#202020"/>
-  <SolidColorBrush x:Key="ComboBoxBorderBrushDisabled" Color="#E5E7EB"/>
+      <SolidColorBrush x:Key="ComboBoxBackground" Color="#1F2023"/>
+      <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#262729"/>
+      <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="#1F2023"/>
+      <SolidColorBrush x:Key="ComboBoxBackgroundDisabled" Color="#1A1B1E"/>
+      <SolidColorBrush x:Key="ComboBoxForeground" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="ComboBoxForegroundPressed" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="ComboBoxForegroundDisabled" Color="#505058"/>
+      <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#3C3D42"/>
+      <SolidColorBrush x:Key="ComboBoxBorderBrushPointerOver" Color="#505058"/>
+      <SolidColorBrush x:Key="ComboBoxBorderBrushPressed" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="ComboBoxBorderBrushDisabled" Color="#2C2D31"/>
+      <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="#6E6E75"/>
+      <SolidColorBrush x:Key="ComboBoxPlaceHolderForeground" Color="#505058"/>
+      <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="#1F2023"/>
+      <SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="#2C2D31"/>
+      <SolidColorBrush x:Key="ComboBoxItemPillFill" Color="#E3E3E6"/>
 
-  <SolidColorBrush x:Key="ComboBoxDropDownGlyphForeground" Color="#6B7280"/>
-  <SolidColorBrush x:Key="ComboBoxPlaceHolderForeground" Color="#9CA3AF"/>
+      <SolidColorBrush x:Key="ListBoxItemBackground" Color="Transparent"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundPointerOver" Color="#2C2D31"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundPressed" Color="#3C3D42"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundSelected" Color="#2C2D31"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPointerOver" Color="#3C3D42"/>
+      <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressed" Color="#505058"/>
+      <SolidColorBrush x:Key="ListBoxItemForeground" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundPointerOver" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundPressed" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundSelected" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundSelectedPointerOver" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="ListBoxItemForegroundSelectedPressed" Color="#E3E3E6"/>
 
-  <SolidColorBrush x:Key="ComboBoxDropDownBackground" Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="#E5E7EB"/>
+      <SolidColorBrush x:Key="DatePickerButtonBorderBrush" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerButtonBackground" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerButtonBackgroundPointerOver" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerButtonBackgroundPressed" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerButtonForeground" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="DatePickerButtonForegroundPointerOver" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="DatePickerButtonForegroundPressed" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="DatePickerFlyoutPresenterBackground" Color="#1F2023"/>
+      <SolidColorBrush x:Key="DatePickerFlyoutPresenterBorderBrush" Color="#2C2D31"/>
+      <SolidColorBrush x:Key="DatePickerSpacerFill" Color="Transparent"/>
+      <SolidColorBrush x:Key="DatePickerHeaderForeground" Color="#E3E3E6"/>
+      <SolidColorBrush x:Key="DatePickerFlyoutPresenterHighlightFill" Color="#2C2D31"/>
+      <SolidColorBrush x:Key="DatePickerFlyoutPresenterSpacerFill" Color="Transparent"/>
+
+      <Color x:Key="SystemAccentColor">#E3E3E6</Color>
+      <Color x:Key="SystemAccentColorDark1">#E3E3E6</Color>
+      <Color x:Key="SystemAccentColorDark2">#D0D0D6</Color>
+      <Color x:Key="SystemAccentColorDark3">#BDBDC3</Color>
+      <Color x:Key="SystemAccentColorLight1">#A0A0A6</Color>
+      <Color x:Key="SystemAccentColorLight2">#6E6E75</Color>
+      <Color x:Key="SystemAccentColorLight3">#505058</Color>
+    </ResourceDictionary>
+
+  </ResourceDictionary.ThemeDictionaries>
+
+  <!-- Non-themed constants -->
   <Thickness x:Key="ComboBoxDropdownBorderPadding">4</Thickness>
   <CornerRadius x:Key="ComboBoxDropdownCornerRadius">12</CornerRadius>
   <CornerRadius x:Key="OverlayCornerRadius">12</CornerRadius>
-
-  <!-- ComboBox dropdown item (ListBoxItem) overrides — remove purple -->
-  <SolidColorBrush x:Key="ComboBoxItemPillFill" Color="#202020"/>
-
-  <SolidColorBrush x:Key="ListBoxItemBackground" Color="Transparent"/>
-  <SolidColorBrush x:Key="ListBoxItemBackgroundPointerOver" Color="#F3F4F6"/>
-  <SolidColorBrush x:Key="ListBoxItemBackgroundPressed" Color="#E5E7EB"/>
-  <SolidColorBrush x:Key="ListBoxItemBackgroundSelected" Color="#F3F4F6"/>
-  <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPointerOver" Color="#E5E7EB"/>
-  <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressed" Color="#D1D5DB"/>
-
-  <SolidColorBrush x:Key="ListBoxItemForeground" Color="#111827"/>
-  <SolidColorBrush x:Key="ListBoxItemForegroundPointerOver" Color="#111827"/>
-  <SolidColorBrush x:Key="ListBoxItemForegroundPressed" Color="#111827"/>
-  <SolidColorBrush x:Key="ListBoxItemForegroundSelected" Color="#111827"/>
-  <SolidColorBrush x:Key="ListBoxItemForegroundSelectedPointerOver" Color="#111827"/>
-  <SolidColorBrush x:Key="ListBoxItemForegroundSelectedPressed" Color="#111827"/>
-
-  <!-- DatePicker width overrides — remove hardcoded min/max so it stretches -->
   <x:Double x:Key="DatePickerThemeMinWidth">0</x:Double>
   <x:Double x:Key="DatePickerThemeMaxWidth">10000</x:Double>
-
-  <!-- DatePicker theme overrides -->
-  <SolidColorBrush x:Key="DatePickerButtonBorderBrush" Color="Transparent"/>
-  <SolidColorBrush x:Key="DatePickerButtonBackground" Color="Transparent"/>
-  <SolidColorBrush x:Key="DatePickerButtonBackgroundPointerOver" Color="Transparent"/>
-  <SolidColorBrush x:Key="DatePickerButtonBackgroundPressed" Color="Transparent"/>
-  <SolidColorBrush x:Key="DatePickerButtonForeground" Color="#111827"/>
-  <SolidColorBrush x:Key="DatePickerButtonForegroundPointerOver" Color="#111827"/>
-  <SolidColorBrush x:Key="DatePickerButtonForegroundPressed" Color="#111827"/>
-  <SolidColorBrush x:Key="DatePickerFlyoutPresenterBackground" Color="#FFFFFF"/>
-  <SolidColorBrush x:Key="DatePickerFlyoutPresenterBorderBrush" Color="#E5E7EB"/>
-  <SolidColorBrush x:Key="DatePickerSpacerFill" Color="Transparent"/>
   <Thickness x:Key="DatePickerBorderThemeThickness">1</Thickness>
-  <SolidColorBrush x:Key="DatePickerHeaderForeground" Color="#111827"/>
-  <SolidColorBrush x:Key="DatePickerFlyoutPresenterHighlightFill" Color="#F3F4F6"/>
-  <SolidColorBrush x:Key="DatePickerFlyoutPresenterSpacerFill" Color="Transparent"/>
-
-  <!-- Accent overrides to kill purple globally -->
-  <Color x:Key="SystemAccentColor">#202020</Color>
-  <Color x:Key="SystemAccentColorDark1">#202020</Color>
-  <Color x:Key="SystemAccentColorDark2">#18181B</Color>
-  <Color x:Key="SystemAccentColorDark3">#111827</Color>
-  <Color x:Key="SystemAccentColorLight1">#374151</Color>
-  <Color x:Key="SystemAccentColorLight2">#6B7280</Color>
-  <Color x:Key="SystemAccentColorLight3">#9CA3AF</Color>
 
 </ResourceDictionary>

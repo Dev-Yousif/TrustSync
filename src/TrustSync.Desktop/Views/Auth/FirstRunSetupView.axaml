@@ -10,9 +10,9 @@
       <!-- Header -->
       <StackPanel Spacing="8">
         <TextBlock Text="Get Started" FontSize="26" FontWeight="Bold"
-                   Foreground="#111827" FontFamily="Trebuchet MS, Verdana, sans-serif"/>
+                   Foreground="{DynamicResource TextPrimaryBrush}" FontFamily="Trebuchet MS, Verdana, sans-serif"/>
         <TextBlock Text="Create your account to begin managing your finances."
-                   FontSize="13.5" Foreground="#6B7280" LineHeight="20" TextWrapping="Wrap"
+                   FontSize="13.5" Foreground="{DynamicResource TextMutedBrush}" LineHeight="20" TextWrapping="Wrap"
                    FontFamily="Inter"/>
       </StackPanel>
 
@@ -22,59 +22,59 @@
         <!-- Display Name -->
         <StackPanel Spacing="6">
           <TextBlock Text="Your Name" FontSize="12" FontWeight="SemiBold"
-                     Foreground="#374151"/>
+                     Foreground="{DynamicResource TextSecondaryBrush}"/>
           <TextBox Text="{Binding DisplayName}" Watermark="Enter your name"
                    Height="42" FontSize="14" Padding="14,0"
                    VerticalContentAlignment="Center"
-                   Background="White" Foreground="#111827"
-                   BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="10"/>
+                   Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                   BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" CornerRadius="10"/>
         </StackPanel>
 
         <!-- Currency -->
         <StackPanel Spacing="6">
           <TextBlock Text="Default Currency" FontSize="12" FontWeight="SemiBold"
-                     Foreground="#374151"/>
+                     Foreground="{DynamicResource TextSecondaryBrush}"/>
           <ComboBox ItemsSource="{Binding AvailableCurrencies}"
                     SelectedItem="{Binding SelectedCurrency}"
                     HorizontalAlignment="Stretch" Height="42"
-                    CornerRadius="10" BorderBrush="#E5E7EB" BorderThickness="1"
-                    Background="White"/>
+                    CornerRadius="10" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
+                    Background="{DynamicResource BackgroundPrimaryBrush}"/>
         </StackPanel>
 
         <!-- Password -->
         <StackPanel Spacing="6">
           <TextBlock Text="Master Password" FontSize="12" FontWeight="SemiBold"
-                     Foreground="#374151"/>
+                     Foreground="{DynamicResource TextSecondaryBrush}"/>
           <TextBox PasswordChar="&#x25CF;" Text="{Binding Password}"
                    Watermark="Min 10 chars, upper, lower, digit, special"
                    Height="42" FontSize="14" Padding="14,0"
                    VerticalContentAlignment="Center"
-                   Background="White" Foreground="#111827"
-                   BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="10"/>
+                   Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                   BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" CornerRadius="10"/>
         </StackPanel>
 
         <!-- Confirm Password -->
         <StackPanel Spacing="6">
           <TextBlock Text="Confirm Password" FontSize="12" FontWeight="SemiBold"
-                     Foreground="#374151"/>
+                     Foreground="{DynamicResource TextSecondaryBrush}"/>
           <TextBox PasswordChar="&#x25CF;" Text="{Binding ConfirmPassword}"
                    Watermark="Re-enter your password"
                    Height="42" FontSize="14" Padding="14,0"
                    VerticalContentAlignment="Center"
-                   Background="White" Foreground="#111827"
-                   BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="10"/>
+                   Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                   BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" CornerRadius="10"/>
         </StackPanel>
 
       </StackPanel>
 
       <!-- Validation Errors -->
       <Border IsVisible="{Binding ValidationErrors.Count}"
-              Background="#FEF2F2" CornerRadius="10" Padding="14,10"
-              BorderBrush="#FECACA" BorderThickness="1">
+              Background="{DynamicResource ErrorTintBrush}" CornerRadius="10" Padding="14,10"
+              BorderBrush="{DynamicResource DangerBorderBrush}" BorderThickness="1">
         <ItemsControl ItemsSource="{Binding ValidationErrors}">
           <ItemsControl.ItemTemplate>
             <DataTemplate>
-              <TextBlock Text="{Binding}" Foreground="#DC2626" FontSize="12"
+              <TextBlock Text="{Binding}" Foreground="{DynamicResource ErrorBrush}" FontSize="12"
                          Margin="0,2" TextWrapping="Wrap"/>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
@@ -83,10 +83,10 @@
 
       <!-- Error message -->
       <Border IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-              Background="#FEF2F2" CornerRadius="10" Padding="14,10"
-              BorderBrush="#FECACA" BorderThickness="1">
+              Background="{DynamicResource ErrorTintBrush}" CornerRadius="10" Padding="14,10"
+              BorderBrush="{DynamicResource DangerBorderBrush}" BorderThickness="1">
         <TextBlock Text="{Binding ErrorMessage}"
-                   Foreground="#DC2626" FontSize="13" TextWrapping="Wrap"/>
+                   Foreground="{DynamicResource ErrorBrush}" FontSize="13" TextWrapping="Wrap"/>
       </Border>
 
       <!-- Setup button -->
@@ -99,16 +99,16 @@
               IsEnabled="{Binding !IsBusy}"
               Cursor="Hand"
               BorderThickness="0"
-              Background="#202020">
+              Background="{DynamicResource AuthBtnGradientBrush}">
         <Panel>
           <TextBlock Text="Create Account" IsVisible="{Binding !IsBusy}"
                      HorizontalAlignment="Center" FontWeight="SemiBold"
-                     Foreground="White" FontSize="14"/>
+                     Foreground="{DynamicResource AuthBtnTextBrush}" FontSize="14"/>
           <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsBusy}"
                       HorizontalAlignment="Center">
             <ProgressBar IsIndeterminate="True" Width="18" Height="18"
-                         Foreground="White"/>
-            <TextBlock Text="Setting up..." FontWeight="SemiBold" Foreground="White"/>
+                         Foreground="{DynamicResource AuthBtnTextBrush}"/>
+            <TextBlock Text="Setting up..." FontWeight="SemiBold" Foreground="{DynamicResource AuthBtnTextBrush}"/>
           </StackPanel>
         </Panel>
       </Button>

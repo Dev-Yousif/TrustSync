@@ -23,6 +23,7 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty] private Bitmap? _profileBitmap;
     [ObservableProperty] private string _defaultCurrency = "USD";
     [ObservableProperty] private int _autoLockTimeout = 5;
+    [ObservableProperty] private string _themeMode = "Light";
     // Password change
     [ObservableProperty] private string _currentPassword = string.Empty;
     [ObservableProperty] private string _newPassword = string.Empty;
@@ -50,6 +51,7 @@ public partial class SettingsViewModel : ViewModelBase
 
     public string[] Currencies { get; } = ["USD", "EUR", "GBP", "IQD", "AED", "SAR", "TRY", "CAD", "AUD", "JPY"];
     public int[] TimeoutOptions { get; } = [1, 2, 5, 10, 15, 30, 60];
+    public string[] ThemeOptions { get; } = ["Light", "Dark"];
 
     public SettingsViewModel(AppDbContext db, IAuthenticationService authService, ISessionService sessionService, ICurrencyConversionService conversionService)
     {
@@ -74,6 +76,9 @@ public partial class SettingsViewModel : ViewModelBase
 
         var timeout = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "AutoLockTimeoutMinutes");
         if (timeout is not null && int.TryParse(timeout.Value, out var t)) AutoLockTimeout = t;
+
+        var theme = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "ThemeMode");
+        if (theme is not null) ThemeMode = theme.Value;
 
         var lastRefresh = await _conversionService.GetLastRefreshTimeAsync();
         LastRateRefresh = lastRefresh.HasValue ? lastRefresh.Value.ToLocalTime().ToString("g") : "Never";
@@ -238,6 +243,26 @@ public partial class SettingsViewModel : ViewModelBase
         }
         catch (Exception ex) { ShowToast($"Failed to clear database: {ex.Message}", isError: true); }
         finally { IsClearingDatabase = false; }
+    }
+
+    partial void OnThemeModeChanged(string value)
+    {
+        App.ApplyTheme(value);
+        // Persist immediately
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                var setting = await _db.AppSettings.FirstOrDefaultAsync(s => s.Key == "ThemeMode");
+                if (setting is not null)
+                    setting.Value = value;
+                else
+                    _db.AppSettings.Add(new Domain.Entities.AppSetting
+                        { Key = "ThemeMode", Value = value, UpdatedAt = DateTime.UtcNow });
+                await _db.SaveChangesAsync();
+            }
+            catch { /* ignore */ }
+        });
     }
 
     partial void OnAutoStartupChanged(bool value)

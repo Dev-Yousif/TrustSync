@@ -24,6 +24,7 @@
     <AvaloniaResource Include="app.ico" />
     <AvaloniaResource Include="Assets\logo.svg" />
     <AvaloniaResource Include="Assets\logo-icon.svg" />
+    <AvaloniaResource Include="Assets\logo-white.svg" />
     <Content Include="Assets\reminder-sound.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

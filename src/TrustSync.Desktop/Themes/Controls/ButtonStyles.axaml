@@ -1,10 +1,10 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <!-- Primary Button (dark bg, white text) -->
+  <!-- Primary Button (dark bg in light, light bg in dark) -->
   <ControlTheme x:Key="BtnPrimary" TargetType="Button">
-    <Setter Property="Background" Value="#18181B"/>
-    <Setter Property="Foreground" Value="#FFFFFF"/>
+    <Setter Property="Background" Value="{DynamicResource BtnPrimaryBgBrush}"/>
+    <Setter Property="Foreground" Value="{DynamicResource BtnPrimaryFgBrush}"/>
     <Setter Property="FontSize" Value="13"/>
     <Setter Property="FontWeight" Value="SemiBold"/>
     <Setter Property="CornerRadius" Value="10"/>
@@ -26,25 +26,25 @@
       </ControlTemplate>
     </Setter>
     <Style Selector="^:pointerover">
-      <Setter Property="Background" Value="#27272A"/>
+      <Setter Property="Background" Value="{DynamicResource BtnPrimaryHoverBrush}"/>
     </Style>
     <Style Selector="^:pressed">
-      <Setter Property="Background" Value="#3F3F46"/>
+      <Setter Property="Background" Value="{DynamicResource BtnPrimaryPressedBrush}"/>
     </Style>
     <Style Selector="^:disabled">
       <Setter Property="Opacity" Value="0.5"/>
     </Style>
   </ControlTheme>
 
-  <!-- Secondary Button (outlined, white bg) -->
+  <!-- Secondary Button (outlined) -->
   <ControlTheme x:Key="BtnSecondary" TargetType="Button">
-    <Setter Property="Background" Value="#FFFFFF"/>
-    <Setter Property="Foreground" Value="#374151"/>
+    <Setter Property="Background" Value="{DynamicResource BtnSecondaryBgBrush}"/>
+    <Setter Property="Foreground" Value="{DynamicResource BtnSecondaryFgBrush}"/>
     <Setter Property="FontSize" Value="13"/>
     <Setter Property="FontWeight" Value="Medium"/>
     <Setter Property="CornerRadius" Value="10"/>
     <Setter Property="Padding" Value="20,10"/>
-    <Setter Property="BorderBrush" Value="#E5E7EB"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource BtnSecondaryBorderBrush}"/>
     <Setter Property="BorderThickness" Value="1"/>
     <Setter Property="HorizontalContentAlignment" Value="Center"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -64,11 +64,11 @@
       </ControlTemplate>
     </Setter>
     <Style Selector="^:pointerover">
-      <Setter Property="Background" Value="#F9FAFB"/>
-      <Setter Property="BorderBrush" Value="#D1D5DB"/>
+      <Setter Property="Background" Value="{DynamicResource BtnSecondaryHoverBgBrush}"/>
+      <Setter Property="BorderBrush" Value="{DynamicResource BtnSecondaryHoverBorderBrush}"/>
     </Style>
     <Style Selector="^:pressed">
-      <Setter Property="Background" Value="#F3F4F6"/>
+      <Setter Property="Background" Value="{DynamicResource BtnSecondaryPressedBrush}"/>
     </Style>
     <Style Selector="^:disabled">
       <Setter Property="Opacity" Value="0.5"/>
@@ -77,8 +77,8 @@
 
   <!-- Danger Button (solid red bg) -->
   <ControlTheme x:Key="BtnDanger" TargetType="Button">
-    <Setter Property="Background" Value="#DC2626"/>
-    <Setter Property="Foreground" Value="#FFFFFF"/>
+    <Setter Property="Background" Value="{DynamicResource BtnDangerBgBrush}"/>
+    <Setter Property="Foreground" Value="{DynamicResource BtnDangerFgBrush}"/>
     <Setter Property="FontSize" Value="13"/>
     <Setter Property="FontWeight" Value="SemiBold"/>
     <Setter Property="CornerRadius" Value="10"/>
@@ -100,10 +100,10 @@
       </ControlTemplate>
     </Setter>
     <Style Selector="^:pointerover">
-      <Setter Property="Background" Value="#B91C1C"/>
+      <Setter Property="Background" Value="{DynamicResource BtnDangerHoverBrush}"/>
     </Style>
     <Style Selector="^:pressed">
-      <Setter Property="Background" Value="#991B1B"/>
+      <Setter Property="Background" Value="{DynamicResource BtnDangerPressedBrush}"/>
     </Style>
     <Style Selector="^:disabled">
       <Setter Property="Opacity" Value="0.5"/>

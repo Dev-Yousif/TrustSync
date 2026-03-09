@@ -2,7 +2,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 using Avalonia.Threading;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,6 +16,7 @@ using TrustSync.Desktop.ViewModels.Pages;
 using TrustSync.Desktop.ViewModels.Shell;
 using TrustSync.Desktop.Views.Auth;
 using TrustSync.Infrastructure;
+using TrustSync.Infrastructure.Persistence;
 
 namespace TrustSync.Desktop;
 
@@ -79,6 +82,9 @@ public partial class App : Avalonia.Application
 
             // Initialize database (migrate + seed)
             await Infrastructure.DependencyInjection.InitializeDatabaseAsync(Services);
+
+            // Load saved theme
+            await LoadThemeAsync();
 
             // Run auth flow
             var authenticated = await RunAuthFlowAsync();
@@ -248,6 +254,29 @@ public partial class App : Avalonia.Application
                 e.Cancel = true;
                 _mainWindow.Hide();
             }
+        };
+    }
+
+    private async Task LoadThemeAsync()
+    {
+        try
+        {
+            var db = Services.GetRequiredService<AppDbContext>();
+            var setting = await db.AppSettings.FirstOrDefaultAsync(s => s.Key == "ThemeMode");
+            var mode = setting?.Value ?? "Light";
+            ApplyTheme(mode);
+        }
+        catch { /* default to light */ }
+    }
+
+    public static void ApplyTheme(string mode)
+    {
+        var app = (App)Current!;
+        app.RequestedThemeVariant = mode switch
+        {
+            "Dark" => ThemeVariant.Dark,
+            "System" => ThemeVariant.Default,
+            _ => ThemeVariant.Light
         };
     }
 

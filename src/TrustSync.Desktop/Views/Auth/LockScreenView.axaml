@@ -10,16 +10,16 @@
     <StackPanel Spacing="16">
       <Border Width="52" Height="52" CornerRadius="14"
               HorizontalAlignment="Left"
-              Background="#F3F4F6" BorderBrush="#E5E7EB" BorderThickness="1">
-        <Path Data="{StaticResource IconLock}" Stroke="#374151" StrokeThickness="1.8"
+              Background="{DynamicResource BackgroundHoverBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1">
+        <Path Data="{StaticResource IconLock}" Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.8"
               Width="20" Height="20" Stretch="Uniform"
               HorizontalAlignment="Center" VerticalAlignment="Center"/>
       </Border>
       <StackPanel Spacing="8">
         <TextBlock Text="Session Locked" FontSize="26" FontWeight="Bold"
-                   Foreground="#111827" FontFamily="Trebuchet MS, Verdana, sans-serif"/>
+                   Foreground="{DynamicResource TextPrimaryBrush}" FontFamily="Trebuchet MS, Verdana, sans-serif"/>
         <TextBlock Text="Your session timed out. Enter your password to continue."
-                   FontSize="13.5" Foreground="#6B7280" LineHeight="20" TextWrapping="Wrap"
+                   FontSize="13.5" Foreground="{DynamicResource TextMutedBrush}" LineHeight="20" TextWrapping="Wrap"
                    FontFamily="Inter"/>
       </StackPanel>
     </StackPanel>
@@ -27,21 +27,21 @@
     <!-- Password input -->
     <StackPanel Spacing="8">
       <TextBlock Text="Password" FontSize="12" FontWeight="SemiBold"
-                 Foreground="#374151"/>
+                 Foreground="{DynamicResource TextSecondaryBrush}"/>
       <TextBox PasswordChar="&#x25CF;" Watermark="Enter your password"
                Text="{Binding Password}"
                Height="44" FontSize="14" Padding="14,0"
                VerticalContentAlignment="Center"
-               Background="White" Foreground="#111827"
-               BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="10"/>
+               Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+               BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" CornerRadius="10"/>
     </StackPanel>
 
     <!-- Error -->
     <Border IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-            Background="#FEF2F2" CornerRadius="10" Padding="14,10"
-            BorderBrush="#FECACA" BorderThickness="1">
+            Background="{DynamicResource ErrorTintBrush}" CornerRadius="10" Padding="14,10"
+            BorderBrush="{DynamicResource DangerBorderBrush}" BorderThickness="1">
       <TextBlock Text="{Binding ErrorMessage}"
-                 Foreground="#DC2626" FontSize="13" TextWrapping="Wrap"/>
+                 Foreground="{DynamicResource ErrorBrush}" FontSize="13" TextWrapping="Wrap"/>
     </Border>
 
     <!-- Unlock button -->
@@ -54,9 +54,9 @@
             IsEnabled="{Binding !IsBusy}"
             Cursor="Hand"
             BorderThickness="0"
-            Background="#202020">
+            Background="{DynamicResource AuthBtnGradientBrush}">
       <TextBlock Text="Unlock" HorizontalAlignment="Center" FontWeight="SemiBold"
-                 Foreground="White" FontSize="14"/>
+                 Foreground="{DynamicResource AuthBtnTextBrush}" FontSize="14"/>
     </Button>
 
   </StackPanel>

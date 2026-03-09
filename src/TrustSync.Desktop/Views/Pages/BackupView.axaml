@@ -14,21 +14,21 @@
   <ScrollViewer HorizontalScrollBarVisibility="Disabled">
     <StackPanel Spacing="16">
 
-      <Border Background="White" CornerRadius="14" Padding="20,16" BoxShadow="0 1 4 0 #00000008">
+      <Border Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="14" Padding="20,16" BoxShadow="0 1 4 0 #00000008">
         <StackPanel Spacing="14">
           <Grid ColumnDefinitions="*,Auto">
             <StackPanel Grid.Column="0" Spacing="2">
-              <TextBlock Text="BACKUP DIRECTORY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
-              <TextBlock Text="{Binding BackupDirectory}" FontSize="12" Foreground="#374151" TextTrimming="CharacterEllipsis"/>
+              <TextBlock Text="BACKUP DIRECTORY" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
+              <TextBlock Text="{Binding BackupDirectory}" FontSize="12" Foreground="{DynamicResource TextSecondaryBrush}" TextTrimming="CharacterEllipsis"/>
             </StackPanel>
             <Button Grid.Column="1" Click="OnChangeBackupDirectory"
-                    Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="1"
-                    Foreground="#374151" FontSize="12" CornerRadius="8" Padding="14,7" Cursor="Hand"
+                    Background="Transparent" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
+                    Foreground="{DynamicResource TextSecondaryBrush}" FontSize="12" CornerRadius="8" Padding="14,7" Cursor="Hand"
                     VerticalAlignment="Center">
               <TextBlock Text="Change Folder"/>
             </Button>
           </Grid>
-          <Border Height="1" Background="#F3F4F6"/>
+          <Border Height="1" Background="{DynamicResource BackgroundHoverBrush}"/>
           <StackPanel Orientation="Horizontal" Spacing="10">
             <Button Command="{Binding CreateBackupCommand}"
                     Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9"
@@ -39,12 +39,12 @@
               </StackPanel>
             </Button>
             <Button Click="OnImportBackup"
-                    Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="1"
-                    Foreground="#374151" FontSize="13" CornerRadius="8" Padding="18,9" Cursor="Hand"
+                    Background="Transparent" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
+                    Foreground="{DynamicResource TextSecondaryBrush}" FontSize="13" CornerRadius="8" Padding="18,9" Cursor="Hand"
                     IsEnabled="{Binding !IsBusy}">
               <StackPanel Orientation="Horizontal" Spacing="6">
                 <Path Data="M12 3v12M12 3l-4 4M12 3l4 4M4 15v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
-                      Stroke="#374151" StrokeThickness="1.6" Width="14" Height="14" Stretch="Uniform"/>
+                      Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.6" Width="14" Height="14" Stretch="Uniform"/>
                 <TextBlock Text="Import Backup"/>
               </StackPanel>
             </Button>
@@ -52,42 +52,42 @@
         </StackPanel>
       </Border>
 
-      <TextBlock Text="{Binding StatusMessage}" IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="#059669" FontSize="13" Margin="4,0"/>
-      <TextBlock Text="{Binding ErrorMessage}" IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="#DC2626" FontSize="13" Margin="4,0"/>
+      <TextBlock Text="{Binding StatusMessage}" IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="{DynamicResource SuccessBrush}" FontSize="13" Margin="4,0"/>
+      <TextBlock Text="{Binding ErrorMessage}" IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="{DynamicResource ErrorBrush}" FontSize="13" Margin="4,0"/>
 
-      <Border Background="White" CornerRadius="14" Padding="24,20" BoxShadow="0 1 4 0 #00000008">
+      <Border Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="14" Padding="24,20" BoxShadow="0 1 4 0 #00000008">
         <StackPanel Spacing="4">
           <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
-            <TextBlock Text="Backup History" FontSize="16" FontWeight="SemiBold" Foreground="#111827"/>
-            <Border Grid.Column="1" Background="#F9FAFB" CornerRadius="6" Padding="10,4">
-              <TextBlock Text="{Binding Backups.Count, StringFormat={}{0} backups}" FontSize="11" Foreground="#6B7280" FontWeight="Medium"/>
+            <TextBlock Text="Backup History" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+            <Border Grid.Column="1" Background="{DynamicResource BackgroundSecondaryBrush}" CornerRadius="6" Padding="10,4">
+              <TextBlock Text="{Binding Backups.Count, StringFormat={}{0} backups}" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" FontWeight="Medium"/>
             </Border>
           </Grid>
 
           <ItemsControl ItemsSource="{Binding Backups}">
             <ItemsControl.ItemTemplate>
               <DataTemplate>
-                <Border Padding="0,12" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
+                <Border Padding="0,12" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,0,0,1">
                   <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto,Auto">
-                    <Border Grid.Column="0" Width="38" Height="38" CornerRadius="10" Background="#F3F4F6" Margin="0,0,14,0" VerticalAlignment="Center">
-                      <Path Data="{StaticResource IconBackup}" Stroke="#374151" StrokeThickness="1.8" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border Grid.Column="0" Width="38" Height="38" CornerRadius="10" Background="{DynamicResource BackgroundHoverBrush}" Margin="0,0,14,0" VerticalAlignment="Center">
+                      <Path Data="{StaticResource IconBackup}" Stroke="{DynamicResource TextSecondaryBrush}" StrokeThickness="1.8" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
-                      <TextBlock Text="{Binding FileName}" FontSize="13.5" FontWeight="SemiBold" Foreground="#111827"/>
-                      <TextBlock Text="{Binding Notes}" FontSize="11" Foreground="#9CA3AF" IsVisible="{Binding Notes, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                      <TextBlock Text="{Binding FileName}" FontSize="13.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                      <TextBlock Text="{Binding Notes}" FontSize="11" Foreground="{DynamicResource TextLightBrush}" IsVisible="{Binding Notes, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
                     </StackPanel>
-                    <TextBlock Grid.Column="2" Text="{Binding CreatedAt, StringFormat=\{0:MMM dd\, HH:mm\}}" FontSize="12" Foreground="#9CA3AF" VerticalAlignment="Center" Margin="16,0"/>
-                    <Border Grid.Column="3" Background="#F9FAFB" CornerRadius="4" Padding="6,2" VerticalAlignment="Center" Margin="8,0">
-                      <TextBlock Text="{Binding FileSizeBytes, StringFormat={}{0:N0} bytes}" FontSize="10" Foreground="#6B7280"/>
+                    <TextBlock Grid.Column="2" Text="{Binding CreatedAt, StringFormat=\{0:MMM dd\, HH:mm\}}" FontSize="12" Foreground="{DynamicResource TextLightBrush}" VerticalAlignment="Center" Margin="16,0"/>
+                    <Border Grid.Column="3" Background="{DynamicResource BackgroundSecondaryBrush}" CornerRadius="4" Padding="6,2" VerticalAlignment="Center" Margin="8,0">
+                      <TextBlock Text="{Binding FileSizeBytes, StringFormat={}{0:N0} bytes}" FontSize="10" Foreground="{DynamicResource TextMutedBrush}"/>
                     </Border>
                     <Button Grid.Column="4" Command="{Binding $parent[ItemsControl].((vm:BackupViewModel)DataContext).OpenFileLocationCommand}" CommandParameter="{Binding}"
                             Background="Transparent" BorderThickness="0" Padding="8,5" CornerRadius="6" Cursor="Hand" VerticalAlignment="Center"
                             ToolTip.Tip="Open file location">
                       <Path Data="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-6l-2-2H5a2 2 0 0 0-2 2z"
-                            Stroke="#6B7280" StrokeThickness="1.5" Width="16" Height="16" Stretch="Uniform"/>
+                            Stroke="{DynamicResource TextMutedBrush}" StrokeThickness="1.5" Width="16" Height="16" Stretch="Uniform"/>
                     </Button>
                     <Button Grid.Column="5" Command="{Binding $parent[ItemsControl].((vm:BackupViewModel)DataContext).RequestDeleteBackupCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="8,5" CornerRadius="6" Cursor="Hand" VerticalAlignment="Center">
-                      <TextBlock Text="Del" FontSize="11" Foreground="#DC2626" FontWeight="Medium"/>
+                      <TextBlock Text="Del" FontSize="11" Foreground="{DynamicResource ErrorBrush}" FontWeight="Medium"/>
                     </Button>
                   </Grid>
                 </Border>
@@ -96,11 +96,11 @@
           </ItemsControl>
 
           <StackPanel IsVisible="{Binding !Backups.Count}" HorizontalAlignment="Center" Margin="0,40" Spacing="10">
-            <Border Width="48" Height="48" CornerRadius="12" Background="#F3F4F6" HorizontalAlignment="Center">
-              <Path Data="{StaticResource IconBackup}" Stroke="#9CA3AF" StrokeThickness="1.8" Width="20" Height="20" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border Width="48" Height="48" CornerRadius="12" Background="{DynamicResource BackgroundHoverBrush}" HorizontalAlignment="Center">
+              <Path Data="{StaticResource IconBackup}" Stroke="{DynamicResource TextLightBrush}" StrokeThickness="1.8" Width="20" Height="20" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
-            <TextBlock Text="No backups yet" FontSize="16" FontWeight="SemiBold" Foreground="#111827" HorizontalAlignment="Center"/>
-            <TextBlock Text="Create your first backup to protect your data." FontSize="13" Foreground="#9CA3AF" HorizontalAlignment="Center"/>
+            <TextBlock Text="No backups yet" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+            <TextBlock Text="Create your first backup to protect your data." FontSize="13" Foreground="{DynamicResource TextLightBrush}" HorizontalAlignment="Center"/>
             <Button Command="{Binding CreateBackupCommand}"
                     Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9"
                     HorizontalAlignment="Center" Margin="0,8,0,0" IsEnabled="{Binding !IsBusy}">
@@ -113,28 +113,28 @@
     </StackPanel>
   </ScrollViewer>
 
-  <Border IsVisible="{Binding IsBusy}" Background="#FFFFFF90" CornerRadius="12">
+  <Border IsVisible="{Binding IsBusy}" Background="{DynamicResource BackgroundOverlayBrush}" CornerRadius="12">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
-      <ProgressBar IsIndeterminate="True" Width="120" Foreground="#202020" Background="#E5E7EB"/>
-      <TextBlock Text="Loading..." FontSize="13" Foreground="#6B7280" HorizontalAlignment="Center"/>
+      <ProgressBar IsIndeterminate="True" Width="120" Foreground="{DynamicResource AccentPrimaryBrush}" Background="{DynamicResource BorderDefaultBrush}"/>
+      <TextBlock Text="Loading..." FontSize="13" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center"/>
     </StackPanel>
   </Border>
   </Panel>
 
   <!-- Confirm Dialog -->
-  <Border IsVisible="{Binding IsConfirmDialogOpen}" Background="#00000050" CornerRadius="12">
-    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
+  <Border IsVisible="{Binding IsConfirmDialogOpen}" Background="{DynamicResource BackgroundModalBrush}" CornerRadius="12">
+    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="16" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
       <StackPanel>
         <StackPanel Margin="32,32,32,0" Spacing="14" HorizontalAlignment="Center">
-          <Border Width="56" Height="56" CornerRadius="28" Background="#FEF2F2" HorizontalAlignment="Center">
-            <Border Width="36" Height="36" CornerRadius="18" Background="#FEE2E2" HorizontalAlignment="Center" VerticalAlignment="Center">
-              <TextBlock Text="!" FontSize="22" FontWeight="Bold" Foreground="#DC2626" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          <Border Width="56" Height="56" CornerRadius="28" Background="{DynamicResource ErrorTintBrush}" HorizontalAlignment="Center">
+            <Border Width="36" Height="36" CornerRadius="18" Background="{DynamicResource ErrorTintBrush}" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <TextBlock Text="!" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource ErrorBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
           </Border>
-          <TextBlock Text="{Binding ConfirmDialogTitle}" FontSize="17" FontWeight="Bold" Foreground="#111827" HorizontalAlignment="Center" TextAlignment="Center"/>
-          <TextBlock Text="{Binding ConfirmDialogMessage}" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap" TextAlignment="Center" LineHeight="20" Margin="0,0,0,4"/>
+          <TextBlock Text="{Binding ConfirmDialogTitle}" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" TextAlignment="Center"/>
+          <TextBlock Text="{Binding ConfirmDialogMessage}" FontSize="13" Foreground="{DynamicResource TextMutedBrush}" TextWrapping="Wrap" TextAlignment="Center" LineHeight="20" Margin="0,0,0,4"/>
         </StackPanel>
-        <Border Margin="0,24,0,0" Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0" Background="#FAFBFC">
+        <Border Margin="0,24,0,0" Padding="24,18" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,1,0,0" Background="{DynamicResource BackgroundSecondaryBrush}">
           <Grid ColumnDefinitions="*,10,*">
             <Button Grid.Column="0" Command="{Binding ConfirmDialogNoCommand}"
                     Theme="{StaticResource BtnSecondary}"
@@ -152,8 +152,8 @@
     </Border>
   </Border>
 
-  <Border IsVisible="{Binding IsToastVisible}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="16,10" CornerRadius="10" Background="#FFFFFF" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 4 16 0 #40000000">
-    <TextBlock Text="{Binding ToastMessage}" FontSize="13" Foreground="#111827"/>
+  <Border IsVisible="{Binding IsToastVisible}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="16,10" CornerRadius="10" Background="{DynamicResource BackgroundPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" BoxShadow="0 4 16 0 #40000000">
+    <TextBlock Text="{Binding ToastMessage}" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}"/>
   </Border>
 
   </Panel>

@@ -8,10 +8,10 @@
 
     <!-- Footer — pinned to bottom -->
     <StackPanel DockPanel.Dock="Bottom" Spacing="5" HorizontalAlignment="Center" Margin="0,0,0,20">
-      <TextBlock Text="v1.1.0" FontSize="10.5" Foreground="#9CA3AF" HorizontalAlignment="Center"/>
+      <TextBlock Text="v1.2.0" FontSize="10.5" Foreground="{DynamicResource TextLightBrush}" HorizontalAlignment="Center"/>
       <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center">
-        <TextBlock Text="Developed by" FontSize="10.5" Foreground="#9CA3AF"/>
-        <TextBlock Text="Yousif Abdul Muti" FontSize="10.5" Foreground="#6B7280" FontWeight="SemiBold"
+        <TextBlock Text="Developed by" FontSize="10.5" Foreground="{DynamicResource TextLightBrush}"/>
+        <TextBlock Text="Yousif Abdul Muti" FontSize="10.5" Foreground="{DynamicResource TextMutedBrush}" FontWeight="SemiBold"
                    Cursor="Hand" TextDecorations="Underline"
                    Tag="https://www.linkedin.com/in/yousif-abdul-muti-101b273a8"
                    PointerPressed="OnDeveloperLinkClick"/>
@@ -24,37 +24,37 @@
       <!-- Header -->
       <StackPanel Spacing="8">
         <TextBlock Text="Welcome Back" FontSize="26" FontWeight="Bold"
-                   Foreground="#111827" FontFamily="Trebuchet MS, Verdana, sans-serif"/>
+                   Foreground="{DynamicResource TextPrimaryBrush}" FontFamily="Trebuchet MS, Verdana, sans-serif"/>
         <TextBlock Text="Enter your master password to unlock your account."
-                   FontSize="13.5" Foreground="#6B7280" LineHeight="20" FontFamily="Inter"/>
+                   FontSize="13.5" Foreground="{DynamicResource TextMutedBrush}" LineHeight="20" FontFamily="Inter"/>
       </StackPanel>
 
       <!-- Password input -->
       <StackPanel Spacing="8">
         <TextBlock Text="Master Password" FontSize="12" FontWeight="SemiBold"
-                   Foreground="#374151"/>
+                   Foreground="{DynamicResource TextSecondaryBrush}"/>
         <TextBox PasswordChar="&#x25CF;" Watermark="Enter your password"
                  Text="{Binding Password}"
                  Height="44" FontSize="14" Padding="14,0"
                  VerticalContentAlignment="Center"
-                 Background="White" Foreground="#111827"
-                 BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="10"/>
+                 Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                 BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" CornerRadius="10"/>
       </StackPanel>
 
       <!-- Error message -->
       <Border IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-              Background="#FEF2F2" CornerRadius="10" Padding="14,10"
-              BorderBrush="#FECACA" BorderThickness="1">
+              Background="{DynamicResource ErrorTintBrush}" CornerRadius="10" Padding="14,10"
+              BorderBrush="{DynamicResource DangerBorderBrush}" BorderThickness="1">
         <TextBlock Text="{Binding ErrorMessage}"
-                   Foreground="#DC2626" FontSize="13" TextWrapping="Wrap"/>
+                   Foreground="{DynamicResource ErrorBrush}" FontSize="13" TextWrapping="Wrap"/>
       </Border>
 
       <!-- Cooldown indicator -->
       <Border IsVisible="{Binding IsCoolingDown}"
-              Background="#FFFBEB" CornerRadius="10" Padding="14,10"
-              BorderBrush="#FDE68A" BorderThickness="1">
+              Background="{DynamicResource WarningTintBrush}" CornerRadius="10" Padding="14,10"
+              BorderBrush="{DynamicResource WarningBrush}" BorderThickness="1">
         <TextBlock Text="Too many failed attempts. Please wait before trying again."
-                   Foreground="#D97706" FontSize="13" TextWrapping="Wrap"/>
+                   Foreground="{DynamicResource WarningBrush}" FontSize="13" TextWrapping="Wrap"/>
       </Border>
 
       <!-- Login button -->
@@ -67,23 +67,23 @@
               IsEnabled="{Binding !IsBusy}"
               Cursor="Hand"
               BorderThickness="0"
-              Background="#202020">
+              Background="{DynamicResource AuthBtnGradientBrush}">
         <Panel>
           <TextBlock Text="Unlock" IsVisible="{Binding !IsBusy}"
                      HorizontalAlignment="Center" FontWeight="SemiBold"
-                     Foreground="White" FontSize="14"/>
+                     Foreground="{DynamicResource AuthBtnTextBrush}" FontSize="14"/>
           <StackPanel Orientation="Horizontal" Spacing="8" IsVisible="{Binding IsBusy}"
                       HorizontalAlignment="Center">
             <ProgressBar IsIndeterminate="True" Width="18" Height="18"
-                         Foreground="White"/>
-            <TextBlock Text="Verifying..." FontWeight="SemiBold" Foreground="White"/>
+                         Foreground="{DynamicResource AuthBtnTextBrush}"/>
+            <TextBlock Text="Verifying..." FontWeight="SemiBold" Foreground="{DynamicResource AuthBtnTextBrush}"/>
           </StackPanel>
         </Panel>
       </Button>
 
       <!-- Subtle note -->
       <TextBlock Text="Your data is encrypted and stored locally."
-                 FontSize="11" Foreground="#9CA3AF" HorizontalAlignment="Center"
+                 FontSize="11" Foreground="{DynamicResource TextLightBrush}" HorizontalAlignment="Center"
                  Margin="0,4,0,0"/>
 
     </StackPanel>

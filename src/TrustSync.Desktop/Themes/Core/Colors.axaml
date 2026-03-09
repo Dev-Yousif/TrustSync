@@ -1,65 +1,346 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <!-- Background -->
-  <Color x:Key="BackgroundPrimary">#FFFFFF</Color>
-  <Color x:Key="BackgroundSecondary">#F9FAFB</Color>
-  <Color x:Key="BackgroundElevated">#FFFFFF</Color>
-  <Color x:Key="BackgroundHover">#F3F4F6</Color>
-  <Color x:Key="BackgroundInput">#FFFFFF</Color>
-  <Color x:Key="BackgroundSelected">#F5F5F5</Color>
+  <ResourceDictionary.ThemeDictionaries>
 
-  <!-- Text -->
-  <Color x:Key="TextPrimary">#111827</Color>
-  <Color x:Key="TextSecondary">#374151</Color>
-  <Color x:Key="TextMuted">#6B7280</Color>
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <!--  LIGHT THEME                                                    -->
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <ResourceDictionary x:Key="Light">
 
-  <!-- Accent -->
-  <Color x:Key="AccentPrimary">#202020</Color>
-  <Color x:Key="AccentPrimaryHover">#303030</Color>
+      <!-- Background -->
+      <Color x:Key="BackgroundPrimary">#FFFFFF</Color>
+      <Color x:Key="BackgroundSecondary">#F9FAFB</Color>
+      <Color x:Key="BackgroundElevated">#FFFFFF</Color>
+      <Color x:Key="BackgroundHover">#F3F4F6</Color>
+      <Color x:Key="BackgroundInput">#FFFFFF</Color>
+      <Color x:Key="BackgroundSelected">#F5F5F5</Color>
+      <Color x:Key="BackgroundMainContent">#F0F1F3</Color>
+      <Color x:Key="BackgroundOverlay">#FFFFFF90</Color>
+      <Color x:Key="BackgroundModal">#00000060</Color>
 
-  <!-- Semantic -->
-  <Color x:Key="Success">#059669</Color>
-  <Color x:Key="Warning">#D97706</Color>
-  <Color x:Key="Error">#DC2626</Color>
+      <!-- Text -->
+      <Color x:Key="TextPrimary">#111827</Color>
+      <Color x:Key="TextSecondary">#374151</Color>
+      <Color x:Key="TextMuted">#6B7280</Color>
+      <Color x:Key="TextLight">#9CA3AF</Color>
+      <Color x:Key="TextOnAccent">#FFFFFF</Color>
+      <Color x:Key="TextOnDanger">#FFFFFF</Color>
 
-  <!-- Semantic Tints -->
-  <Color x:Key="SuccessTint">#F0FDF4</Color>
-  <Color x:Key="WarningTint">#FFFBEB</Color>
-  <Color x:Key="ErrorTint">#FEF2F2</Color>
-  <Color x:Key="AccentTint">#F5F5F5</Color>
+      <!-- Accent -->
+      <Color x:Key="AccentPrimary">#202020</Color>
+      <Color x:Key="AccentPrimaryHover">#303030</Color>
+      <Color x:Key="AccentPrimaryPressed">#404040</Color>
 
-  <!-- Border -->
-  <Color x:Key="BorderDefault">#E5E7EB</Color>
-  <Color x:Key="BorderHover">#D1D5DB</Color>
+      <!-- Semantic -->
+      <Color x:Key="Success">#059669</Color>
+      <Color x:Key="Warning">#D97706</Color>
+      <Color x:Key="Error">#DC2626</Color>
+      <Color x:Key="SuccessTint">#F0FDF4</Color>
+      <Color x:Key="WarningTint">#FFFBEB</Color>
+      <Color x:Key="ErrorTint">#FEF2F2</Color>
+      <Color x:Key="AccentTint">#F5F5F5</Color>
 
-  <!-- Sidebar -->
-  <Color x:Key="SidebarBackground">#FFFFFF</Color>
-  <Color x:Key="SidebarBorder">#E5E7EB</Color>
+      <!-- Border -->
+      <Color x:Key="BorderDefault">#E5E7EB</Color>
+      <Color x:Key="BorderHover">#D1D5DB</Color>
 
-  <!-- Brushes -->
-  <SolidColorBrush x:Key="BackgroundPrimaryBrush" Color="{StaticResource BackgroundPrimary}"/>
-  <SolidColorBrush x:Key="BackgroundSecondaryBrush" Color="{StaticResource BackgroundSecondary}"/>
-  <SolidColorBrush x:Key="BackgroundElevatedBrush" Color="{StaticResource BackgroundElevated}"/>
-  <SolidColorBrush x:Key="BackgroundHoverBrush" Color="{StaticResource BackgroundHover}"/>
-  <SolidColorBrush x:Key="BackgroundInputBrush" Color="{StaticResource BackgroundInput}"/>
-  <SolidColorBrush x:Key="BackgroundSelectedBrush" Color="{StaticResource BackgroundSelected}"/>
+      <!-- Sidebar -->
+      <Color x:Key="SidebarBackground">#FFFFFF</Color>
+      <Color x:Key="SidebarBorder">#E5E7EB</Color>
 
-  <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
-  <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}"/>
-  <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}"/>
+      <!-- Navigation -->
+      <Color x:Key="NavGroupLabel">#C0C5CE</Color>
+      <Color x:Key="NavItemText">#4B5563</Color>
+      <Color x:Key="NavItemIcon">#9CA3AF</Color>
 
-  <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource AccentPrimary}"/>
-  <SolidColorBrush x:Key="AccentPrimaryHoverBrush" Color="{StaticResource AccentPrimaryHover}"/>
+      <!-- Special -->
+      <Color x:Key="DangerBorder">#FCA5A5</Color>
+      <Color x:Key="NotificationBg">#111827</Color>
+      <Color x:Key="NotificationIcon">#FBBF24</Color>
+      <Color x:Key="CaretColor">#202020</Color>
+      <Color x:Key="SelectionColor">#20202040</Color>
 
-  <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}"/>
-  <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource Warning}"/>
-  <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}"/>
+      <!-- Button: Primary -->
+      <Color x:Key="BtnPrimaryBg">#18181B</Color>
+      <Color x:Key="BtnPrimaryFg">#FFFFFF</Color>
+      <Color x:Key="BtnPrimaryHover">#27272A</Color>
+      <Color x:Key="BtnPrimaryPressed">#3F3F46</Color>
 
-  <SolidColorBrush x:Key="BorderDefaultBrush" Color="{StaticResource BorderDefault}"/>
-  <SolidColorBrush x:Key="BorderHoverBrush" Color="{StaticResource BorderHover}"/>
+      <!-- Button: Secondary -->
+      <Color x:Key="BtnSecondaryBg">#FFFFFF</Color>
+      <Color x:Key="BtnSecondaryFg">#374151</Color>
+      <Color x:Key="BtnSecondaryBorder">#E5E7EB</Color>
+      <Color x:Key="BtnSecondaryHoverBg">#F9FAFB</Color>
+      <Color x:Key="BtnSecondaryHoverBorder">#D1D5DB</Color>
+      <Color x:Key="BtnSecondaryPressed">#F3F4F6</Color>
 
-  <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource SidebarBackground}"/>
-  <SolidColorBrush x:Key="SidebarBorderBrush" Color="{StaticResource SidebarBorder}"/>
+      <!-- Button: Danger -->
+      <Color x:Key="BtnDangerBg">#DC2626</Color>
+      <Color x:Key="BtnDangerFg">#FFFFFF</Color>
+      <Color x:Key="BtnDangerHover">#B91C1C</Color>
+      <Color x:Key="BtnDangerPressed">#991B1B</Color>
+
+      <!-- ── Brushes ── -->
+      <SolidColorBrush x:Key="BackgroundPrimaryBrush" Color="{StaticResource BackgroundPrimary}"/>
+      <SolidColorBrush x:Key="BackgroundSecondaryBrush" Color="{StaticResource BackgroundSecondary}"/>
+      <SolidColorBrush x:Key="BackgroundElevatedBrush" Color="{StaticResource BackgroundElevated}"/>
+      <SolidColorBrush x:Key="BackgroundHoverBrush" Color="{StaticResource BackgroundHover}"/>
+      <SolidColorBrush x:Key="BackgroundInputBrush" Color="{StaticResource BackgroundInput}"/>
+      <SolidColorBrush x:Key="BackgroundSelectedBrush" Color="{StaticResource BackgroundSelected}"/>
+      <SolidColorBrush x:Key="BackgroundMainContentBrush" Color="{StaticResource BackgroundMainContent}"/>
+      <SolidColorBrush x:Key="BackgroundOverlayBrush" Color="{StaticResource BackgroundOverlay}"/>
+      <SolidColorBrush x:Key="BackgroundModalBrush" Color="{StaticResource BackgroundModal}"/>
+
+      <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
+      <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}"/>
+      <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}"/>
+      <SolidColorBrush x:Key="TextLightBrush" Color="{StaticResource TextLight}"/>
+      <SolidColorBrush x:Key="TextOnAccentBrush" Color="{StaticResource TextOnAccent}"/>
+      <SolidColorBrush x:Key="TextOnDangerBrush" Color="{StaticResource TextOnDanger}"/>
+
+      <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource AccentPrimary}"/>
+      <SolidColorBrush x:Key="AccentPrimaryHoverBrush" Color="{StaticResource AccentPrimaryHover}"/>
+      <SolidColorBrush x:Key="AccentPrimaryPressedBrush" Color="{StaticResource AccentPrimaryPressed}"/>
+
+      <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}"/>
+      <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource Warning}"/>
+      <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}"/>
+      <SolidColorBrush x:Key="SuccessTintBrush" Color="{StaticResource SuccessTint}"/>
+      <SolidColorBrush x:Key="WarningTintBrush" Color="{StaticResource WarningTint}"/>
+      <SolidColorBrush x:Key="ErrorTintBrush" Color="{StaticResource ErrorTint}"/>
+      <SolidColorBrush x:Key="AccentTintBrush" Color="{StaticResource AccentTint}"/>
+
+      <SolidColorBrush x:Key="BorderDefaultBrush" Color="{StaticResource BorderDefault}"/>
+      <SolidColorBrush x:Key="BorderHoverBrush" Color="{StaticResource BorderHover}"/>
+
+      <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource SidebarBackground}"/>
+      <SolidColorBrush x:Key="SidebarBorderBrush" Color="{StaticResource SidebarBorder}"/>
+
+      <SolidColorBrush x:Key="NavGroupLabelBrush" Color="{StaticResource NavGroupLabel}"/>
+      <SolidColorBrush x:Key="NavItemTextBrush" Color="{StaticResource NavItemText}"/>
+      <SolidColorBrush x:Key="NavItemIconBrush" Color="{StaticResource NavItemIcon}"/>
+
+      <SolidColorBrush x:Key="DangerBorderBrush" Color="{StaticResource DangerBorder}"/>
+      <SolidColorBrush x:Key="NotificationBgBrush" Color="{StaticResource NotificationBg}"/>
+      <SolidColorBrush x:Key="NotificationIconBrush" Color="{StaticResource NotificationIcon}"/>
+      <SolidColorBrush x:Key="CaretBrush" Color="{StaticResource CaretColor}"/>
+      <SolidColorBrush x:Key="SelectionBrush" Color="{StaticResource SelectionColor}"/>
+
+      <SolidColorBrush x:Key="BtnPrimaryBgBrush" Color="{StaticResource BtnPrimaryBg}"/>
+      <SolidColorBrush x:Key="BtnPrimaryFgBrush" Color="{StaticResource BtnPrimaryFg}"/>
+      <SolidColorBrush x:Key="BtnPrimaryHoverBrush" Color="{StaticResource BtnPrimaryHover}"/>
+      <SolidColorBrush x:Key="BtnPrimaryPressedBrush" Color="{StaticResource BtnPrimaryPressed}"/>
+
+      <SolidColorBrush x:Key="BtnSecondaryBgBrush" Color="{StaticResource BtnSecondaryBg}"/>
+      <SolidColorBrush x:Key="BtnSecondaryFgBrush" Color="{StaticResource BtnSecondaryFg}"/>
+      <SolidColorBrush x:Key="BtnSecondaryBorderBrush" Color="{StaticResource BtnSecondaryBorder}"/>
+      <SolidColorBrush x:Key="BtnSecondaryHoverBgBrush" Color="{StaticResource BtnSecondaryHoverBg}"/>
+      <SolidColorBrush x:Key="BtnSecondaryHoverBorderBrush" Color="{StaticResource BtnSecondaryHoverBorder}"/>
+      <SolidColorBrush x:Key="BtnSecondaryPressedBrush" Color="{StaticResource BtnSecondaryPressed}"/>
+
+      <SolidColorBrush x:Key="BtnDangerBgBrush" Color="{StaticResource BtnDangerBg}"/>
+      <SolidColorBrush x:Key="BtnDangerFgBrush" Color="{StaticResource BtnDangerFg}"/>
+      <SolidColorBrush x:Key="BtnDangerHoverBrush" Color="{StaticResource BtnDangerHover}"/>
+      <SolidColorBrush x:Key="BtnDangerPressedBrush" Color="{StaticResource BtnDangerPressed}"/>
+
+      <!-- Gradient: avatar fallback -->
+      <LinearGradientBrush x:Key="AvatarGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#202020" Offset="0"/>
+        <GradientStop Color="#404040" Offset="1"/>
+      </LinearGradientBrush>
+
+      <!-- Gradient: accent card (Net Balance, Quick Expense) -->
+      <LinearGradientBrush x:Key="AccentCardGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#202020" Offset="0"/>
+        <GradientStop Color="#404040" Offset="1"/>
+      </LinearGradientBrush>
+      <SolidColorBrush x:Key="AccentCardTextBrush" Color="#FFFFFF"/>
+      <SolidColorBrush x:Key="AccentCardSubtextBrush" Color="#D1D5DB"/>
+
+      <!-- Auth: branding panel -->
+      <SolidColorBrush x:Key="AuthBrandingBgBrush" Color="#F5F5F5"/>
+      <LinearGradientBrush x:Key="AuthBtnGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#202020" Offset="0"/>
+        <GradientStop Color="#404040" Offset="1"/>
+      </LinearGradientBrush>
+      <SolidColorBrush x:Key="AuthBtnTextBrush" Color="#FFFFFF"/>
+
+      <!-- Logo theme toggle -->
+      <x:Double x:Key="LogoDarkOpacity">1</x:Double>
+      <x:Double x:Key="LogoWhiteOpacity">0</x:Double>
+
+    </ResourceDictionary>
+
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <!--  DARK THEME                                                     -->
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <ResourceDictionary x:Key="Dark">
+
+      <!-- Background -->
+      <Color x:Key="BackgroundPrimary">#1F2023</Color>
+      <Color x:Key="BackgroundSecondary">#1A1B1E</Color>
+      <Color x:Key="BackgroundElevated">#262729</Color>
+      <Color x:Key="BackgroundHover">#2C2D31</Color>
+      <Color x:Key="BackgroundInput">#1F2023</Color>
+      <Color x:Key="BackgroundSelected">#2C2D31</Color>
+      <Color x:Key="BackgroundMainContent">#151618</Color>
+      <Color x:Key="BackgroundOverlay">#1F202390</Color>
+      <Color x:Key="BackgroundModal">#00000080</Color>
+
+      <!-- Text -->
+      <Color x:Key="TextPrimary">#E3E3E6</Color>
+      <Color x:Key="TextSecondary">#A0A0A6</Color>
+      <Color x:Key="TextMuted">#6E6E75</Color>
+      <Color x:Key="TextLight">#505058</Color>
+      <Color x:Key="TextOnAccent">#1A1B1E</Color>
+      <Color x:Key="TextOnDanger">#FFFFFF</Color>
+
+      <!-- Accent -->
+      <Color x:Key="AccentPrimary">#E3E3E6</Color>
+      <Color x:Key="AccentPrimaryHover">#D0D0D6</Color>
+      <Color x:Key="AccentPrimaryPressed">#BDBDC3</Color>
+
+      <!-- Semantic -->
+      <Color x:Key="Success">#34D399</Color>
+      <Color x:Key="Warning">#FBBF24</Color>
+      <Color x:Key="Error">#EF4444</Color>
+      <Color x:Key="SuccessTint">#0F2D1E</Color>
+      <Color x:Key="WarningTint">#2D210C</Color>
+      <Color x:Key="ErrorTint">#2D1114</Color>
+      <Color x:Key="AccentTint">#2C2D31</Color>
+
+      <!-- Border -->
+      <Color x:Key="BorderDefault">#2C2D31</Color>
+      <Color x:Key="BorderHover">#3C3D42</Color>
+
+      <!-- Sidebar -->
+      <Color x:Key="SidebarBackground">#1A1B1E</Color>
+      <Color x:Key="SidebarBorder">#2C2D31</Color>
+
+      <!-- Navigation -->
+      <Color x:Key="NavGroupLabel">#505058</Color>
+      <Color x:Key="NavItemText">#8A8A92</Color>
+      <Color x:Key="NavItemIcon">#5A5A62</Color>
+
+      <!-- Special -->
+      <Color x:Key="DangerBorder">#7F1D1D</Color>
+      <Color x:Key="NotificationBg">#262729</Color>
+      <Color x:Key="NotificationIcon">#FBBF24</Color>
+      <Color x:Key="CaretColor">#E3E3E6</Color>
+      <Color x:Key="SelectionColor">#E3E3E640</Color>
+
+      <!-- Button: Primary -->
+      <Color x:Key="BtnPrimaryBg">#E3E3E6</Color>
+      <Color x:Key="BtnPrimaryFg">#1A1B1E</Color>
+      <Color x:Key="BtnPrimaryHover">#D0D0D6</Color>
+      <Color x:Key="BtnPrimaryPressed">#BDBDC3</Color>
+
+      <!-- Button: Secondary -->
+      <Color x:Key="BtnSecondaryBg">#1F2023</Color>
+      <Color x:Key="BtnSecondaryFg">#A0A0A6</Color>
+      <Color x:Key="BtnSecondaryBorder">#2C2D31</Color>
+      <Color x:Key="BtnSecondaryHoverBg">#262729</Color>
+      <Color x:Key="BtnSecondaryHoverBorder">#3C3D42</Color>
+      <Color x:Key="BtnSecondaryPressed">#2C2D31</Color>
+
+      <!-- Button: Danger -->
+      <Color x:Key="BtnDangerBg">#DC2626</Color>
+      <Color x:Key="BtnDangerFg">#FFFFFF</Color>
+      <Color x:Key="BtnDangerHover">#B91C1C</Color>
+      <Color x:Key="BtnDangerPressed">#991B1B</Color>
+
+      <!-- ── Brushes ── -->
+      <SolidColorBrush x:Key="BackgroundPrimaryBrush" Color="{StaticResource BackgroundPrimary}"/>
+      <SolidColorBrush x:Key="BackgroundSecondaryBrush" Color="{StaticResource BackgroundSecondary}"/>
+      <SolidColorBrush x:Key="BackgroundElevatedBrush" Color="{StaticResource BackgroundElevated}"/>
+      <SolidColorBrush x:Key="BackgroundHoverBrush" Color="{StaticResource BackgroundHover}"/>
+      <SolidColorBrush x:Key="BackgroundInputBrush" Color="{StaticResource BackgroundInput}"/>
+      <SolidColorBrush x:Key="BackgroundSelectedBrush" Color="{StaticResource BackgroundSelected}"/>
+      <SolidColorBrush x:Key="BackgroundMainContentBrush" Color="{StaticResource BackgroundMainContent}"/>
+      <SolidColorBrush x:Key="BackgroundOverlayBrush" Color="{StaticResource BackgroundOverlay}"/>
+      <SolidColorBrush x:Key="BackgroundModalBrush" Color="{StaticResource BackgroundModal}"/>
+
+      <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
+      <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}"/>
+      <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMuted}"/>
+      <SolidColorBrush x:Key="TextLightBrush" Color="{StaticResource TextLight}"/>
+      <SolidColorBrush x:Key="TextOnAccentBrush" Color="{StaticResource TextOnAccent}"/>
+      <SolidColorBrush x:Key="TextOnDangerBrush" Color="{StaticResource TextOnDanger}"/>
+
+      <SolidColorBrush x:Key="AccentPrimaryBrush" Color="{StaticResource AccentPrimary}"/>
+      <SolidColorBrush x:Key="AccentPrimaryHoverBrush" Color="{StaticResource AccentPrimaryHover}"/>
+      <SolidColorBrush x:Key="AccentPrimaryPressedBrush" Color="{StaticResource AccentPrimaryPressed}"/>
+
+      <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}"/>
+      <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource Warning}"/>
+      <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}"/>
+      <SolidColorBrush x:Key="SuccessTintBrush" Color="{StaticResource SuccessTint}"/>
+      <SolidColorBrush x:Key="WarningTintBrush" Color="{StaticResource WarningTint}"/>
+      <SolidColorBrush x:Key="ErrorTintBrush" Color="{StaticResource ErrorTint}"/>
+      <SolidColorBrush x:Key="AccentTintBrush" Color="{StaticResource AccentTint}"/>
+
+      <SolidColorBrush x:Key="BorderDefaultBrush" Color="{StaticResource BorderDefault}"/>
+      <SolidColorBrush x:Key="BorderHoverBrush" Color="{StaticResource BorderHover}"/>
+
+      <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="{StaticResource SidebarBackground}"/>
+      <SolidColorBrush x:Key="SidebarBorderBrush" Color="{StaticResource SidebarBorder}"/>
+
+      <SolidColorBrush x:Key="NavGroupLabelBrush" Color="{StaticResource NavGroupLabel}"/>
+      <SolidColorBrush x:Key="NavItemTextBrush" Color="{StaticResource NavItemText}"/>
+      <SolidColorBrush x:Key="NavItemIconBrush" Color="{StaticResource NavItemIcon}"/>
+
+      <SolidColorBrush x:Key="DangerBorderBrush" Color="{StaticResource DangerBorder}"/>
+      <SolidColorBrush x:Key="NotificationBgBrush" Color="{StaticResource NotificationBg}"/>
+      <SolidColorBrush x:Key="NotificationIconBrush" Color="{StaticResource NotificationIcon}"/>
+      <SolidColorBrush x:Key="CaretBrush" Color="{StaticResource CaretColor}"/>
+      <SolidColorBrush x:Key="SelectionBrush" Color="{StaticResource SelectionColor}"/>
+
+      <SolidColorBrush x:Key="BtnPrimaryBgBrush" Color="{StaticResource BtnPrimaryBg}"/>
+      <SolidColorBrush x:Key="BtnPrimaryFgBrush" Color="{StaticResource BtnPrimaryFg}"/>
+      <SolidColorBrush x:Key="BtnPrimaryHoverBrush" Color="{StaticResource BtnPrimaryHover}"/>
+      <SolidColorBrush x:Key="BtnPrimaryPressedBrush" Color="{StaticResource BtnPrimaryPressed}"/>
+
+      <SolidColorBrush x:Key="BtnSecondaryBgBrush" Color="{StaticResource BtnSecondaryBg}"/>
+      <SolidColorBrush x:Key="BtnSecondaryFgBrush" Color="{StaticResource BtnSecondaryFg}"/>
+      <SolidColorBrush x:Key="BtnSecondaryBorderBrush" Color="{StaticResource BtnSecondaryBorder}"/>
+      <SolidColorBrush x:Key="BtnSecondaryHoverBgBrush" Color="{StaticResource BtnSecondaryHoverBg}"/>
+      <SolidColorBrush x:Key="BtnSecondaryHoverBorderBrush" Color="{StaticResource BtnSecondaryHoverBorder}"/>
+      <SolidColorBrush x:Key="BtnSecondaryPressedBrush" Color="{StaticResource BtnSecondaryPressed}"/>
+
+      <SolidColorBrush x:Key="BtnDangerBgBrush" Color="{StaticResource BtnDangerBg}"/>
+      <SolidColorBrush x:Key="BtnDangerFgBrush" Color="{StaticResource BtnDangerFg}"/>
+      <SolidColorBrush x:Key="BtnDangerHoverBrush" Color="{StaticResource BtnDangerHover}"/>
+      <SolidColorBrush x:Key="BtnDangerPressedBrush" Color="{StaticResource BtnDangerPressed}"/>
+
+      <!-- Gradient: avatar fallback -->
+      <LinearGradientBrush x:Key="AvatarGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#505058" Offset="0"/>
+        <GradientStop Color="#2C2D31" Offset="1"/>
+      </LinearGradientBrush>
+
+      <!-- Gradient: accent card (Net Balance, Quick Expense) -->
+      <LinearGradientBrush x:Key="AccentCardGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#FFFFFF" Offset="0"/>
+        <GradientStop Color="#E8E8EC" Offset="1"/>
+      </LinearGradientBrush>
+      <SolidColorBrush x:Key="AccentCardTextBrush" Color="#1A1B1E"/>
+      <SolidColorBrush x:Key="AccentCardSubtextBrush" Color="#6B6B72"/>
+
+      <!-- Auth: branding panel -->
+      <SolidColorBrush x:Key="AuthBrandingBgBrush" Color="#1A1B1E"/>
+      <LinearGradientBrush x:Key="AuthBtnGradientBrush" StartPoint="0%,0%" EndPoint="100%,100%">
+        <GradientStop Color="#E3E3E6" Offset="0"/>
+        <GradientStop Color="#D0D0D4" Offset="1"/>
+      </LinearGradientBrush>
+      <SolidColorBrush x:Key="AuthBtnTextBrush" Color="#1A1B1E"/>
+
+      <!-- Logo theme toggle -->
+      <x:Double x:Key="LogoDarkOpacity">0</x:Double>
+      <x:Double x:Key="LogoWhiteOpacity">1</x:Double>
+
+    </ResourceDictionary>
+
+  </ResourceDictionary.ThemeDictionaries>
 
 </ResourceDictionary>

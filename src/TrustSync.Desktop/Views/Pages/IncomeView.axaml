@@ -18,29 +18,29 @@
     <StackPanel Spacing="16">
 
       <!-- ROW 1: Action Bar inside a card -->
-      <Border Background="White" CornerRadius="14" Padding="20,16"
+      <Border Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="14" Padding="20,16"
               BoxShadow="0 1 4 0 #00000008">
         <StackPanel Spacing="14">
           <Grid ColumnDefinitions="*,Auto,Auto">
             <TextBox Text="{Binding SearchText}" Watermark="Search income..."
                      Width="300" HorizontalAlignment="Left"
-                     Background="#F9FAFB" BorderBrush="#E5E7EB" BorderThickness="1"
+                     Background="{DynamicResource BackgroundSecondaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                      CornerRadius="8" Padding="12,0" Height="38" FontSize="13"
                      VerticalContentAlignment="Center"/>
             <!-- Filter Toggle Button -->
             <Button Grid.Column="1" Command="{Binding ToggleFilterCommand}"
                     Background="Transparent"
-                    BorderBrush="#E5E7EB" BorderThickness="1"
+                    BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                     CornerRadius="8" Padding="12,8" Cursor="Hand" Margin="0,0,8,0">
               <StackPanel Orientation="Horizontal" Spacing="6">
-                <Path Data="{StaticResource IconSettings}" Stroke="#6B7280" StrokeThickness="1.8"
+                <Path Data="{StaticResource IconSettings}" Stroke="{DynamicResource TextMutedBrush}" StrokeThickness="1.8"
                       Width="14" Height="14" Stretch="Uniform" VerticalAlignment="Center"/>
-                <TextBlock Text="Filters" FontSize="12" FontWeight="Medium" Foreground="#374151"
+                <TextBlock Text="Filters" FontSize="12" FontWeight="Medium" Foreground="{DynamicResource TextSecondaryBrush}"
                            VerticalAlignment="Center"/>
-                <Border Background="#202020" CornerRadius="8" Padding="6,1" Margin="2,0,0,0"
+                <Border Background="{DynamicResource AccentPrimaryBrush}" CornerRadius="8" Padding="6,1" Margin="2,0,0,0"
                         IsVisible="{Binding ActiveFilterCount}">
                   <TextBlock Text="{Binding ActiveFilterCount}" FontSize="10" FontWeight="Bold"
-                             Foreground="White"/>
+                             Foreground="{DynamicResource TextOnAccentBrush}"/>
                 </Border>
               </StackPanel>
             </Button>
@@ -55,20 +55,20 @@
 
           <!-- Advanced Filter Panel -->
           <Border IsVisible="{Binding IsFilterOpen}"
-                  Background="#FAFBFC" CornerRadius="12" Padding="20,16"
-                  BorderBrush="#E5E7EB" BorderThickness="1">
+                  Background="{DynamicResource BackgroundSecondaryBrush}" CornerRadius="12" Padding="20,16"
+                  BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1">
             <StackPanel Spacing="14">
-              <TextBlock Text="ADVANCED FILTERS" FontSize="11" FontWeight="Bold" Foreground="#9CA3AF"
+              <TextBlock Text="ADVANCED FILTERS" FontSize="11" FontWeight="Bold" Foreground="{DynamicResource TextLightBrush}"
                          LetterSpacing="1"/>
 
               <!-- Row 1: Date Range -->
               <Grid ColumnDefinitions="*,12,*">
                 <StackPanel Grid.Column="0" Spacing="6">
-                  <TextBlock Text="FROM DATE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                  <TextBlock Text="FROM DATE" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                   <DatePicker SelectedDate="{Binding FilterDateFrom}" HorizontalAlignment="Stretch"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Spacing="6">
-                  <TextBlock Text="TO DATE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                  <TextBlock Text="TO DATE" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                   <DatePicker SelectedDate="{Binding FilterDateTo}" HorizontalAlignment="Stretch"/>
                 </StackPanel>
               </Grid>
@@ -76,19 +76,19 @@
               <!-- Row 2: Source Type + Payment Status -->
               <Grid ColumnDefinitions="*,12,*">
                 <StackPanel Grid.Column="0" Spacing="6">
-                  <TextBlock Text="SOURCE TYPE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                  <TextBlock Text="SOURCE TYPE" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                   <ComboBox ItemsSource="{Binding FilterSourceTypes}" SelectedItem="{Binding FilterSourceType}"
                             PlaceholderText="All"
                             HorizontalAlignment="Stretch" FontSize="13"
-                            Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1"
+                            Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                             CornerRadius="8" Padding="14,10" MinHeight="40"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Spacing="6">
-                  <TextBlock Text="PAYMENT STATUS" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                  <TextBlock Text="PAYMENT STATUS" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                   <ComboBox ItemsSource="{Binding FilterPaymentStatuses}" SelectedItem="{Binding FilterPaymentStatus}"
                             PlaceholderText="All"
                             HorizontalAlignment="Stretch" FontSize="13"
-                            Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1"
+                            Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                             CornerRadius="8" Padding="14,10" MinHeight="40"/>
                 </StackPanel>
               </Grid>
@@ -96,19 +96,19 @@
               <!-- Row 3: Company + Currency -->
               <Grid ColumnDefinitions="*,12,*">
                 <StackPanel Grid.Column="0" Spacing="6">
-                  <TextBlock Text="COMPANY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                  <TextBlock Text="COMPANY" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                   <ComboBox ItemsSource="{Binding Companies}" SelectedItem="{Binding FilterCompany}"
                             DisplayMemberBinding="{Binding Name}" PlaceholderText="All"
                             HorizontalAlignment="Stretch" FontSize="13"
-                            Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1"
+                            Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                             CornerRadius="8" Padding="14,10" MinHeight="40"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Spacing="6">
-                  <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                  <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                   <ComboBox ItemsSource="{Binding FilterCurrencies}" SelectedItem="{Binding FilterCurrency}"
                             PlaceholderText="All"
                             HorizontalAlignment="Stretch" FontSize="13"
-                            Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1"
+                            Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                             CornerRadius="8" Padding="14,10" MinHeight="40"/>
                 </StackPanel>
               </Grid>
@@ -116,17 +116,17 @@
               <!-- Row 4: Amount Range -->
               <Grid ColumnDefinitions="*,12,*">
                 <StackPanel Grid.Column="0" Spacing="6">
-                  <TextBlock Text="MIN AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                  <TextBlock Text="MIN AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                   <TextBox Text="{Binding FilterMinAmount}" Watermark="0.00"
-                           MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
-                           BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12,0"
+                           MinHeight="40" FontSize="13" Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                           BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="12,0"
                            VerticalContentAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Spacing="6">
-                  <TextBlock Text="MAX AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                  <TextBlock Text="MAX AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                   <TextBox Text="{Binding FilterMaxAmount}" Watermark="99999.00"
-                           MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
-                           BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12,0"
+                           MinHeight="40" FontSize="13" Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}"
+                           BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1" CornerRadius="8" Padding="12,0"
                            VerticalContentAlignment="Center"/>
                 </StackPanel>
               </Grid>
@@ -134,12 +134,12 @@
               <!-- Buttons -->
               <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" Margin="0,4,0,0">
                 <Button Command="{Binding ClearFiltersCommand}"
-                        Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="1"
-                        Foreground="#6B7280" FontSize="12" CornerRadius="8" Padding="14,7" Cursor="Hand">
+                        Background="Transparent" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
+                        Foreground="{DynamicResource TextMutedBrush}" FontSize="12" CornerRadius="8" Padding="14,7" Cursor="Hand">
                   <TextBlock Text="Clear All"/>
                 </Button>
                 <Button Command="{Binding ApplyFiltersCommand}"
-                        Background="#202020" Foreground="White" FontSize="12" FontWeight="SemiBold"
+                        Background="{DynamicResource AccentPrimaryBrush}" Foreground="{DynamicResource TextOnAccentBrush}" FontSize="12" FontWeight="SemiBold"
                         CornerRadius="8" Padding="18,8" Cursor="Hand" BorderThickness="0">
                   <TextBlock Text="Apply Filters"/>
                 </Button>
@@ -150,17 +150,17 @@
       </Border>
 
       <!-- ROW 2: Income List Card -->
-      <Border Background="White" CornerRadius="14" Padding="24,20"
+      <Border Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="14" Padding="24,20"
               BoxShadow="0 1 4 0 #00000008">
         <StackPanel Spacing="4">
 
           <!-- Card Header -->
           <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
             <TextBlock Text="Income Transactions" FontSize="16" FontWeight="SemiBold"
-                       Foreground="#111827"/>
-            <Border Grid.Column="1" Background="#F9FAFB" CornerRadius="6" Padding="10,4">
+                       Foreground="{DynamicResource TextPrimaryBrush}"/>
+            <Border Grid.Column="1" Background="{DynamicResource BackgroundSecondaryBrush}" CornerRadius="6" Padding="10,4">
               <TextBlock Text="{Binding Items.Count, StringFormat={}{0} records}"
-                         FontSize="11" Foreground="#6B7280" FontWeight="Medium"/>
+                         FontSize="11" Foreground="{DynamicResource TextMutedBrush}" FontWeight="Medium"/>
             </Border>
           </Grid>
 
@@ -168,32 +168,32 @@
           <ItemsControl ItemsSource="{Binding Items}">
             <ItemsControl.ItemTemplate>
               <DataTemplate>
-                <Border Padding="0,12" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
+                <Border Padding="0,12" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,0,0,1">
                   <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto">
                     <Border Grid.Column="0" Width="38" Height="38" CornerRadius="10"
-                            Background="#F0FDF4" Margin="0,0,14,0" VerticalAlignment="Center">
-                      <Path Data="{StaticResource IconIncome}" Stroke="#059669" StrokeThickness="1.8"
+                            Background="{DynamicResource SuccessTintBrush}" Margin="0,0,14,0" VerticalAlignment="Center">
+                      <Path Data="{StaticResource IconIncome}" Stroke="{DynamicResource SuccessBrush}" StrokeThickness="1.8"
                             Width="16" Height="16" Stretch="Uniform"
                             HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
-                      <TextBlock Text="{Binding Description}" FontSize="13.5" FontWeight="SemiBold" Foreground="#111827"/>
+                      <TextBlock Text="{Binding Description}" FontSize="13.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}"/>
                       <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Border Background="#F0FDF4" CornerRadius="4" Padding="6,2">
-                          <TextBlock Text="{Binding SourceType}" FontSize="10" Foreground="#059669" FontWeight="Medium"/>
+                        <Border Background="{DynamicResource SuccessTintBrush}" CornerRadius="4" Padding="6,2">
+                          <TextBlock Text="{Binding SourceType}" FontSize="10" Foreground="{DynamicResource SuccessBrush}" FontWeight="Medium"/>
                         </Border>
-                        <Border Background="#FFFBEB" CornerRadius="4" Padding="6,2">
-                          <TextBlock Text="{Binding PaymentStatus}" FontSize="10" Foreground="#D97706" FontWeight="Medium"/>
+                        <Border Background="{DynamicResource WarningTintBrush}" CornerRadius="4" Padding="6,2">
+                          <TextBlock Text="{Binding PaymentStatus}" FontSize="10" Foreground="{DynamicResource WarningBrush}" FontWeight="Medium"/>
                         </Border>
-                        <TextBlock Text="{Binding CompanyClientName}" FontSize="11" Foreground="#9CA3AF"
+                        <TextBlock Text="{Binding CompanyClientName}" FontSize="11" Foreground="{DynamicResource TextLightBrush}"
                                    IsVisible="{Binding CompanyClientName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                                    VerticalAlignment="Center"/>
                       </StackPanel>
                     </StackPanel>
                     <TextBlock Grid.Column="2" Text="{Binding Date, StringFormat=\{0:MMM dd\, yyyy\}}"
-                               FontSize="12" Foreground="#9CA3AF" VerticalAlignment="Center" Margin="16,0"/>
+                               FontSize="12" Foreground="{DynamicResource TextLightBrush}" VerticalAlignment="Center" Margin="16,0"/>
                     <TextBlock Grid.Column="3"
-                               FontSize="15" FontWeight="Bold" Foreground="#059669"
+                               FontSize="15" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}"
                                VerticalAlignment="Center" Margin="12,0">
                       <TextBlock.Text>
                         <MultiBinding StringFormat="{}{1}{0:N2}">
@@ -206,12 +206,12 @@
                       <Button Command="{Binding $parent[ItemsControl].((vm:IncomeViewModel)DataContext).OpenEditCommand}"
                               CommandParameter="{Binding}" Background="Transparent" BorderThickness="0"
                               Padding="8,5" CornerRadius="6" Cursor="Hand">
-                        <TextBlock Text="Edit" FontSize="11" Foreground="#374151" FontWeight="Medium"/>
+                        <TextBlock Text="Edit" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" FontWeight="Medium"/>
                       </Button>
                       <Button Command="{Binding $parent[ItemsControl].((vm:IncomeViewModel)DataContext).RequestDeleteCommand}"
                               CommandParameter="{Binding}" Background="Transparent" BorderThickness="0"
                               Padding="8,5" CornerRadius="6" Cursor="Hand">
-                        <TextBlock Text="Del" FontSize="11" Foreground="#DC2626" FontWeight="Medium"/>
+                        <TextBlock Text="Del" FontSize="11" Foreground="{DynamicResource ErrorBrush}" FontWeight="Medium"/>
                       </Button>
                     </StackPanel>
                   </Grid>
@@ -223,16 +223,16 @@
           <!-- Empty State -->
           <StackPanel IsVisible="{Binding !Items.Count}" HorizontalAlignment="Center"
                       Margin="0,40" Spacing="10">
-            <Border Width="48" Height="48" CornerRadius="12" Background="#F3F4F6"
+            <Border Width="48" Height="48" CornerRadius="12" Background="{DynamicResource BackgroundHoverBrush}"
                     HorizontalAlignment="Center">
-              <Path Data="{StaticResource IconIncome}" Stroke="#9CA3AF" StrokeThickness="1.8"
+              <Path Data="{StaticResource IconIncome}" Stroke="{DynamicResource TextLightBrush}" StrokeThickness="1.8"
                     Width="20" Height="20" Stretch="Uniform"
                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <TextBlock Text="No income recorded" FontSize="16" FontWeight="SemiBold"
-                       Foreground="#111827" HorizontalAlignment="Center"/>
+                       Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
             <TextBlock Text="Track salary, freelance payments, and other income."
-                       FontSize="13" Foreground="#9CA3AF" HorizontalAlignment="Center"/>
+                       FontSize="13" Foreground="{DynamicResource TextLightBrush}" HorizontalAlignment="Center"/>
             <Button Command="{Binding OpenCreateCommand}"
                     Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9"
                     HorizontalAlignment="Center" Margin="0,8,0,0">
@@ -247,36 +247,36 @@
   </ScrollViewer>
 
   <!-- Loading Overlay -->
-  <Border IsVisible="{Binding IsBusy}" Background="#FFFFFF90" CornerRadius="12">
+  <Border IsVisible="{Binding IsBusy}" Background="{DynamicResource BackgroundOverlayBrush}" CornerRadius="12">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
-      <ProgressBar IsIndeterminate="True" Width="120" Foreground="#202020" Background="#E5E7EB"/>
-      <TextBlock Text="Loading..." FontSize="13" Foreground="#6B7280" HorizontalAlignment="Center"/>
+      <ProgressBar IsIndeterminate="True" Width="120" Foreground="{DynamicResource AccentPrimaryBrush}" Background="{DynamicResource BorderDefaultBrush}"/>
+      <TextBlock Text="Loading..." FontSize="13" Foreground="{DynamicResource TextMutedBrush}" HorizontalAlignment="Center"/>
     </StackPanel>
   </Border>
   </Panel>
 
   <!-- Confirm Dialog -->
-  <Border IsVisible="{Binding IsConfirmDialogOpen}" Background="#00000050" CornerRadius="12">
+  <Border IsVisible="{Binding IsConfirmDialogOpen}" Background="{DynamicResource BackgroundModalBrush}" CornerRadius="12">
     <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="400"
-            Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1"
+            Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="16" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
             BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
       <StackPanel>
         <StackPanel Margin="32,32,32,0" Spacing="14" HorizontalAlignment="Center">
-          <Border Width="56" Height="56" CornerRadius="28" Background="#FEF2F2"
+          <Border Width="56" Height="56" CornerRadius="28" Background="{DynamicResource ErrorTintBrush}"
                   HorizontalAlignment="Center">
-            <Border Width="36" Height="36" CornerRadius="18" Background="#FEE2E2"
+            <Border Width="36" Height="36" CornerRadius="18" Background="{DynamicResource ErrorTintBrush}"
                     HorizontalAlignment="Center" VerticalAlignment="Center">
-              <TextBlock Text="!" FontSize="22" FontWeight="Bold" Foreground="#DC2626"
+              <TextBlock Text="!" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource ErrorBrush}"
                          HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
           </Border>
           <TextBlock Text="{Binding ConfirmDialogTitle}" FontSize="17" FontWeight="Bold"
-                     Foreground="#111827" HorizontalAlignment="Center" TextAlignment="Center"/>
-          <TextBlock Text="{Binding ConfirmDialogMessage}" FontSize="13" Foreground="#6B7280"
+                     Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" TextAlignment="Center"/>
+          <TextBlock Text="{Binding ConfirmDialogMessage}" FontSize="13" Foreground="{DynamicResource TextMutedBrush}"
                      TextWrapping="Wrap" TextAlignment="Center" LineHeight="20" Margin="0,0,0,4"/>
         </StackPanel>
-        <Border Margin="0,24,0,0" Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0"
-                Background="#FAFBFC">
+        <Border Margin="0,24,0,0" Padding="24,18" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,1,0,0"
+                Background="{DynamicResource BackgroundSecondaryBrush}">
           <Grid ColumnDefinitions="*,10,*">
             <Button Grid.Column="0" Command="{Binding ConfirmDialogNoCommand}"
                     Theme="{StaticResource BtnSecondary}"
@@ -295,105 +295,105 @@
   </Border>
 
   <!-- Editor -->
-  <Border IsVisible="{Binding IsEditorOpen}" Background="#00000050" CornerRadius="12">
+  <Border IsVisible="{Binding IsEditorOpen}" Background="{DynamicResource BackgroundModalBrush}" CornerRadius="12">
     <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="520"
-            Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1"
+            Background="{DynamicResource BackgroundPrimaryBrush}" CornerRadius="16" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
             BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
       <StackPanel>
         <!-- Header -->
         <Grid ColumnDefinitions="Auto,*,Auto" Margin="28,24,20,0">
-          <Border Width="42" Height="42" CornerRadius="12" Background="#F0FDF4">
-            <Path Data="{StaticResource IconIncome}" Stroke="#059669" StrokeThickness="1.8"
+          <Border Width="42" Height="42" CornerRadius="12" Background="{DynamicResource SuccessTintBrush}">
+            <Path Data="{StaticResource IconIncome}" Stroke="{DynamicResource SuccessBrush}" StrokeThickness="1.8"
                   Width="18" Height="18" Stretch="Uniform"
                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
           </Border>
           <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="2">
-            <TextBlock Text="Income" FontSize="17" FontWeight="Bold" Foreground="#111827"/>
-            <TextBlock Text="Add or edit income record" FontSize="12" Foreground="#9CA3AF"/>
+            <TextBlock Text="Income" FontSize="17" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+            <TextBlock Text="Add or edit income record" FontSize="12" Foreground="{DynamicResource TextLightBrush}"/>
           </StackPanel>
           <Button Grid.Column="2" Command="{Binding CloseEditorCommand}"
                   Background="Transparent" BorderThickness="0" Padding="10" CornerRadius="8"
                   Cursor="Hand" VerticalAlignment="Top">
-            <TextBlock Text="✕" FontSize="16" Foreground="#9CA3AF"/>
+            <TextBlock Text="✕" FontSize="16" Foreground="{DynamicResource TextLightBrush}"/>
           </Button>
         </Grid>
-        <Border Height="1" Background="#F3F4F6" Margin="0,20,0,0"/>
+        <Border Height="1" Background="{DynamicResource BackgroundHoverBrush}" Margin="0,20,0,0"/>
 
         <!-- Body -->
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" MaxHeight="420">
           <StackPanel Margin="28,20,28,8" Spacing="16">
 
             <StackPanel Spacing="6">
-              <TextBlock Text="DESCRIPTION" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <TextBlock Text="DESCRIPTION" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
               <TextBox Text="{Binding EditorDescription}" Watermark="What is this income for?"/>
-              <TextBlock Text="{Binding DescriptionError}" FontSize="11" Foreground="#DC2626" IsVisible="{Binding HasDescriptionError}"/>
+              <TextBlock Text="{Binding DescriptionError}" FontSize="11" Foreground="{DynamicResource ErrorBrush}" IsVisible="{Binding HasDescriptionError}"/>
             </StackPanel>
 
             <Grid ColumnDefinitions="*,12,*">
               <StackPanel Grid.Column="0" Spacing="6">
-                <TextBlock Text="AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <TextBlock Text="AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                 <TextBox Text="{Binding EditorAmount}"/>
-                <TextBlock Text="{Binding AmountError}" FontSize="11" Foreground="#DC2626" IsVisible="{Binding HasAmountError}"/>
+                <TextBlock Text="{Binding AmountError}" FontSize="11" Foreground="{DynamicResource ErrorBrush}" IsVisible="{Binding HasAmountError}"/>
               </StackPanel>
               <StackPanel Grid.Column="2" Spacing="6">
-                <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                 <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding EditorCurrency}"
                           HorizontalAlignment="Stretch" FontSize="13"
-                          Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1"
+                          Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                           CornerRadius="8" Padding="14,10" MinHeight="44"/>
               </StackPanel>
             </Grid>
             <TextBlock Text="{Binding ConversionPreview}"
                        IsVisible="{Binding ConversionPreview, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                       FontSize="12" Foreground="#6B7280" FontStyle="Italic" Margin="0,-10,0,0"/>
+                       FontSize="12" Foreground="{DynamicResource TextMutedBrush}" FontStyle="Italic" Margin="0,-10,0,0"/>
 
             <Grid ColumnDefinitions="*,12,*">
               <StackPanel Grid.Column="0" Spacing="6">
-                <TextBlock Text="SOURCE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <TextBlock Text="SOURCE" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                 <ComboBox ItemsSource="{Binding SourceTypes}" SelectedItem="{Binding EditorSourceType}"
                           HorizontalAlignment="Stretch" FontSize="13"
-                          Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1"
+                          Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                           CornerRadius="8" Padding="14,10" MinHeight="44"/>
               </StackPanel>
               <StackPanel Grid.Column="2" Spacing="6">
-                <TextBlock Text="PAYMENT STATUS" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <TextBlock Text="PAYMENT STATUS" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                 <ComboBox ItemsSource="{Binding PaymentStatuses}" SelectedItem="{Binding EditorPaymentStatus}"
                           HorizontalAlignment="Stretch" FontSize="13"
-                          Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1"
+                          Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                           CornerRadius="8" Padding="14,10" MinHeight="44"/>
               </StackPanel>
             </Grid>
 
             <StackPanel Spacing="6">
-              <TextBlock Text="DATE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <TextBlock Text="DATE" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
               <DatePicker SelectedDate="{Binding EditorDate}" HorizontalAlignment="Stretch"/>
             </StackPanel>
 
             <Grid ColumnDefinitions="*,12,*">
               <StackPanel Grid.Column="0" Spacing="6">
-                <TextBlock Text="COMPANY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <TextBlock Text="COMPANY" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                 <ComboBox ItemsSource="{Binding Companies}" SelectedItem="{Binding EditorCompany}"
                           DisplayMemberBinding="{Binding Name}" HorizontalAlignment="Stretch" FontSize="13"
-                          Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1"
+                          Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                           CornerRadius="8" Padding="14,10" MinHeight="44"/>
               </StackPanel>
               <StackPanel Grid.Column="2" Spacing="6">
-                <TextBlock Text="PROJECT" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <TextBlock Text="PROJECT" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextLightBrush}"/>
                 <ComboBox ItemsSource="{Binding Projects}" SelectedItem="{Binding EditorProject}"
                           DisplayMemberBinding="{Binding Name}" HorizontalAlignment="Stretch" FontSize="13"
-                          Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1"
+                          Background="{DynamicResource BackgroundPrimaryBrush}" Foreground="{DynamicResource TextPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
                           CornerRadius="8" Padding="14,10" MinHeight="44"/>
               </StackPanel>
             </Grid>
 
             <TextBlock Text="{Binding ErrorMessage}"
                        IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                       Foreground="#DC2626" FontSize="12"/>
+                       Foreground="{DynamicResource ErrorBrush}" FontSize="12"/>
           </StackPanel>
         </ScrollViewer>
 
         <!-- Footer -->
-        <Border Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0" Background="#FAFBFC">
+        <Border Padding="24,18" BorderBrush="{DynamicResource BackgroundHoverBrush}" BorderThickness="0,1,0,0" Background="{DynamicResource BackgroundSecondaryBrush}">
           <Grid ColumnDefinitions="*,10,*">
             <Button Grid.Column="0" Command="{Binding CloseEditorCommand}"
                     Theme="{StaticResource BtnSecondary}"
@@ -416,9 +416,9 @@
   <Border IsVisible="{Binding IsToastVisible}"
           HorizontalAlignment="Center" VerticalAlignment="Bottom"
           Margin="0,0,0,24" Padding="16,10" CornerRadius="10"
-          Background="#FFFFFF" BorderBrush="#E5E7EB" BorderThickness="1"
+          Background="{DynamicResource BackgroundPrimaryBrush}" BorderBrush="{DynamicResource BorderDefaultBrush}" BorderThickness="1"
           BoxShadow="0 4 16 0 #40000000">
-    <TextBlock Text="{Binding ToastMessage}" FontSize="13" Foreground="#111827"/>
+    <TextBlock Text="{Binding ToastMessage}" FontSize="13" Foreground="{DynamicResource TextPrimaryBrush}"/>
   </Border>
 
   </Panel>
