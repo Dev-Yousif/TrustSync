@@ -21,11 +21,11 @@
 ## Download
 
 <p align="center">
-  <a href="https://github.com/Dev-Yousif/TrustSync/releases/latest">
+  <a href="https://github.com/Dev-Yousif/TrustSync/releases/download/v1.2.0/TrustSync-Setup.exe">
     <img src="https://img.shields.io/badge/%E2%AC%87%EF%B8%8F_Download_for-Windows-0078D4?style=for-the-badge&logo=windows&logoColor=white" alt="Download for Windows" />
   </a>
   &nbsp;&nbsp;
-  <a href="https://github.com/Dev-Yousif/TrustSync/releases/latest">
+  <a href="https://github.com/Dev-Yousif/TrustSync/releases/download/v1.2.0/TrustSync-linux-x64.tar.gz">
     <img src="https://img.shields.io/badge/%F0%9F%90%A7_Download_for-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Download for Linux" />
   </a>
 </p>
