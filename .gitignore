@@ -47,6 +47,9 @@ installer.iss
 installer_wizard.bmp
 installer_wizard_small.bmp
 
+## Environment
+.env
+
 ## Claude IDE
 .claude/
 

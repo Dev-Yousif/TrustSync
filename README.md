@@ -91,7 +91,9 @@ tests/
 
 ## Screenshots
 
-*Coming soon*
+<p align="center">
+  <img src="assets/dashboard-preview.png" alt="TrustSync Dashboard" width="900" style="border-radius: 16px;" />
+</p>
 
 ## Contributing
 
