@@ -30,6 +30,12 @@
   </a>
 </p>
 
+**Linux quick install** — paste in terminal:
+
+```bash
+curl -sL https://raw.githubusercontent.com/Dev-Yousif/TrustSync/main/install.sh | bash
+```
+
 ---
 
 ## About
