@@ -1,0 +1,229 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrustSync.Desktop.ViewModels.Pages"
+             xmlns:domain="using:TrustSync.Domain.Entities"
+             xmlns:enums="using:TrustSync.Domain.Enums"
+             x:Class="TrustSync.Desktop.Views.Pages.RemindersView"
+             x:DataType="vm:RemindersViewModel">
+
+  <Panel>
+  <Panel Classes.dialog="{Binding IsConfirmDialogOpen}">
+    <Panel.Styles>
+      <Style Selector="Panel.dialog">
+        <Setter Property="Opacity" Value="0.4"/>
+        <Setter Property="IsHitTestVisible" Value="False"/>
+      </Style>
+    </Panel.Styles>
+
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="16" MaxWidth="700">
+
+      <!-- Add/Edit Reminder Card -->
+      <Border Background="White" CornerRadius="14" Padding="24,20"
+              BoxShadow="0 1 4 0 #00000008">
+        <StackPanel Spacing="14">
+          <StackPanel Orientation="Horizontal" Spacing="8">
+            <Path Data="{StaticResource IconPlus}" Stroke="#111827" StrokeThickness="1.8"
+                  Width="16" Height="16" Stretch="Uniform" VerticalAlignment="Center"
+                  IsVisible="{Binding !IsEditing}"/>
+            <Path Data="{StaticResource IconEdit}" Stroke="#111827" StrokeThickness="1.8"
+                  Width="16" Height="16" Stretch="Uniform" VerticalAlignment="Center"
+                  IsVisible="{Binding IsEditing}"/>
+            <TextBlock Text="New Reminder" FontSize="16" FontWeight="SemiBold" Foreground="#111827"
+                       IsVisible="{Binding !IsEditing}"/>
+            <TextBlock Text="Edit Reminder" FontSize="16" FontWeight="SemiBold" Foreground="#111827"
+                       IsVisible="{Binding IsEditing}"/>
+          </StackPanel>
+
+          <!-- Title -->
+          <StackPanel Spacing="6">
+            <TextBlock Text="TITLE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+            <TextBox Text="{Binding FormTitle}" Watermark="e.g., Add your daily expenses"
+                     MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
+                     BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12,0" VerticalContentAlignment="Center"/>
+          </StackPanel>
+
+          <!-- Description -->
+          <StackPanel Spacing="6">
+            <TextBlock Text="DESCRIPTION (OPTIONAL)" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+            <TextBox Text="{Binding FormDescription}" Watermark="Brief description of the reminder"
+                     MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
+                     BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12,0" VerticalContentAlignment="Center"/>
+          </StackPanel>
+
+          <!-- Schedule Type + Time -->
+          <Grid ColumnDefinitions="*,*">
+            <StackPanel Grid.Column="0" Spacing="6" Margin="0,0,8,0">
+              <TextBlock Text="REPEAT" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <ComboBox ItemsSource="{Binding RepeatTypes}" SelectedItem="{Binding FormRepeatType}"
+                        HorizontalAlignment="Stretch" MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
+                        BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Spacing="6" Margin="8,0,0,0">
+              <TextBlock Text="TIME" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <TextBox Text="{Binding FormHourText}" Watermark="HH"
+                         Width="60" MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
+                         BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12,0"
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <TextBlock Text=":" FontSize="16" Foreground="#6B7280" VerticalAlignment="Center" Margin="2,0"/>
+                <TextBox Text="{Binding FormMinuteText}" Watermark="MM"
+                         Width="60" MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
+                         BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12,0"
+                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+              </StackPanel>
+            </StackPanel>
+          </Grid>
+
+          <!-- Day of Week (Weekly only) -->
+          <StackPanel Spacing="6"
+                      IsVisible="{Binding FormRepeatType, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static enums:RepeatType.Weekly}}">
+            <TextBlock Text="DAY OF WEEK" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+            <ComboBox ItemsSource="{Binding DaysOfWeekNames}" SelectedItem="{Binding FormDayOfWeekName}"
+                      HorizontalAlignment="Stretch" MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
+                      BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+          </StackPanel>
+
+          <!-- Day of Month (Monthly only) -->
+          <StackPanel Spacing="6"
+                      IsVisible="{Binding FormRepeatType, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static enums:RepeatType.Monthly}}">
+            <TextBlock Text="DAY OF MONTH" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+            <ComboBox ItemsSource="{Binding DaysOfMonth}" SelectedItem="{Binding FormDayOfMonth}"
+                      MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
+                      BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" MaxWidth="120" HorizontalAlignment="Left"/>
+          </StackPanel>
+
+          <!-- Custom interval (Custom only) -->
+          <StackPanel Spacing="6"
+                      IsVisible="{Binding FormRepeatType, Converter={x:Static ObjectConverters.Equal}, ConverterParameter={x:Static enums:RepeatType.Custom}}">
+            <TextBlock Text="INTERVAL (MINUTES)" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+            <TextBox Text="{Binding FormCustomMinutes}" Watermark="60"
+                     MinHeight="40" FontSize="13" Background="#FFFFFF" Foreground="#111827"
+                     BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12,0" VerticalContentAlignment="Center" MaxWidth="120" HorizontalAlignment="Left"/>
+          </StackPanel>
+
+          <!-- Buttons -->
+          <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right" Margin="0,4,0,0">
+            <Button Command="{Binding CancelEditCommand}"
+                    IsVisible="{Binding IsEditing}"
+                    Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="1"
+                    Foreground="#6B7280" FontSize="13" CornerRadius="8" Padding="16,8" Cursor="Hand">
+              <TextBlock Text="Cancel"/>
+            </Button>
+            <Button Command="{Binding SaveReminderCommand}"
+                    Background="#202020" Foreground="#FFFFFF" FontSize="13" FontWeight="SemiBold"
+                    CornerRadius="8" Padding="18,9" Cursor="Hand" IsEnabled="{Binding !IsBusy}" BorderThickness="0">
+              <TextBlock Text="Save Reminder"/>
+            </Button>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+      <!-- Reminders List Header -->
+      <TextBlock Text="Active Reminders" FontSize="16" FontWeight="SemiBold" Foreground="#111827" Margin="0,8,0,0"/>
+
+      <ItemsControl ItemsSource="{Binding Reminders}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate x:DataType="domain:Reminder">
+            <Border Background="White" CornerRadius="12" Padding="18,14" Margin="0,0,0,8"
+                    BoxShadow="0 1 4 0 #00000008"
+                    Opacity="{Binding IsEnabled, Converter={StaticResource ReminderEnabledOpacityConverter}}">
+              <Grid ColumnDefinitions="*,Auto">
+                <!-- Info -->
+                <StackPanel Grid.Column="0" Spacing="4" VerticalAlignment="Center">
+                  <TextBlock Text="{Binding Title}" FontSize="14" FontWeight="SemiBold" Foreground="#111827"/>
+                  <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#6B7280"
+                             IsVisible="{Binding Description, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                             TextWrapping="Wrap"/>
+                  <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,4,0,0">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                      <Path Data="{StaticResource IconCalendar}" Stroke="#9CA3AF" StrokeThickness="1.5"
+                            Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center"/>
+                      <TextBlock Text="{Binding Converter={StaticResource ReminderScheduleConverter}}"
+                                 FontSize="11" Foreground="#9CA3AF" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                      <TextBlock Text="Next:" FontSize="11" Foreground="#9CA3AF" FontWeight="SemiBold"/>
+                      <TextBlock Text="{Binding Converter={StaticResource ReminderNextFireConverter}}"
+                                 FontSize="11" Foreground="#6B7280"/>
+                    </StackPanel>
+                  </StackPanel>
+                </StackPanel>
+
+                <!-- Actions -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                  <Border Background="#EFF6FF" CornerRadius="6" Padding="8,4" Margin="0,0,4,0"
+                          IsVisible="{Binding IsSystem}">
+                    <TextBlock Text="System" FontSize="10" FontWeight="SemiBold" Foreground="#3B82F6"/>
+                  </Border>
+                  <ToggleSwitch IsChecked="{Binding IsEnabled, Mode=OneWay}"
+                                OnContent="" OffContent=""
+                                Command="{Binding $parent[ItemsControl].((vm:RemindersViewModel)DataContext).ToggleEnabledCommand}"
+                                CommandParameter="{Binding}"/>
+                  <Button Command="{Binding $parent[ItemsControl].((vm:RemindersViewModel)DataContext).EditReminderCommand}"
+                          CommandParameter="{Binding}"
+                          IsVisible="{Binding !IsSystem}"
+                          Background="Transparent" BorderThickness="0" Padding="6" Cursor="Hand" CornerRadius="6">
+                    <Path Data="{StaticResource IconEdit}" Stroke="#6B7280" StrokeThickness="1.8"
+                          Width="14" Height="14" Stretch="Uniform"/>
+                  </Button>
+                  <Button Command="{Binding $parent[ItemsControl].((vm:RemindersViewModel)DataContext).RequestDeleteReminderCommand}"
+                          CommandParameter="{Binding}"
+                          IsVisible="{Binding !IsSystem}"
+                          Background="Transparent" BorderThickness="0" Padding="6" Cursor="Hand" CornerRadius="6">
+                    <Path Data="{StaticResource IconTrash}" Stroke="#DC2626" StrokeThickness="1.8"
+                          Width="14" Height="14" Stretch="Uniform"/>
+                  </Button>
+                </StackPanel>
+              </Grid>
+            </Border>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+
+      <!-- Empty state -->
+      <TextBlock Text="No reminders yet. Create one above to get started."
+                 FontSize="13" Foreground="#9CA3AF" HorizontalAlignment="Center" Margin="0,20"
+                 IsVisible="{Binding !Reminders.Count}"/>
+
+    </StackPanel>
+  </ScrollViewer>
+
+  </Panel>
+
+  <!-- Confirm Dialog Overlay -->
+  <Border IsVisible="{Binding IsConfirmDialogOpen}" Background="#80000000">
+    <Border Background="White" CornerRadius="14" Padding="28,24" MaxWidth="400"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            BoxShadow="0 8 32 0 #40000000">
+      <StackPanel Spacing="16">
+        <TextBlock Text="{Binding ConfirmDialogTitle}" FontSize="16" FontWeight="SemiBold" Foreground="#111827"/>
+        <TextBlock Text="{Binding ConfirmDialogMessage}" FontSize="13" Foreground="#4B5563" TextWrapping="Wrap"/>
+        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right" Margin="0,8,0,0">
+          <Button Command="{Binding ConfirmDialogNoCommand}"
+                  Background="Transparent" BorderBrush="#E5E7EB" BorderThickness="1"
+                  Foreground="#4B5563" FontSize="13" CornerRadius="8" Padding="16,8" Cursor="Hand">
+            <TextBlock Text="Cancel"/>
+          </Button>
+          <Button Command="{Binding ConfirmDialogYesCommand}"
+                  Background="#DC2626" Foreground="White" FontSize="13" FontWeight="SemiBold"
+                  CornerRadius="8" Padding="16,8" Cursor="Hand" BorderThickness="0">
+            <TextBlock Text="Delete"/>
+          </Button>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+  </Border>
+
+  <!-- Toast -->
+  <Border IsVisible="{Binding IsToastVisible}"
+          HorizontalAlignment="Center" VerticalAlignment="Bottom"
+          Margin="0,0,0,24" Padding="16,10" CornerRadius="10"
+          Background="#FFFFFF" BorderBrush="#E5E7EB" BorderThickness="1"
+          BoxShadow="0 4 16 0 #40000000">
+    <TextBlock Text="{Binding ToastMessage}" FontSize="13" Foreground="#111827"/>
+  </Border>
+
+  </Panel>
+</UserControl>

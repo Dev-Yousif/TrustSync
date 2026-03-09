@@ -1,0 +1,180 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:svg="using:Avalonia.Svg.Skia"
+        xmlns:vm="using:TrustSync.Desktop.ViewModels.Shell"
+        xmlns:pages="using:TrustSync.Desktop.ViewModels.Pages"
+        xmlns:pv="using:TrustSync.Desktop.Views.Pages"
+        x:Class="TrustSync.Desktop.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="avares://TrustSync/app.ico"
+        Title="TrustSync"
+        Width="1400" Height="900"
+        MinWidth="1100" MinHeight="700"
+        WindowStartupLocation="CenterScreen"
+        Background="White">
+
+  <Panel>
+  <Grid ColumnDefinitions="260,*" Margin="0">
+
+    <!-- SIDEBAR (on white, no separate bg) -->
+    <DockPanel Grid.Column="0" Margin="0">
+
+      <!-- Brand -->
+      <Border DockPanel.Dock="Top" Padding="20,18,20,14">
+        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Left">
+          <svg:Svg Path="avares://TrustSync/Assets/logo.svg"
+                   Width="38" Height="38" VerticalAlignment="Center"/>
+          <TextBlock Text="TrustSync" FontSize="22" FontWeight="SemiBold"
+                     Foreground="#111827" VerticalAlignment="Center"
+                     FontFamily="Trebuchet MS, Verdana, sans-serif"/>
+        </StackPanel>
+      </Border>
+
+      <!-- Separator -->
+      <Border DockPanel.Dock="Top" Height="1" Background="#F3F4F6" Margin="20,0"/>
+
+      <!-- Logout button (bottom) -->
+      <Border DockPanel.Dock="Bottom" Padding="16,12"
+              BorderBrush="#F3F4F6" BorderThickness="0,1,0,0">
+        <Button Command="{Binding LogoutCommand}"
+                Background="Transparent" BorderThickness="0"
+                HorizontalAlignment="Stretch" Padding="12,10"
+                CornerRadius="8" Cursor="Hand">
+          <StackPanel Orientation="Horizontal" Spacing="10">
+            <Path Data="{StaticResource IconLock}" Stroke="#9CA3AF" StrokeThickness="1.8"
+                  Width="15" Height="15" Stretch="Uniform" VerticalAlignment="Center"/>
+            <TextBlock Text="Logout" FontSize="13" Foreground="#9CA3AF"
+                       VerticalAlignment="Center"/>
+          </StackPanel>
+        </Button>
+      </Border>
+
+      <!-- Navigation Groups -->
+      <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding NavigationGroups}" Margin="14,16,14,14">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="vm:NavigationGroup">
+              <StackPanel Margin="0,0,0,6">
+                <TextBlock Text="{Binding Title}" FontSize="10" FontWeight="Bold"
+                           Foreground="#C0C5CE" Margin="14,14,0,8"
+                           LetterSpacing="1.5"/>
+                <ItemsControl ItemsSource="{Binding Items}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:NavigationItem">
+                      <Button Classes.selected="{Binding IsSelected}"
+                              Command="{Binding $parent[Window].((vm:MainViewModel)DataContext).SelectNavItemCommand}"
+                              CommandParameter="{Binding}"
+                              Background="Transparent" BorderThickness="0"
+                              HorizontalAlignment="Stretch"
+                              HorizontalContentAlignment="Left"
+                              Padding="14,10" Margin="0,2"
+                              CornerRadius="8" Cursor="Hand">
+                        <Button.Styles>
+                          <Style Selector="Button.selected">
+                            <Setter Property="Background" Value="#F3F4F6"/>
+                          </Style>
+                          <Style Selector="Button.selected /template/ ContentPresenter">
+                            <Setter Property="Background" Value="#F3F4F6"/>
+                          </Style>
+                          <Style Selector="Button.selected TextBlock">
+                            <Setter Property="Foreground" Value="#111827"/>
+                          </Style>
+                          <Style Selector="Button.selected Path">
+                            <Setter Property="Stroke" Value="#111827"/>
+                          </Style>
+                        </Button.Styles>
+                        <StackPanel Orientation="Horizontal" Spacing="12">
+                          <Path Data="{Binding IconGeometry}" Stroke="#9CA3AF" StrokeThickness="1.8"
+                                Width="18" Height="18" Stretch="Uniform" VerticalAlignment="Center"/>
+                          <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="Medium"
+                                     Foreground="#4B5563" VerticalAlignment="Center"/>
+                        </StackPanel>
+                      </Button>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+
+    </DockPanel>
+
+    <!-- MAIN CONTENT -->
+    <Border Grid.Column="1" Background="#F0F1F3" CornerRadius="16" Margin="10,10,10,10">
+      <DockPanel Margin="28,20,28,24">
+
+        <!-- Page Title Bar -->
+        <Border DockPanel.Dock="Top" Margin="0,0,0,16">
+          <TextBlock Text="{Binding PageTitle}" FontSize="16" FontWeight="SemiBold"
+                     Foreground="#111827" VerticalAlignment="Center"/>
+        </Border>
+
+        <!-- Content (no wrapper card — pages have their own cards) -->
+        <ContentControl Content="{Binding CurrentView}">
+          <ContentControl.DataTemplates>
+            <DataTemplate DataType="pages:DashboardViewModel">
+              <pv:DashboardView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:IncomeViewModel">
+              <pv:IncomeView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:ExpensesViewModel">
+              <pv:ExpensesView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:CompaniesViewModel">
+              <pv:CompaniesView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:ProjectsViewModel">
+              <pv:ProjectsView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:DeductionsViewModel">
+              <pv:DeductionsView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:SavingsViewModel">
+              <pv:SavingsView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:ReportsViewModel">
+              <pv:ReportsView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:BackupViewModel">
+              <pv:BackupView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:RemindersViewModel">
+              <pv:RemindersView/>
+            </DataTemplate>
+            <DataTemplate DataType="pages:SettingsViewModel">
+              <pv:SettingsView/>
+            </DataTemplate>
+          </ContentControl.DataTemplates>
+        </ContentControl>
+
+      </DockPanel>
+    </Border>
+
+  </Grid>
+
+  <!-- In-App Reminder Notification Banner -->
+  <Border IsVisible="{Binding IsReminderVisible}"
+          HorizontalAlignment="Center" VerticalAlignment="Top"
+          Margin="0,12,0,0" Padding="18,12" CornerRadius="12"
+          Background="#111827"
+          BoxShadow="0 4 20 0 #40000000">
+    <StackPanel Orientation="Horizontal" Spacing="12">
+      <Path Data="{StaticResource IconReminders}" Stroke="#FBBF24" StrokeThickness="1.8"
+            Width="18" Height="18" Stretch="Uniform" VerticalAlignment="Center"/>
+      <TextBlock Text="{Binding ReminderText}" FontSize="13" FontWeight="Medium"
+                 Foreground="White" VerticalAlignment="Center" MaxWidth="500" TextWrapping="Wrap"/>
+      <Button Command="{Binding DismissReminderCommand}"
+              Background="Transparent" BorderThickness="0" Padding="4" Cursor="Hand" CornerRadius="4"
+              VerticalAlignment="Center">
+        <Path Data="M18 6 6 18 M6 6l12 12" Stroke="#9CA3AF" StrokeThickness="2"
+              Width="14" Height="14" Stretch="Uniform"/>
+      </Button>
+    </StackPanel>
+  </Border>
+
+  </Panel>
+</Window>

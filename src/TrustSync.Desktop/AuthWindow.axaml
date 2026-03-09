@@ -1,0 +1,126 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:svg="clr-namespace:Avalonia.Svg.Skia;assembly=Avalonia.Svg.Skia"
+        x:Class="TrustSync.Desktop.AuthWindow"
+        Icon="avares://TrustSync/app.ico"
+        Title="TrustSync"
+        Width="920" Height="600"
+        WindowStartupLocation="CenterScreen"
+        CanResize="False"
+        Background="Transparent"
+        TransparencyLevelHint="AcrylicBlur"
+        SystemDecorations="None">
+
+  <Border CornerRadius="20" ClipToBounds="True"
+          Background="White" BoxShadow="0 8 32 0 #40000000">
+  <Panel>
+  <Grid ColumnDefinitions="380,*">
+
+    <!-- Left Panel — Branding (floating card) -->
+    <Border Grid.Column="0" Margin="14" CornerRadius="16"
+            Background="#F5F5F5" BorderBrush="#E5E7EB" BorderThickness="1">
+      <Panel ClipToBounds="True">
+        <!-- Branding content -->
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Spacing="24" Margin="40">
+
+          <!-- Logo -->
+          <svg:Svg Path="avares://TrustSync/Assets/logo.svg"
+                   Width="130" Height="130" HorizontalAlignment="Center"/>
+
+          <!-- App name -->
+          <StackPanel Spacing="6" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Spacing="0" HorizontalAlignment="Center">
+              <TextBlock Text="Trust" FontSize="32" FontWeight="Bold"
+                         Foreground="#111827" FontFamily="Trebuchet MS, Verdana, sans-serif"
+                         LetterSpacing="2"/>
+              <TextBlock Text="Sync" FontSize="32" FontWeight="Bold"
+                         Foreground="#374151" FontFamily="Trebuchet MS, Verdana, sans-serif"
+                         LetterSpacing="2"/>
+            </StackPanel>
+            <TextBlock Text="FINANCIAL MANAGEMENT" FontSize="11"
+                       Foreground="#9CA3AF" HorizontalAlignment="Center"
+                       LetterSpacing="4"/>
+          </StackPanel>
+
+          <!-- Divider -->
+          <Border Height="1" Width="60" Background="#D1D5DB"
+                  HorizontalAlignment="Center"/>
+
+          <TextBlock Text="Sync your finances,&#x0a;trust the process."
+                     FontSize="14" Foreground="#6B7280"
+                     HorizontalAlignment="Center" TextAlignment="Center"
+                     LineHeight="24"/>
+
+          <!-- Feature badges -->
+          <StackPanel Spacing="10" Margin="0,12,0,0">
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+              <Border Background="White" CornerRadius="12" Padding="14,7"
+                      BorderBrush="#E5E7EB" BorderThickness="1">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <Path Data="{StaticResource IconLock}" Stroke="#374151" StrokeThickness="1.5"
+                        Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center"/>
+                  <TextBlock Text="Encrypted" FontSize="11" Foreground="#374151" FontWeight="Medium"/>
+                </StackPanel>
+              </Border>
+              <Border Background="White" CornerRadius="12" Padding="14,7"
+                      BorderBrush="#E5E7EB" BorderThickness="1">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <Path Data="{StaticResource IconSettings}" Stroke="#374151" StrokeThickness="1.5"
+                        Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center"/>
+                  <TextBlock Text="Secure" FontSize="11" Foreground="#374151" FontWeight="Medium"/>
+                </StackPanel>
+              </Border>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+              <Border Background="White" CornerRadius="12" Padding="14,7"
+                      BorderBrush="#E5E7EB" BorderThickness="1">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <Path Data="{StaticResource IconBackup}" Stroke="#374151" StrokeThickness="1.5"
+                        Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center"/>
+                  <TextBlock Text="Local-first" FontSize="11" Foreground="#374151" FontWeight="Medium"/>
+                </StackPanel>
+              </Border>
+              <Border Background="White" CornerRadius="12" Padding="14,7"
+                      BorderBrush="#E5E7EB" BorderThickness="1">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                  <Path Data="{StaticResource IconDownload}" Stroke="#374151" StrokeThickness="1.5"
+                        Width="12" Height="12" Stretch="Uniform" VerticalAlignment="Center"/>
+                  <TextBlock Text="Offline" FontSize="11" Foreground="#374151" FontWeight="Medium"/>
+                </StackPanel>
+              </Border>
+            </StackPanel>
+          </StackPanel>
+
+        </StackPanel>
+      </Panel>
+    </Border>
+
+    <!-- Right Panel — Auth Form -->
+    <Border Grid.Column="1" Background="White" CornerRadius="0,20,20,0">
+      <ContentControl x:Name="AuthContent"/>
+    </Border>
+
+  </Grid>
+
+  <!-- Close button -->
+  <Button Click="OnClose" Width="36" Height="28"
+          Background="Transparent" BorderThickness="0"
+          CornerRadius="6" Padding="0" Cursor="Hand"
+          HorizontalAlignment="Right" VerticalAlignment="Top"
+          Margin="0,12,14,0"
+          HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+    <Button.Styles>
+      <Style Selector="Button:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="#FEE2E2"/>
+      </Style>
+      <Style Selector="Button:pointerover Path">
+        <Setter Property="Stroke" Value="#DC2626"/>
+      </Style>
+    </Button.Styles>
+    <Path Data="M6 6l12 12M18 6l-12 12" Stroke="#6B7280" StrokeThickness="1.5"
+          Width="9" Height="9" Stretch="Uniform"/>
+  </Button>
+  </Panel>
+  </Border>
+</Window>

@@ -1,0 +1,55 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.vs/
+.vs/
+
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+
+## NuGet
+*.nupkg
+**/packages/*
+*.nuget.props
+*.nuget.targets
+
+## IDE
+.idea/
+*.sln.iml
+.vscode/
+
+## OS
+Thumbs.db
+.DS_Store
+
+## User-specific
+*.rsuser
+*.userprefs
+
+## SQLite databases (local dev)
+*.db
+*.db-shm
+*.db-wal
+
+## Build/publish output
+publish/
+publish-linux/
+installer_output/
+installer.iss
+installer_wizard.bmp
+installer_wizard_small.bmp
+
+## Claude IDE
+.claude/
+
+## Internal docs
+PRODUCT.md
+Code logo*

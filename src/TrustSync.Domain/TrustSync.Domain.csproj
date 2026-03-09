@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>TrustSync.Domain</RootNamespace>
+    <AssemblyName>TrustSync.Domain</AssemblyName>
+  </PropertyGroup>
+
+</Project>

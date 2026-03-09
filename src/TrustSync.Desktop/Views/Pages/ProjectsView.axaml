@@ -1,0 +1,253 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrustSync.Desktop.ViewModels.Pages"
+             x:Class="TrustSync.Desktop.Views.Pages.ProjectsView"
+             x:DataType="vm:ProjectsViewModel">
+
+  <Panel>
+  <Panel Classes.dialog="{Binding IsConfirmDialogOpen}" Classes.editor="{Binding IsEditorOpen}">
+    <Panel.Styles>
+      <Style Selector="Panel.dialog">
+        <Setter Property="Effect"><Setter.Value><BlurEffect Radius="6"/></Setter.Value></Setter>
+      </Style>
+      <Style Selector="Panel.editor">
+        <Setter Property="Effect"><Setter.Value><BlurEffect Radius="6"/></Setter.Value></Setter>
+      </Style>
+    </Panel.Styles>
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="16">
+
+      <Border Background="White" CornerRadius="14" Padding="20,16" BoxShadow="0 1 4 0 #00000008">
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBox Text="{Binding SearchText}" Watermark="Search projects..." Width="300" HorizontalAlignment="Left" Background="#F9FAFB" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12,0" Height="38" FontSize="13" VerticalContentAlignment="Center"/>
+          <Button Grid.Column="1" Command="{Binding OpenCreateCommand}"
+                  Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <TextBlock Text="+" FontSize="16" FontWeight="Bold" Margin="0,-2,0,0"/>
+              <TextBlock Text="Add Project"/>
+            </StackPanel>
+          </Button>
+        </Grid>
+      </Border>
+
+      <Border Background="White" CornerRadius="14" Padding="24,20" BoxShadow="0 1 4 0 #00000008">
+        <StackPanel Spacing="4">
+          <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+            <TextBlock Text="All Projects" FontSize="16" FontWeight="SemiBold" Foreground="#111827"/>
+            <Border Grid.Column="1" Background="#F9FAFB" CornerRadius="6" Padding="10,4">
+              <TextBlock Text="{Binding Items.Count, StringFormat={}{0} records}" FontSize="11" Foreground="#6B7280" FontWeight="Medium"/>
+            </Border>
+          </Grid>
+
+          <ItemsControl ItemsSource="{Binding Items}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Border Padding="0,14" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
+                  <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Border Grid.Column="0" Width="38" Height="38" CornerRadius="10" Background="#F0FDF4" Margin="0,0,14,0" VerticalAlignment="Center">
+                      <Path Data="{StaticResource IconProjects}" Stroke="#059669" StrokeThickness="1.8" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
+                      <StackPanel Spacing="1">
+                        <TextBlock Text="{Binding Name}" FontSize="13.5" FontWeight="SemiBold" Foreground="#111827"/>
+                        <TextBlock Text="{Binding CompanyClientName}" FontSize="11" Foreground="#9CA3AF" IsVisible="{Binding CompanyClientName, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                      </StackPanel>
+                      <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Border Background="#F5F5F5" CornerRadius="4" Padding="6,2">
+                          <TextBlock Text="{Binding Status}" FontSize="10" Foreground="#202020" FontWeight="Medium"/>
+                        </Border>
+                        <Border Background="#F0FDF4" CornerRadius="4" Padding="6,2">
+                          <TextBlock Text="{Binding CompletionPercentage, StringFormat={}{0}%}" FontSize="10" Foreground="#059669" FontWeight="Medium"/>
+                        </Border>
+                      </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="20" VerticalAlignment="Center" Margin="16,0">
+                      <StackPanel Spacing="1">
+                        <TextBlock Text="Agreed" FontSize="10" Foreground="#9CA3AF"/>
+                        <TextBlock Text="{Binding AgreedAmount, StringFormat={}{0:N2}}" FontSize="12" Foreground="#111827"/>
+                      </StackPanel>
+                      <StackPanel Spacing="1">
+                        <TextBlock Text="Received" FontSize="10" Foreground="#9CA3AF"/>
+                        <TextBlock Text="{Binding ReceivedAmount, StringFormat={}{0:N2}}" FontSize="12" Foreground="#059669"/>
+                      </StackPanel>
+                      <StackPanel Spacing="1">
+                        <TextBlock Text="Expenses" FontSize="10" Foreground="#9CA3AF"/>
+                        <TextBlock Text="{Binding TotalExpenses, StringFormat={}{0:N2}}" FontSize="12" Foreground="#DC2626"/>
+                      </StackPanel>
+                      <StackPanel Spacing="1">
+                        <TextBlock Text="Profit" FontSize="10" Foreground="#9CA3AF"/>
+                        <TextBlock Text="{Binding Profit, StringFormat={}{0:N2}}" FontSize="12" FontWeight="SemiBold" Foreground="#111827"/>
+                      </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center" Margin="8,0,0,0">
+                      <Button Command="{Binding $parent[ItemsControl].((vm:ProjectsViewModel)DataContext).OpenEditCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="8,5" CornerRadius="6" Cursor="Hand">
+                        <TextBlock Text="Edit" FontSize="11" Foreground="#374151" FontWeight="Medium"/>
+                      </Button>
+                      <Button Command="{Binding $parent[ItemsControl].((vm:ProjectsViewModel)DataContext).RequestDeleteCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="8,5" CornerRadius="6" Cursor="Hand">
+                        <TextBlock Text="Del" FontSize="11" Foreground="#DC2626" FontWeight="Medium"/>
+                      </Button>
+                    </StackPanel>
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+
+          <StackPanel IsVisible="{Binding !Items.Count}" HorizontalAlignment="Center" Margin="0,40" Spacing="10">
+            <Border Width="48" Height="48" CornerRadius="12" Background="#F3F4F6" HorizontalAlignment="Center">
+              <Path Data="{StaticResource IconProjects}" Stroke="#9CA3AF" StrokeThickness="1.8" Width="20" Height="20" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Text="No projects yet" FontSize="16" FontWeight="SemiBold" Foreground="#111827" HorizontalAlignment="Center"/>
+            <TextBlock Text="Create your first project to track work and profitability." FontSize="13" Foreground="#9CA3AF" HorizontalAlignment="Center"/>
+            <Button Command="{Binding OpenCreateCommand}"
+                    Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9"
+                    HorizontalAlignment="Center" Margin="0,8,0,0">
+              <TextBlock Text="+ Add Project"/>
+            </Button>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+
+  <Border IsVisible="{Binding IsBusy}" Background="#FFFFFF90" CornerRadius="12">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
+      <ProgressBar IsIndeterminate="True" Width="120" Foreground="#202020" Background="#E5E7EB"/>
+      <TextBlock Text="Loading..." FontSize="13" Foreground="#6B7280" HorizontalAlignment="Center"/>
+    </StackPanel>
+  </Border>
+  </Panel>
+
+  <!-- Confirm Dialog -->
+  <Border IsVisible="{Binding IsConfirmDialogOpen}" Background="#00000050" CornerRadius="12">
+    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
+      <StackPanel>
+        <StackPanel Margin="32,32,32,0" Spacing="14" HorizontalAlignment="Center">
+          <Border Width="56" Height="56" CornerRadius="28" Background="#FEF2F2" HorizontalAlignment="Center">
+            <Border Width="36" Height="36" CornerRadius="18" Background="#FEE2E2" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <TextBlock Text="!" FontSize="22" FontWeight="Bold" Foreground="#DC2626" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+          </Border>
+          <TextBlock Text="{Binding ConfirmDialogTitle}" FontSize="17" FontWeight="Bold" Foreground="#111827" HorizontalAlignment="Center" TextAlignment="Center"/>
+          <TextBlock Text="{Binding ConfirmDialogMessage}" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap" TextAlignment="Center" LineHeight="20" Margin="0,0,0,4"/>
+        </StackPanel>
+        <Border Margin="0,24,0,0" Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0" Background="#FAFBFC">
+          <Grid ColumnDefinitions="*,10,*">
+            <Button Grid.Column="0" Command="{Binding ConfirmDialogNoCommand}"
+                    Theme="{StaticResource BtnSecondary}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="42">
+              <TextBlock Text="Cancel"/>
+            </Button>
+            <Button Grid.Column="2" Command="{Binding ConfirmDialogYesCommand}"
+                    Theme="{StaticResource BtnDanger}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="42">
+              <TextBlock Text="Delete"/>
+            </Button>
+          </Grid>
+        </Border>
+      </StackPanel>
+    </Border>
+  </Border>
+
+  <!-- Editor -->
+  <Border IsVisible="{Binding IsEditorOpen}" Background="#00000050" CornerRadius="12">
+    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="540" Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
+      <StackPanel>
+        <Grid ColumnDefinitions="Auto,*,Auto" Margin="28,24,20,0">
+          <Border Width="42" Height="42" CornerRadius="12" Background="#F0FDF4">
+            <Path Data="{StaticResource IconProjects}" Stroke="#059669" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="2">
+            <TextBlock Text="Project" FontSize="17" FontWeight="Bold" Foreground="#111827"/>
+            <TextBlock Text="Track project details and finances" FontSize="12" Foreground="#9CA3AF"/>
+          </StackPanel>
+          <Button Grid.Column="2" Command="{Binding CloseEditorCommand}" Background="Transparent" BorderThickness="0" Padding="10" CornerRadius="8" Cursor="Hand" VerticalAlignment="Top">
+            <TextBlock Text="✕" FontSize="16" Foreground="#9CA3AF"/>
+          </Button>
+        </Grid>
+        <Border Height="1" Background="#F3F4F6" Margin="0,20,0,0"/>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" MaxHeight="420">
+          <StackPanel Margin="28,20,28,8" Spacing="16">
+            <StackPanel Spacing="6">
+              <TextBlock Text="NAME" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <TextBox Text="{Binding EditorName}" Watermark="Project name..."/>
+              <TextBlock Text="{Binding NameError}" FontSize="11" Foreground="#DC2626" IsVisible="{Binding HasNameError}"/>
+            </StackPanel>
+            <StackPanel Spacing="6">
+              <TextBlock Text="COMPANY / CLIENT" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <ComboBox ItemsSource="{Binding Companies}" SelectedItem="{Binding EditorCompany}" DisplayMemberBinding="{Binding Name}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+            </StackPanel>
+            <Grid ColumnDefinitions="*,12,*">
+              <StackPanel Grid.Column="0" Spacing="6">
+                <TextBlock Text="STATUS" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <ComboBox ItemsSource="{Binding StatusValues}" SelectedItem="{Binding EditorStatus}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+              </StackPanel>
+              <StackPanel Grid.Column="2" Spacing="6">
+                <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding EditorCurrency}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+              </StackPanel>
+            </Grid>
+            <Grid ColumnDefinitions="*,12,*,12,*">
+              <StackPanel Grid.Column="0" Spacing="6">
+                <TextBlock Text="AGREED" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <TextBox Text="{Binding EditorAgreedAmount}"/>
+              </StackPanel>
+              <StackPanel Grid.Column="2" Spacing="6">
+                <TextBlock Text="RECEIVED" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <TextBox Text="{Binding EditorReceivedAmount}" IsVisible="{Binding IsEditMode}"/>
+                <TextBox Text="0" IsEnabled="False" Foreground="#9CA3AF" IsVisible="{Binding !IsEditMode}"/>
+              </StackPanel>
+              <StackPanel Grid.Column="4" Spacing="6">
+                <TextBlock Text="EXPECTED" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <TextBox Text="{Binding EditorExpectedAmount}"/>
+              </StackPanel>
+            </Grid>
+            <StackPanel Spacing="6">
+              <TextBlock Text="{Binding EditorCompletion, StringFormat=COMPLETION {0}%}" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <Slider Minimum="0" Maximum="100" Value="{Binding EditorCompletion}" Foreground="#202020"/>
+            </StackPanel>
+            <Grid ColumnDefinitions="*,12,*">
+              <StackPanel Grid.Column="0" Spacing="6">
+                <TextBlock Text="START DATE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <DatePicker SelectedDate="{Binding EditorStartDate}" HorizontalAlignment="Stretch"/>
+              </StackPanel>
+              <StackPanel Grid.Column="2" Spacing="6">
+                <TextBlock Text="END DATE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+                <DatePicker SelectedDate="{Binding EditorEndDate}" HorizontalAlignment="Stretch"/>
+              </StackPanel>
+            </Grid>
+            <StackPanel Spacing="6">
+              <TextBlock Text="NOTES" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <TextBox Text="{Binding EditorNotes}" Watermark="Optional notes..." Height="60" AcceptsReturn="True" TextWrapping="Wrap"/>
+            </StackPanel>
+            <TextBlock Text="{Binding ErrorMessage}" IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="#DC2626" FontSize="12"/>
+          </StackPanel>
+        </ScrollViewer>
+
+        <Border Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0" Background="#FAFBFC">
+          <Grid ColumnDefinitions="*,10,*">
+            <Button Grid.Column="0" Command="{Binding CloseEditorCommand}"
+                    Theme="{StaticResource BtnSecondary}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="42">
+              <TextBlock Text="Cancel"/>
+            </Button>
+            <Button Grid.Column="2" Command="{Binding SaveCommand}"
+                    Theme="{StaticResource BtnPrimary}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="42"
+                    IsEnabled="{Binding !IsBusy}">
+              <TextBlock Text="Save"/>
+            </Button>
+          </Grid>
+        </Border>
+      </StackPanel>
+    </Border>
+  </Border>
+
+  <Border IsVisible="{Binding IsToastVisible}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="16,10" CornerRadius="10" Background="#FFFFFF" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 4 16 0 #40000000">
+    <TextBlock Text="{Binding ToastMessage}" FontSize="13" Foreground="#111827"/>
+  </Border>
+
+  </Panel>
+</UserControl>

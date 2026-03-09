@@ -1,0 +1,31 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# C# sources
+*.cs text diff=csharp
+*.csproj text
+*.sln text
+
+# Avalonia / XAML
+*.axaml text
+*.xaml text
+
+# Config & docs
+*.json text
+*.xml text
+*.md text
+*.props text
+*.targets text
+*.editorconfig text
+
+# Binary files
+*.bmp binary
+*.ico binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg text
+*.mp3 binary
+*.wav binary
+*.db binary

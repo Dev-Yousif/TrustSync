@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="/Themes/Core/Colors.axaml"/>
+    <ResourceInclude Source="/Themes/Core/Typography.axaml"/>
+    <ResourceInclude Source="/Themes/Core/Spacing.axaml"/>
+    <ResourceInclude Source="/Themes/Assets/Icons.axaml"/>
+    <ResourceInclude Source="/Themes/Controls/ButtonStyles.axaml"/>
+    <ResourceInclude Source="/Themes/Controls/TextBoxStyles.axaml"/>
+    <ResourceInclude Source="/Themes/Controls/CardStyles.axaml"/>
+  </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

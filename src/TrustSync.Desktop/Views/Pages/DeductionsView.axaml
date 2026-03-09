@@ -1,0 +1,230 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:TrustSync.Desktop.ViewModels.Pages"
+             x:Class="TrustSync.Desktop.Views.Pages.DeductionsView"
+             x:DataType="vm:DeductionsViewModel">
+
+  <Panel>
+  <Panel Classes.dialog="{Binding IsConfirmDialogOpen}" Classes.editor="{Binding IsEditorOpen}">
+    <Panel.Styles>
+      <Style Selector="Panel.dialog">
+        <Setter Property="Effect"><Setter.Value><BlurEffect Radius="6"/></Setter.Value></Setter>
+      </Style>
+      <Style Selector="Panel.editor">
+        <Setter Property="Effect"><Setter.Value><BlurEffect Radius="6"/></Setter.Value></Setter>
+      </Style>
+    </Panel.Styles>
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Spacing="16">
+
+      <Border Background="White" CornerRadius="14" Padding="20,16" BoxShadow="0 1 4 0 #00000008">
+        <Grid ColumnDefinitions="*,Auto">
+          <TextBox Text="{Binding SearchText}" Watermark="Search deductions..." Width="300" HorizontalAlignment="Left" Background="#F9FAFB" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8" Padding="12,0" Height="38" FontSize="13" VerticalContentAlignment="Center"/>
+          <Button Grid.Column="1" Command="{Binding OpenCreateCommand}"
+                  Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <TextBlock Text="+" FontSize="16" FontWeight="Bold" Margin="0,-2,0,0"/>
+              <TextBlock Text="Add Deduction"/>
+            </StackPanel>
+          </Button>
+        </Grid>
+      </Border>
+
+      <Border Background="White" CornerRadius="14" Padding="24,20" BoxShadow="0 1 4 0 #00000008">
+        <StackPanel Spacing="4">
+          <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+            <TextBlock Text="All Deductions" FontSize="16" FontWeight="SemiBold" Foreground="#111827"/>
+            <Border Grid.Column="1" Background="#F9FAFB" CornerRadius="6" Padding="10,4">
+              <TextBlock Text="{Binding Items.Count, StringFormat={}{0} records}" FontSize="11" Foreground="#6B7280" FontWeight="Medium"/>
+            </Border>
+          </Grid>
+
+          <ItemsControl ItemsSource="{Binding Items}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Border Padding="0,12" BorderBrush="#F3F4F6" BorderThickness="0,0,0,1">
+                  <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                    <Border Grid.Column="0" Width="38" Height="38" CornerRadius="10" Background="#FFFBEB" Margin="0,0,14,0" VerticalAlignment="Center">
+                      <Path Data="{StaticResource IconDeductions}" Stroke="#D97706" StrokeThickness="1.8" Width="16" Height="16" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Grid.Column="1" Spacing="4" VerticalAlignment="Center">
+                      <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold" Foreground="#111827"/>
+                      <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Border Background="#FFFBEB" CornerRadius="4" Padding="6,2">
+                          <TextBlock Text="{Binding Type}" FontSize="10" Foreground="#D97706" FontWeight="Medium"/>
+                        </Border>
+                        <Border Background="#F5F5F5" CornerRadius="4" Padding="6,2">
+                          <TextBlock Text="{Binding RecurrenceType}" FontSize="10" Foreground="#202020" FontWeight="Medium"/>
+                        </Border>
+                        <Border Background="#F0FDF4" CornerRadius="4" Padding="6,2">
+                          <TextBlock FontSize="10" FontWeight="Medium">
+                            <TextBlock.Text>
+                              <MultiBinding StringFormat="{}{0}">
+                                <Binding Path="IsActive"/>
+                              </MultiBinding>
+                            </TextBlock.Text>
+                            <TextBlock.Foreground>
+                              <SolidColorBrush Color="#059669"/>
+                            </TextBlock.Foreground>
+                          </TextBlock>
+                        </Border>
+                      </StackPanel>
+                    </StackPanel>
+                    <TextBlock Grid.Column="2" FontSize="15" FontWeight="Bold" Foreground="#D97706" VerticalAlignment="Center" Margin="16,0">
+                      <TextBlock.Text>
+                        <MultiBinding StringFormat="{}{1}{0:N2}">
+                          <Binding Path="Amount"/>
+                          <Binding Path="CurrencyCode" Converter="{StaticResource CurrencySymbolConverter}"/>
+                        </MultiBinding>
+                      </TextBlock.Text>
+                    </TextBlock>
+                    <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center" Margin="8,0,0,0">
+                      <Button Command="{Binding $parent[ItemsControl].((vm:DeductionsViewModel)DataContext).OpenEditCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="8,5" CornerRadius="6" Cursor="Hand">
+                        <TextBlock Text="Edit" FontSize="11" Foreground="#374151" FontWeight="Medium"/>
+                      </Button>
+                      <Button Command="{Binding $parent[ItemsControl].((vm:DeductionsViewModel)DataContext).RequestDeleteCommand}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Padding="8,5" CornerRadius="6" Cursor="Hand">
+                        <TextBlock Text="Del" FontSize="11" Foreground="#DC2626" FontWeight="Medium"/>
+                      </Button>
+                    </StackPanel>
+                  </Grid>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+
+          <StackPanel IsVisible="{Binding !Items.Count}" HorizontalAlignment="Center" Margin="0,40" Spacing="10">
+            <Border Width="48" Height="48" CornerRadius="12" Background="#F3F4F6" HorizontalAlignment="Center">
+              <Path Data="{StaticResource IconDeductions}" Stroke="#9CA3AF" StrokeThickness="1.8" Width="20" Height="20" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <TextBlock Text="No deductions" FontSize="16" FontWeight="SemiBold" Foreground="#111827" HorizontalAlignment="Center"/>
+            <TextBlock Text="Track recurring deductions like taxes and subscriptions." FontSize="13" Foreground="#9CA3AF" HorizontalAlignment="Center"/>
+            <Button Command="{Binding OpenCreateCommand}"
+                    Theme="{StaticResource BtnPrimary}" CornerRadius="8" Padding="18,9"
+                    HorizontalAlignment="Center" Margin="0,8,0,0">
+              <TextBlock Text="+ Add Deduction"/>
+            </Button>
+          </StackPanel>
+        </StackPanel>
+      </Border>
+
+    </StackPanel>
+  </ScrollViewer>
+
+  <Border IsVisible="{Binding IsBusy}" Background="#FFFFFF90" CornerRadius="12">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12">
+      <ProgressBar IsIndeterminate="True" Width="120" Foreground="#202020" Background="#E5E7EB"/>
+      <TextBlock Text="Loading..." FontSize="13" Foreground="#6B7280" HorizontalAlignment="Center"/>
+    </StackPanel>
+  </Border>
+  </Panel>
+
+  <!-- Confirm Dialog -->
+  <Border IsVisible="{Binding IsConfirmDialogOpen}" Background="#00000050" CornerRadius="12">
+    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
+      <StackPanel>
+        <StackPanel Margin="32,32,32,0" Spacing="14" HorizontalAlignment="Center">
+          <Border Width="56" Height="56" CornerRadius="28" Background="#FEF2F2" HorizontalAlignment="Center">
+            <Border Width="36" Height="36" CornerRadius="18" Background="#FEE2E2" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <TextBlock Text="!" FontSize="22" FontWeight="Bold" Foreground="#DC2626" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+          </Border>
+          <TextBlock Text="{Binding ConfirmDialogTitle}" FontSize="17" FontWeight="Bold" Foreground="#111827" HorizontalAlignment="Center" TextAlignment="Center"/>
+          <TextBlock Text="{Binding ConfirmDialogMessage}" FontSize="13" Foreground="#6B7280" TextWrapping="Wrap" TextAlignment="Center" LineHeight="20" Margin="0,0,0,4"/>
+        </StackPanel>
+        <Border Margin="0,24,0,0" Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0" Background="#FAFBFC">
+          <Grid ColumnDefinitions="*,10,*">
+            <Button Grid.Column="0" Command="{Binding ConfirmDialogNoCommand}"
+                    Theme="{StaticResource BtnSecondary}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="42">
+              <TextBlock Text="Cancel"/>
+            </Button>
+            <Button Grid.Column="2" Command="{Binding ConfirmDialogYesCommand}"
+                    Theme="{StaticResource BtnDanger}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="42">
+              <TextBlock Text="Delete"/>
+            </Button>
+          </Grid>
+        </Border>
+      </StackPanel>
+    </Border>
+  </Border>
+
+  <!-- Editor -->
+  <Border IsVisible="{Binding IsEditorOpen}" Background="#00000050" CornerRadius="12">
+    <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="520" Background="#FFFFFF" CornerRadius="16" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 24 48 0 #30000000" ClipToBounds="True">
+      <StackPanel>
+        <Grid ColumnDefinitions="Auto,*,Auto" Margin="28,24,20,0">
+          <Border Width="42" Height="42" CornerRadius="12" Background="#FFFBEB">
+            <Path Data="{StaticResource IconDeductions}" Stroke="#D97706" StrokeThickness="1.8" Width="18" Height="18" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+          </Border>
+          <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="2">
+            <TextBlock Text="Deduction" FontSize="17" FontWeight="Bold" Foreground="#111827"/>
+            <TextBlock Text="Manage deduction details" FontSize="12" Foreground="#9CA3AF"/>
+          </StackPanel>
+          <Button Grid.Column="2" Command="{Binding CloseEditorCommand}" Background="Transparent" BorderThickness="0" Padding="10" CornerRadius="8" Cursor="Hand" VerticalAlignment="Top">
+            <TextBlock Text="✕" FontSize="16" Foreground="#9CA3AF"/>
+          </Button>
+        </Grid>
+        <Border Height="1" Background="#F3F4F6" Margin="0,20,0,0"/>
+
+        <StackPanel Margin="28,20,28,8" Spacing="16">
+          <StackPanel Spacing="6">
+            <TextBlock Text="TITLE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+            <TextBox Text="{Binding EditorTitle}"/>
+            <TextBlock Text="{Binding TitleError}" FontSize="11" Foreground="#DC2626" IsVisible="{Binding HasTitleError}"/>
+          </StackPanel>
+          <Grid ColumnDefinitions="*,12,*">
+            <StackPanel Grid.Column="0" Spacing="6">
+              <TextBlock Text="AMOUNT" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <TextBox Text="{Binding EditorAmount}"/>
+              <TextBlock Text="{Binding AmountError}" FontSize="11" Foreground="#DC2626" IsVisible="{Binding HasAmountError}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Spacing="6">
+              <TextBlock Text="CURRENCY" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <ComboBox ItemsSource="{Binding Currencies}" SelectedItem="{Binding EditorCurrency}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+            </StackPanel>
+          </Grid>
+          <TextBlock Text="{Binding ConversionPreview}"
+                     IsVisible="{Binding ConversionPreview, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                     FontSize="12" Foreground="#6B7280" FontStyle="Italic" Margin="0,-10,0,0"/>
+          <Grid ColumnDefinitions="*,12,*">
+            <StackPanel Grid.Column="0" Spacing="6">
+              <TextBlock Text="TYPE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <ComboBox ItemsSource="{Binding DeductionTypes}" SelectedItem="{Binding EditorType}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Spacing="6">
+              <TextBlock Text="RECURRENCE" FontSize="11" FontWeight="SemiBold" Foreground="#9CA3AF"/>
+              <ComboBox ItemsSource="{Binding RecurrenceTypes}" SelectedItem="{Binding EditorRecurrenceType}" HorizontalAlignment="Stretch" MinHeight="44" FontSize="13" Background="#FFFFFF" Foreground="#111827" BorderBrush="#E5E7EB" BorderThickness="1" CornerRadius="8"/>
+            </StackPanel>
+          </Grid>
+          <CheckBox IsChecked="{Binding EditorIsActive}" Foreground="#374151" FontSize="13">
+            <TextBlock Text="Active" Foreground="#374151"/>
+          </CheckBox>
+          <TextBlock Text="{Binding ErrorMessage}" IsVisible="{Binding ErrorMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Foreground="#DC2626" FontSize="12"/>
+        </StackPanel>
+
+        <Border Padding="24,18" BorderBrush="#F3F4F6" BorderThickness="0,1,0,0" Background="#FAFBFC">
+          <Grid ColumnDefinitions="*,10,*">
+            <Button Grid.Column="0" Command="{Binding CloseEditorCommand}"
+                    Theme="{StaticResource BtnSecondary}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="42">
+              <TextBlock Text="Cancel"/>
+            </Button>
+            <Button Grid.Column="2" Command="{Binding SaveCommand}"
+                    Theme="{StaticResource BtnPrimary}"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Height="42"
+                    IsEnabled="{Binding !IsBusy}">
+              <TextBlock Text="Save"/>
+            </Button>
+          </Grid>
+        </Border>
+      </StackPanel>
+    </Border>
+  </Border>
+
+  <Border IsVisible="{Binding IsToastVisible}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,24" Padding="16,10" CornerRadius="10" Background="#FFFFFF" BorderBrush="#E5E7EB" BorderThickness="1" BoxShadow="0 4 16 0 #40000000">
+    <TextBlock Text="{Binding ToastMessage}" FontSize="13" Foreground="#111827"/>
+  </Border>
+
+  </Panel>
+</UserControl>
