@@ -4,28 +4,35 @@ set -e
 echo "Installing TrustSync..."
 
 INSTALL_DIR="$HOME/.local/bin"
+ICON_DIR="$HOME/.local/share/icons"
 DESKTOP_DIR="$HOME/.local/share/applications"
-URL="https://github.com/Dev-Yousif/TrustSync/releases/download/v1.2.0/TrustSync-linux-x64.tar.gz"
+RELEASE_URL="https://github.com/Dev-Yousif/TrustSync/releases/download/v1.2.0"
+ICON_URL="https://raw.githubusercontent.com/Dev-Yousif/TrustSync/main/assets/trustsync-icon.png"
 
-mkdir -p "$INSTALL_DIR"
+mkdir -p "$INSTALL_DIR" "$ICON_DIR" "$DESKTOP_DIR"
 
 echo "Downloading TrustSync..."
-curl -sL "$URL" | tar -xz -C "$INSTALL_DIR"
+curl -sL "$RELEASE_URL/TrustSync-linux-x64.tar.gz" | tar -xz -C "$INSTALL_DIR"
 chmod +x "$INSTALL_DIR/TrustSync"
 
-mkdir -p "$DESKTOP_DIR"
+echo "Installing icon..."
+curl -sL "$ICON_URL" -o "$ICON_DIR/trustsync.png"
+
 cat > "$DESKTOP_DIR/TrustSync.desktop" << EOF
 [Desktop Entry]
 Name=TrustSync
 Comment=Privacy-first personal accounting
 Exec=$INSTALL_DIR/TrustSync
+Icon=$ICON_DIR/trustsync.png
+Terminal=false
 Type=Application
 Categories=Office;Finance;
+StartupWMClass=TrustSync
 EOF
 
 echo ""
 echo "TrustSync installed successfully!"
-echo "Run it with: TrustSync"
+echo "You can now launch it from your application menu or run: TrustSync"
 echo ""
 
 if ! echo "$PATH" | grep -q "$INSTALL_DIR"; then
