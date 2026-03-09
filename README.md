@@ -16,6 +16,16 @@
   <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-blue" alt="Platform" />
 </p>
 
+<p align="center">
+  <a href="https://github.com/Dev-Yousif/TrustSync/releases/latest">
+    <img src="https://img.shields.io/badge/%E2%AC%87%EF%B8%8F_Download_for-Windows-0078D4?style=for-the-badge&logo=windows&logoColor=white" alt="Download for Windows" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://github.com/Dev-Yousif/TrustSync#build--run">
+    <img src="https://img.shields.io/badge/%F0%9F%90%A7_Build_for-Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Build for Linux" />
+  </a>
+</p>
+
 ---
 
 ## About
